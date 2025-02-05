@@ -9,5 +9,6 @@ public class UserEntity : BaseEntity<int>
     public byte[] PasswordSalt { get; set; } = default!;
     public string Role { get; set; } = "commenter";
     public virtual ICollection<RefreshTokenEntity> RefreshTokens { get; set; } = default!;
+    public virtual ICollection<UserVerificationEntity> UserVerifications { get; set; } = default!;
 
 }
