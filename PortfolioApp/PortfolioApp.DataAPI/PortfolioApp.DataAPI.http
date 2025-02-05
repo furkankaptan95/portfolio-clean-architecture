@@ -1,0 +1,6 @@
+@PortfolioApp.DataAPI_HostAddress = http://localhost:5052
+
+GET {{PortfolioApp.DataAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
