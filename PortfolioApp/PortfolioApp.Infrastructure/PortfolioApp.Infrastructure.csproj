@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="EF Core\" />
+    <Folder Include="File Services\" />
+    <Folder Include="Database\" />
+  </ItemGroup>
+
 </Project>
