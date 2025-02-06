@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using PortfolioApp.Infrastructure.Persistence.DbContexts;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var dataDbConnectionString = builder.Configuration.GetConnectionString("DataDb");
+builder.Services.AddDbContext<DataDbContext>(options =>
+    options.UseNpgsql(dataDbConnectionString));
 
 // Add services to the container.
 
@@ -21,5 +28,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+using var context = scope.ServiceProvider.GetRequiredService<DataDbContext>();
+context.Database.EnsureCreated();
 
 app.Run();

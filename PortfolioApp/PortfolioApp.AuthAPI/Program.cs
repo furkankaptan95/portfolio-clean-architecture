@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using PortfolioApp.Infrastructure.Persistence.DbContexts;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var authDbConnectionString = builder.Configuration.GetConnectionString("AuthDb");
+builder.Services.AddDbContext<AuthDbContext>(options =>
+    options.UseNpgsql(authDbConnectionString));
 
 // Add services to the container.
 
@@ -21,5 +28,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+using var context = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+context.Database.EnsureCreated();
 
 app.Run();

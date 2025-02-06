@@ -14,4 +14,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PortfolioApp.Infrastructure\PortfolioApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
