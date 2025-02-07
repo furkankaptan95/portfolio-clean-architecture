@@ -10,13 +10,13 @@ public class AboutMeEntityConfiguration : IEntityTypeConfiguration<AboutMeEntity
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Id).ValueGeneratedOnAdd();
 
-        builder.Property(a => a.Introduction).IsRequired().HasColumnType("varchar(100)");
-        builder.Property(a => a.FullName).IsRequired().HasColumnType("varchar(50)");
-        builder.Property(a => a.Field).IsRequired().HasColumnType("varchar(50)");
-        builder.Property(a => a.AboutMeImageUrl).IsRequired().HasColumnType("varchar(255)");
-        builder.Property(a => a.LinkedInUrl).IsRequired().HasColumnType("varchar(255)");
-        builder.Property(a => a.GithubUrl).IsRequired().HasColumnType("varchar(255)");
-        builder.Property(a => a.GithubUrl).IsRequired().HasColumnType("varchar(255)");
-        builder.Property(a => a.Email).IsRequired().HasColumnType("varchar(100)");
+        builder.Property(a => a.Introduction).IsRequired().HasColumnType("nvarchar(100)");
+        builder.Property(a => a.FullName).IsRequired().HasColumnType("nvarchar(50)");
+        builder.Property(a => a.Field).IsRequired().HasColumnType("nvarchar(50)");
+        builder.Property(a => a.AboutMeImageUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.LinkedInUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.GithubUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.GithubUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.Email).IsRequired().HasColumnType("nvarchar(100)");
     }
 }

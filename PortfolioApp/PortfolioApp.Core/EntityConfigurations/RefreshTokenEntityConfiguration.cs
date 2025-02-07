@@ -14,13 +14,13 @@ public class RefreshTokenEntityConfiguration : IEntityTypeConfiguration<RefreshT
 
         builder.Property(c => c.ExpireDate)
             .IsRequired()
-            .HasColumnType("timestamp");  // datetime yerine timestamp kullanıyoruz
+            .HasColumnType("datetime");  // datetime yerine timestamp kullanıyoruz
 
         builder.Property(c => c.IsRevoked)
-            .HasColumnType("timestamp");  // datetime yerine timestamp kullanıyoruz
+            .HasColumnType("datetime");  // datetime yerine timestamp kullanıyoruz
 
         builder.Property(c => c.IsUsed)
-            .HasColumnType("timestamp");  // datetime yerine timestamp kullanıyoruz
+            .HasColumnType("datetime");  // datetime yerine timestamp kullanıyoruz
 
         builder.HasOne(rt => rt.User)
             .WithMany(u => u.RefreshTokens)

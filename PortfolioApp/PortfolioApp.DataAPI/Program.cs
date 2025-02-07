@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var dataDbConnectionString = builder.Configuration.GetConnectionString("DataDb");
 builder.Services.AddDbContext<DataDbContext>(options =>
-    options.UseNpgsql(dataDbConnectionString));
+    options.UseSqlServer(dataDbConnectionString));
 
 // Add services to the container.
 
