@@ -12,8 +12,8 @@ public class UserVerificationEntityConfiguration : IEntityTypeConfiguration<User
 
         builder.HasIndex(u => u.Token).IsUnique();
 
-        builder.Property(c => c.ExpireDate).IsRequired().HasColumnType("timestamp");
-        builder.Property(c => c.CreatedAt).IsRequired().HasColumnType("timestamp");
+        builder.Property(c => c.ExpireDate).IsRequired().HasColumnType("datetime");
+        builder.Property(c => c.CreatedAt).IsRequired().HasColumnType("datetime");
 
         builder.HasOne(rt => rt.User)
             .WithMany(u => u.UserVerifications)

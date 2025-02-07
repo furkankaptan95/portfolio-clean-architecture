@@ -7,14 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business Logic\" />
     <Folder Include="Services\" />
-    <Folder Include="Use Cases\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PortfolioApp.Core\PortfolioApp.Core.csproj" />
+    <ProjectReference Include="..\PortfolioApp.Infrastructure\PortfolioApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

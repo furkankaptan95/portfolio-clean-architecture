@@ -12,18 +12,18 @@ public class CommentEntityConfiguration : IEntityTypeConfiguration<CommentEntity
 
         builder.Property(c => c.Content)
             .IsRequired()
-            .HasColumnType("varchar(300)");  // PostgreSQL'de nvarchar yerine varchar kullanıyoruz
+            .HasColumnType("nvarchar(300)");  // PostgreSQL'de nvarchar yerine varchar kullanıyoruz
 
         builder.Property(c => c.CreatedAt)
             .IsRequired()
-            .HasColumnType("timestamp");  // datetime yerine timestamp kullanıyoruz
+            .HasColumnType("datetime");  // datetime yerine timestamp kullanıyoruz
 
         builder.Property(c => c.IsApproved)
             .IsRequired()
-            .HasColumnType("boolean");  // bit yerine boolean kullanıyoruz
+            .HasColumnType("bit");  // bit yerine boolean kullanıyoruz
 
         builder.Property(c => c.UnsignedCommenterName)
-            .HasColumnType("varchar(50)");  // nvarchar yerine varchar kullanıyoruz
+            .HasColumnType("nvarchar(50)");  // nvarchar yerine varchar kullanıyoruz
 
         builder.HasOne(c => c.BlogPost)
             .WithMany(bp => bp.Comments)
