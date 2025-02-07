@@ -14,6 +14,7 @@ builder.Services.AddDbContext<DataDbContext>(options =>
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAboutMeHandler).Assembly));
 builder.Services.AddScoped<IAboutMeService, AboutMeService>();
+builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
