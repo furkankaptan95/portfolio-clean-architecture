@@ -22,4 +22,17 @@ public class AboutMeController : ControllerBase
         var result = await _aboutMeService.CreateAboutMeAsync(dto);
         return Ok(result);
     }
+
+    [HttpGet("get")]
+    public async Task<IActionResult> Get()
+    {
+        var result = await _aboutMeService.GetAsync();
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
 }

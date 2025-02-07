@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.AboutMe.Commands;
+using PortfolioApp.Application.Use_Cases.AboutMe.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.Interfaces;
@@ -16,5 +17,11 @@ public class AboutMeService : IAboutMeService
     {
         var command = new CreateAboutMeCommand(dto);
         return await _mediator.Send(command);
+    }
+
+    public async Task<ServiceResult<AboutMeDto>> GetAsync()
+    {
+        var result = await _mediator.Send(new GetAboutMeQuery());
+        return result;
     }
 }
