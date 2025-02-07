@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using PortfolioApp.Application.Use_Cases.AboutMe.Commands;
 using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;

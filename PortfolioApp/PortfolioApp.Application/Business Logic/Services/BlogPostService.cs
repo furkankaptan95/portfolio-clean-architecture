@@ -20,6 +20,13 @@ public class BlogPostService : IBlogPostService
         return result;
     }
 
+    public async Task<ServiceResult> DeleteAsync(int id)
+    {
+        var result = await _mediator.Send(new DeleteBlogPostCommand(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult<List<BlogPostDto>>> GetAllAsync()
     {
         var result = await _mediator.Send(new GetBlogPostsQuery());

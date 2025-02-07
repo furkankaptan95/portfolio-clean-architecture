@@ -30,4 +30,12 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("delete/{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var result = await _blogPostService.DeleteAsync(id);
+
+        return Ok(result);
+    }
 }
