@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
+using PortfolioApp.Application.Use_Cases.BlogPost.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.Interfaces;
@@ -15,6 +16,13 @@ public class BlogPostService : IBlogPostService
     public async Task<ServiceResult> AddBlogPostAsync(AddBlogPostDto dto)
     {
         var result = await _mediator.Send(new CreateBlogPostCommand(dto));
+
+        return result;
+    }
+
+    public async Task<ServiceResult<List<BlogPostDto>>> GetAllAsync()
+    {
+        var result = await _mediator.Send(new GetBlogPostsQuery());
 
         return result;
     }

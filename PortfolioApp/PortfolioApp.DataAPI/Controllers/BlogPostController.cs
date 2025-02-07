@@ -22,4 +22,12 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _blogPostService.GetAllAsync();
+
+        return Ok(result);
+    }
 }

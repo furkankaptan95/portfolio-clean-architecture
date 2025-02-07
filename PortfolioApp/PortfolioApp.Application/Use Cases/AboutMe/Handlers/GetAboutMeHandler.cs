@@ -1,10 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using PortfolioApp.Application.Use_Cases.AboutMe.Commands;
 using PortfolioApp.Application.Use_Cases.AboutMe.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
-using PortfolioApp.Core.Entities;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
 namespace PortfolioApp.Application.Use_Cases.AboutMe.Handlers;

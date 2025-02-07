@@ -5,4 +5,5 @@ namespace PortfolioApp.Core.Interfaces;
 public interface IBlogPostService
 {
     Task<ServiceResult> AddBlogPostAsync(AddBlogPostDto dto);
+    Task<ServiceResult<List<BlogPostDto>>> GetAllAsync();
 }
