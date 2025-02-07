@@ -24,4 +24,10 @@ public class AboutMeService : IAboutMeService
         var result = await _mediator.Send(new GetAboutMeQuery());
         return result;
     }
+
+    public async Task<ServiceResult> UpdateAboutMeAsync(UpdateAboutMeApiDto dto)
+    {
+        var result = await _mediator.Send(new UpdateAboutMeCommand(dto));
+        return result;
+    }
 }

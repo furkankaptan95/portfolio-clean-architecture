@@ -6,4 +6,5 @@ public interface IAboutMeService
 {
     Task<ServiceResult> CreateAboutMeAsync(AddAboutMeApiDto dto);
     Task<ServiceResult<AboutMeDto>> GetAsync();
+    Task<ServiceResult> UpdateAboutMeAsync(UpdateAboutMeApiDto dto);
 }

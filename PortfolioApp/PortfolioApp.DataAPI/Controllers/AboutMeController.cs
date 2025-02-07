@@ -35,4 +35,17 @@ public class AboutMeController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateAboutMeApiDto dto)
+    {
+        var result = await _aboutMeService.UpdateAboutMeAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
 }
