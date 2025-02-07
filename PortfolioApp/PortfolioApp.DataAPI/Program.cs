@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using PortfolioApp.Application.Business_Logic.Services;
+using PortfolioApp.Application.Use_Cases.AboutMe.Handlers;
+using PortfolioApp.Core.Interfaces;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +11,9 @@ builder.Services.AddDbContext<DataDbContext>(options =>
     options.UseNpgsql(dataDbConnectionString));
 
 // Add services to the container.
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAboutMeHandler).Assembly));
+builder.Services.AddScoped<IAboutMeService, AboutMeService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
