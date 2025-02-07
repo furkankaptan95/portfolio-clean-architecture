@@ -30,7 +30,7 @@ public class BlogPostController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("delete/{id}")]
+    [HttpGet("delete/{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var result = await _blogPostService.DeleteAsync(id);
@@ -51,7 +51,7 @@ public class BlogPostController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> Get([FromRoute] int id)
     {
         var result = await _blogPostService.GetByIdAsync(id);
@@ -63,4 +63,18 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("visibility/{id:int}")]
+    public async Task<IActionResult> Visibility([FromRoute] int id)
+    {
+        var result = await _blogPostService.ChangeVisibilityAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+    
 }
