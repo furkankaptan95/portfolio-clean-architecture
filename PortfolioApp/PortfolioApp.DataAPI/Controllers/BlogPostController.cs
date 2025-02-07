@@ -38,4 +38,17 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateBlogPostDto dto)
+    {
+        var result = await _blogPostService.UpdateAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }

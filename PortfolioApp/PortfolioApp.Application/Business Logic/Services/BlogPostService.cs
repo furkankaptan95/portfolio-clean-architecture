@@ -33,4 +33,11 @@ public class BlogPostService : IBlogPostService
 
         return result;
     }
+
+    public async Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)
+    {
+        var result = await _mediator.Send(new UpdateBlogPostCommand(dto));
+
+        return result;
+    }
 }
