@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.Interfaces;
 
@@ -43,6 +42,19 @@ public class BlogPostController : ControllerBase
     public async Task<IActionResult> Update([FromBody] UpdateBlogPostDto dto)
     {
         var result = await _blogPostService.UpdateAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get([FromRoute] int id)
+    {
+        var result = await _blogPostService.GetByIdAsync(id);
 
         if (!result.IsSuccess)
         {

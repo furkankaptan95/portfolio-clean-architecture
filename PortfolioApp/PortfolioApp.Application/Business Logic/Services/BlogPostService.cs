@@ -34,6 +34,13 @@ public class BlogPostService : IBlogPostService
         return result;
     }
 
+    public async Task<ServiceResult<BlogPostDto>> GetByIdAsync(int id)
+    {
+        var result = await _mediator.Send(new GetBlogPostByIdQuery(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)
     {
         var result = await _mediator.Send(new UpdateBlogPostCommand(dto));
