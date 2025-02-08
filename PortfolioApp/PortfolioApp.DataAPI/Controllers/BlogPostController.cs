@@ -35,6 +35,11 @@ public class BlogPostController : ControllerBase
     {
         var result = await _blogPostService.DeleteAsync(id);
 
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
         return Ok(result);
     }
 
