@@ -19,6 +19,13 @@ public class CommentService : ICommentService
         return result;
     }
 
+    public async Task<ServiceResult> ApprovalAsync(int id)
+    {
+        var result = await _mediator.Send(new CommentApprovalCommand(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult> DeleteAsync(int id)
     {
         var result = await _mediator.Send(new DeleteCommentCommand(id));

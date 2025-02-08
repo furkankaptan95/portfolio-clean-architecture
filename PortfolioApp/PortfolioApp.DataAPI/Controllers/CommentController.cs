@@ -34,4 +34,17 @@ public class CommentController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("approval/{id:int}")]
+    public async Task<IActionResult> Approval([FromRoute] int id)
+    {
+        var result = await _commentService.ApprovalAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }

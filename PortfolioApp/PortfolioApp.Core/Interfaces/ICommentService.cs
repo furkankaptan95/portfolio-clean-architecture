@@ -6,4 +6,5 @@ public interface ICommentService
 {
     Task<ServiceResult> AddAsync(AddCommentDto dto);
     Task<ServiceResult> DeleteAsync(int id);
+    Task<ServiceResult> ApprovalAsync(int id);
 }
