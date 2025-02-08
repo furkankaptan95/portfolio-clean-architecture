@@ -1,13 +1,13 @@
-﻿namespace PortfolioApp.Core.Entities;
-public class ContactMessageEntity : BaseEntity<int>
+﻿namespace PortfolioApp.Core.DTOs.Admin.ContactMessage;
+public class ContactMessageDto
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
     public string? Subject { get; set; }
     public string Message { get; set; }
-    public DateTime SentDate { get; set; } = DateTime.UtcNow;
-    public bool IsRead { get; set; } = false;
+    public DateTime SentDate { get; set; }
+    public bool IsRead { get; set; }
     public string? Reply { get; set; }
     public DateTime? ReplyDate { get; set; }
-
 }
