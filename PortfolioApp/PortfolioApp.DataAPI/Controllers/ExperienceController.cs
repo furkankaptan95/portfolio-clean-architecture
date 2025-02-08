@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.Interfaces;
 
@@ -23,4 +24,13 @@ public class ExperienceController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _experienceService.GetAllAsync();
+
+        return Ok(result);
+    }
+
 }

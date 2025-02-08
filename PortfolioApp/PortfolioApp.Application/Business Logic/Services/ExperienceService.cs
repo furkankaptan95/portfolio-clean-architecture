@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using PortfolioApp.Application.Use_Cases.Education.Queries;
 using PortfolioApp.Application.Use_Cases.Experience.Commands;
+using PortfolioApp.Application.Use_Cases.Experience.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.Interfaces;
@@ -20,4 +22,10 @@ public class ExperienceService : IExperienceService
 
     }
 
+    public async Task<ServiceResult<List<ExperienceDto>>> GetAllAsync()
+    {
+        var result = await _mediator.Send(new GetExperiencesQuery());
+
+        return result;
+    }
 }
