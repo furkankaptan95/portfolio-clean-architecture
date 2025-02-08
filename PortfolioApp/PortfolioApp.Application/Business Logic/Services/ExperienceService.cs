@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PortfolioApp.Application.Use_Cases.Education.Commands;
 using PortfolioApp.Application.Use_Cases.Education.Queries;
 using PortfolioApp.Application.Use_Cases.Experience.Commands;
 using PortfolioApp.Application.Use_Cases.Experience.Queries;
@@ -20,6 +21,13 @@ public class ExperienceService : IExperienceService
 
         return result;
 
+    }
+
+    public async Task<ServiceResult> DeleteAsync(int id)
+    {
+        var result = await _mediator.Send(new DeleteExperienceCommand(id));
+
+        return result;
     }
 
     public async Task<ServiceResult<List<ExperienceDto>>> GetAllAsync()
