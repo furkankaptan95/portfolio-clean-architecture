@@ -9,4 +9,5 @@ public interface IProjectService
     Task<ServiceResult> DeleteAsync(int id);
     Task<ServiceResult> UpdateAsync(UpdateProjectApiDto dto);
     Task<ServiceResult<ProjectDto>> GetByIdAsync(int id);
+    Task<ServiceResult> ChangeVisibilityAsync(int id);
 }
