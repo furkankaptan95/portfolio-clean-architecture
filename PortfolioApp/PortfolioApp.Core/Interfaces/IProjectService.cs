@@ -7,5 +7,5 @@ public interface IProjectService
 {
     Task<ServiceResult> AddAsync(AddProjectDto dto);
     Task<ServiceResult<List<ProjectDto>>> GetAllAsync();
-
+    Task<ServiceResult> DeleteAsync(int id);
 }

@@ -30,4 +30,17 @@ public class ProjectController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("delete/{id:int}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var result = await _projectService.DeleteAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }
