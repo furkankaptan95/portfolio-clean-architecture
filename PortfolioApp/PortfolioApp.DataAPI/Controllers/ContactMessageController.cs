@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Core.DTOs.Web.ContactMessage;
 using PortfolioApp.Core.Interfaces;
 
@@ -26,6 +27,19 @@ public class ContactMessageController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var result = await _contactMessageService.GetAllAsync();
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Get([FromRoute] int id)
+    {
+        var result = await _contactMessageService.GetByIdAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
 
         return Ok(result);
     }

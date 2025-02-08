@@ -27,4 +27,11 @@ public class ContactMessageService : IContactMessageService
 
         return result;
     }
+
+    public async Task<ServiceResult<ContactMessageDto>> GetByIdAsync(int id)
+    {
+        var result = await _mediator.Send(new GetContactMessageByIdQuery(id));
+
+        return result;
+    }
 }
