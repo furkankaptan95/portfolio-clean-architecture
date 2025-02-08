@@ -24,6 +24,13 @@ public class ExperienceService : IExperienceService
 
     }
 
+    public async Task<ServiceResult> ChangeVisibilityAsync(int id)
+    {
+        var result = await _mediator.Send(new ExperienceVisibilityCommand(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult> DeleteAsync(int id)
     {
         var result = await _mediator.Send(new DeleteExperienceCommand(id));

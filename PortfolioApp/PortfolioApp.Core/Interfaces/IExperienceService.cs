@@ -10,5 +10,5 @@ public interface IExperienceService
     Task<ServiceResult> DeleteAsync(int id);
     Task<ServiceResult> UpdateAsync(UpdateExperienceDto dto);
     Task<ServiceResult<ExperienceDto>> GetByIdAsync(int id);
-
+    Task<ServiceResult> ChangeVisibilityAsync(int id);
 }

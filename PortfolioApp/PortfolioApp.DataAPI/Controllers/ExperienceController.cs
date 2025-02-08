@@ -73,5 +73,16 @@ public class ExperienceController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("visibility/{id:int}")]
+    public async Task<IActionResult> Visibility([FromRoute] int id)
+    {
+        var result = await _experienceService.ChangeVisibilityAsync(id);
 
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }
