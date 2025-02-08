@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
@@ -35,6 +34,19 @@ public class EducationController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var result = await _educationService.DeleteAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateEducationDto dto)
+    {
+        var result = await _educationService.UpdateAsync(dto);
 
         if (!result.IsSuccess)
         {

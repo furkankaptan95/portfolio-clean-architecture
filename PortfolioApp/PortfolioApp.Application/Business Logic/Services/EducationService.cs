@@ -35,4 +35,11 @@ public class EducationService : IEducationService
 
         return result;
     }
+
+    public async Task<ServiceResult> UpdateAsync(UpdateEducationDto dto)
+    {
+        var result = await _mediator.Send(new UpdateEducationCommand(dto));
+
+        return result;
+    }
 }

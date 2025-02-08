@@ -6,5 +6,6 @@ public interface IEducationService
 {
     Task<ServiceResult> AddAsync(AddEducationDto dto); 
     Task<ServiceResult<List<EducationDto>>> GetAllAsync();
-    Task<ServiceResult> DeleteAsync(int id);
+    Task<ServiceResult> DeleteAsync(int id); 
+    Task<ServiceResult> UpdateAsync(UpdateEducationDto dto);
 }
