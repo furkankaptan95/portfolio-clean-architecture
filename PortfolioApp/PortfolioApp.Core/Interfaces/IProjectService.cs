@@ -6,4 +6,6 @@ namespace PortfolioApp.Core.Interfaces;
 public interface IProjectService
 {
     Task<ServiceResult> AddAsync(AddProjectDto dto);
+    Task<ServiceResult<List<ProjectDto>>> GetAllAsync();
+
 }
