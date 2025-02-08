@@ -1,0 +1,86 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.Application.Business_Logic.Services;
+using PortfolioApp.Core.DTOs.Admin.Experience;
+using PortfolioApp.Core.DTOs.Admin.Project;
+using PortfolioApp.Core.Interfaces;
+
+namespace PortfolioApp.DataAPI.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ProjectController : ControllerBase
+{
+    private readonly IProjectService _projectService;
+    public ProjectController(IProjectService projectService)
+    {
+        _projectService = projectService;
+    }
+
+    [HttpPost("create")]
+    public async Task<IActionResult> Create([FromBody] AddProjectDto dto)
+    {
+        var result = await _projectService.AddAsync(dto);
+
+        return Ok(result);
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _projectService.GetAllAsync();
+
+        return Ok(result);
+    }
+
+    [HttpGet("delete/{id:int}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var result = await _projectService.DeleteAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateProjectApiDto dto)
+    {
+        var result = await _projectService.UpdateAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Get([FromRoute] int id)
+    {
+        var result = await _projectService.GetByIdAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("visibility/{id:int}")]
+    public async Task<IActionResult> Visibility([FromRoute] int id)
+    {
+        var result = await _projectService.ChangeVisibilityAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+}

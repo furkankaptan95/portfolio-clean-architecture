@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using PortfolioApp.Application.Use_Cases.Education.Commands;
 using PortfolioApp.Application.Use_Cases.Experience.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;

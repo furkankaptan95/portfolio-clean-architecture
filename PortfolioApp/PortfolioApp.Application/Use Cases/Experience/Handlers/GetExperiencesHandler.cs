@@ -1,9 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using PortfolioApp.Application.Use_Cases.Education.Queries;
 using PortfolioApp.Application.Use_Cases.Experience.Queries;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 

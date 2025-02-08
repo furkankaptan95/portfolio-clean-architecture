@@ -20,6 +20,8 @@ builder.Services.AddScoped<IContactMessageService, ContactMessageService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<IPersonalInfoService, PersonalInfoService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+
 
 
 builder.Services.AddControllers();
