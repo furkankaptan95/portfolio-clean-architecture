@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.Comment.Commands;
+using PortfolioApp.Application.Use_Cases.Comment.Queries;
 using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.Comment;
 using PortfolioApp.Core.DTOs.Web.Comment;
 using PortfolioApp.Core.Interfaces;
 
@@ -29,6 +31,13 @@ public class CommentService : ICommentService
     public async Task<ServiceResult> DeleteAsync(int id)
     {
         var result = await _mediator.Send(new DeleteCommentCommand(id));
+
+        return result;
+    }
+
+    public async Task<ServiceResult<List<CommentDto>>> GetAllAsync()
+    {
+        var result = await _mediator.Send(new GetCommentsQuery());
 
         return result;
     }

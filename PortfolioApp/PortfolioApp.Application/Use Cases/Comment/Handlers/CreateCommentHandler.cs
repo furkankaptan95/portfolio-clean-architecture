@@ -19,6 +19,7 @@ public class CreateCommentHandler : IRequestHandler<CreateCommentCommand, Servic
             Content = request.Comment.Content,
             BlogPostId = request.Comment.BlogPostId,
             UserId = request.Comment.UserId,
+            SignedCommenterName = request.Comment.SignedCommenterName,
             UnsignedCommenterName = request.Comment.UnsignedCommenterName,
         };
 

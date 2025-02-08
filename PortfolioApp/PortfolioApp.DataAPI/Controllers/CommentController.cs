@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Core.DTOs.Web.Comment;
 using PortfolioApp.Core.Interfaces;
 
@@ -44,6 +45,14 @@ public class CommentController : ControllerBase
         {
             return NotFound(result);
         }
+
+        return Ok(result);
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _commentService.GetAllAsync();
 
         return Ok(result);
     }

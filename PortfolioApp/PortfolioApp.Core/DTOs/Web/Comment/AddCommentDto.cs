@@ -5,4 +5,5 @@ public class AddCommentDto
     public int BlogPostId { get; set; }
     public string? UnsignedCommenterName { get; set; }
     public int? UserId { get; set; }
+    public string? SignedCommenterName { get; set; }
 }
