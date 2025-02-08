@@ -14,6 +14,7 @@ public class DataDbContext : DbContext
     public DbSet<ContactMessageEntity> ContactMessages { get; set; }
     public DbSet<ProjectEntity> ProjectEntities { get; set; }
     public DbSet<SocialLinksEntity> SocialLinks { get; set; }
+    public object PersonalInfos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

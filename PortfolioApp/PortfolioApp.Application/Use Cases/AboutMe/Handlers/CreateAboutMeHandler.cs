@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.AboutMe.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;
@@ -14,6 +15,13 @@ public class CreateAboutMeHandler : IRequestHandler<CreateAboutMeCommand, Servic
     }
     public async Task<ServiceResult> Handle(CreateAboutMeCommand request, CancellationToken cancellationToken)
     {
+        var entityCheck = await _dataDbContext.AboutMe.FirstOrDefaultAsync();
+
+        if (entityCheck is not null)
+        {
+            return new ServiceResult(false, "Hakkımda bilgileri daha önceden zaten eklenmiş!");
+        }
+
         var aboutMe = new AboutMeEntity
         {
             FullName = request.AboutMe.FullName,
