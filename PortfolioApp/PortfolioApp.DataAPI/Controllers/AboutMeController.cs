@@ -20,6 +20,12 @@ public class AboutMeController : ControllerBase
     public async Task<IActionResult> Create([FromBody] AddAboutMeApiDto dto)
     {
         var result = await _aboutMeService.CreateAboutMeAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+
         return Ok(result);
     }
 
@@ -30,7 +36,7 @@ public class AboutMeController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         return Ok(result);
@@ -43,7 +49,7 @@ public class AboutMeController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         return Ok(result);
