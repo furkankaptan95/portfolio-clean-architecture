@@ -20,6 +20,8 @@ builder.Services.AddScoped<IContactMessageService, ContactMessageService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<IPersonalInfoService, PersonalInfoService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+
 
 
 builder.Services.AddControllers();
@@ -44,6 +46,7 @@ app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 using var context = scope.ServiceProvider.GetRequiredService<DataDbContext>();
+context.Database.EnsureDeleted();
 context.Database.EnsureCreated();
 
 app.Run();

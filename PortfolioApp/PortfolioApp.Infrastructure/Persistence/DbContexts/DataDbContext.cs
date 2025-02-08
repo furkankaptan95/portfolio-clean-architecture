@@ -12,7 +12,7 @@ public class DataDbContext : DbContext
     public DbSet<ExperienceEntity> Experiences { get; set; }
     public DbSet<PersonalInfoEntity> PersonalInfo { get; set; }
     public DbSet<ContactMessageEntity> ContactMessages { get; set; }
-    public DbSet<ProjectEntity> ProjectEntities { get; set; }
+    public DbSet<ProjectEntity> Projects { get; set; }
     public DbSet<SocialLinksEntity> SocialLinks { get; set; }
     public object PersonalInfos { get; set; }
 
