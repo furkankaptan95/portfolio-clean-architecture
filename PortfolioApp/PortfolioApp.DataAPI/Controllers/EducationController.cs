@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
@@ -47,6 +48,32 @@ public class EducationController : ControllerBase
     public async Task<IActionResult> Update([FromBody] UpdateEducationDto dto)
     {
         var result = await _educationService.UpdateAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Get([FromRoute] int id)
+    {
+        var result = await _educationService.GetByIdAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet("visibility/{id:int}")]
+    public async Task<IActionResult> Visibility([FromRoute] int id)
+    {
+        var result = await _educationService.ChangeVisibilityAsync(id);
 
         if (!result.IsSuccess)
         {

@@ -22,6 +22,13 @@ public class EducationService : IEducationService
         return result;
     }
 
+    public async Task<ServiceResult> ChangeVisibilityAsync(int id)
+    {
+        var result = await _mediator.Send(new EducationVisibilityCommand(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult> DeleteAsync(int id)
     {
         var result = await _mediator.Send(new DeleteEducationCommand(id));
@@ -32,6 +39,13 @@ public class EducationService : IEducationService
     public async Task<ServiceResult<List<EducationDto>>> GetAllAsync()
     {
         var result = await _mediator.Send(new GetEducationsQuery());
+
+        return result;
+    }
+
+    public async Task<ServiceResult<EducationDto>> GetByIdAsync(int id)
+    {
+        var result = await _mediator.Send(new GetEducationByIdQuery(id));
 
         return result;
     }
