@@ -21,4 +21,17 @@ public class CommentController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("delete/{id:int}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var result = await _commentService.DeleteAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }
