@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Web.ContactMessage;
 using PortfolioApp.Core.Interfaces;
 
@@ -19,6 +18,14 @@ public class ContactMessageController : ControllerBase
     public async Task<IActionResult> Create([FromBody] AddContactMessageDto dto)
     {
         var result = await _contactMessageService.AddAsync(dto);
+
+        return Ok(result);
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _contactMessageService.GetAllAsync();
 
         return Ok(result);
     }

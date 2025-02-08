@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.ContactMessage.Commands;
+using PortfolioApp.Application.Use_Cases.ContactMessage.Queries;
 using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.ContactMessage;
 using PortfolioApp.Core.DTOs.Web.ContactMessage;
 using PortfolioApp.Core.Interfaces;
 
@@ -15,6 +17,13 @@ public class ContactMessageService : IContactMessageService
     public async Task<ServiceResult> AddAsync(AddContactMessageDto dto)
     {
         var result = await _mediator.Send(new CreateContactMessageCommand(dto));
+
+        return result;
+    }
+
+    public async Task<ServiceResult<List<ContactMessageDto>>> GetAllAsync()
+    {
+        var result = await _mediator.Send(new GetContactMessagesQuery());
 
         return result;
     }
