@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Core.DTOs.Admin.Education;
-using PortfolioApp.Core.DTOs.Web.ContactMessage;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.DataAPI.Controllers;
@@ -20,6 +19,14 @@ public class EducationController : ControllerBase
     public async Task<IActionResult> Create([FromBody] AddEducationDto dto)
     {
         var result = await _educationService.AddAsync(dto);
+
+        return Ok(result);
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _educationService.GetAllAsync();
 
         return Ok(result);
     }

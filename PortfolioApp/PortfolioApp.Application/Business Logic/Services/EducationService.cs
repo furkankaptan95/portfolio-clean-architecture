@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
 using PortfolioApp.Application.Use_Cases.Education.Commands;
+using PortfolioApp.Application.Use_Cases.Education.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Education;
@@ -18,6 +19,13 @@ public class EducationService : IEducationService
     public async Task<ServiceResult> AddAsync(AddEducationDto dto)
     {
         var result = await _mediator.Send(new CreateEducationCommand(dto));
+
+        return result;
+    }
+
+    public async Task<ServiceResult<List<EducationDto>>> GetAllAsync()
+    {
+        var result = await _mediator.Send(new GetEducationsQuery());
 
         return result;
     }
