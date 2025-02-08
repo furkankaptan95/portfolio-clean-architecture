@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Application.Business_Logic.Services;
+using PortfolioApp.Core.DTOs.Admin.ContactMessage;
 using PortfolioApp.Core.DTOs.Web.ContactMessage;
 using PortfolioApp.Core.Interfaces;
 
@@ -40,6 +41,14 @@ public class ContactMessageController : ControllerBase
         {
             return BadRequest(result);
         }
+
+        return Ok(result);
+    }
+
+    [HttpPost("reply")]
+    public async Task<IActionResult> Reply([FromBody] ReplyContactMessageDto dto)
+    {
+        var result = await _contactMessageService.ReplyAsync(dto);
 
         return Ok(result);
     }

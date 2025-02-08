@@ -8,4 +8,5 @@ public interface IContactMessageService
     Task<ServiceResult> AddAsync(AddContactMessageDto dto); 
     Task<ServiceResult<List<ContactMessageDto>>> GetAllAsync();
     Task<ServiceResult<ContactMessageDto>> GetByIdAsync(int id);
+    Task<ServiceResult> ReplyAsync(ReplyContactMessageDto dto);
 }
