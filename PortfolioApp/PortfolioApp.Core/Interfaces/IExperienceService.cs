@@ -8,5 +8,6 @@ public interface IExperienceService
     Task<ServiceResult> AddAsync(AddExperienceDto dto); 
     Task<ServiceResult<List<ExperienceDto>>> GetAllAsync();
     Task<ServiceResult> DeleteAsync(int id);
+    Task<ServiceResult> UpdateAsync(UpdateExperienceDto dto);
 
 }
