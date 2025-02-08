@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Experience.Queries;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
@@ -31,6 +30,7 @@ public class GetExperienceByIdHandler : IRequestHandler<GetExperienceByIdQuery, 
             Description = entity.Description,
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
+            IsVisible = entity.IsVisible,
         };
 
         return new ServiceResult<ExperienceDto>(true,null,dto);

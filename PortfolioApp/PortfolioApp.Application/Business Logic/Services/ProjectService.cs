@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.Experience.Commands;
+using PortfolioApp.Application.Use_Cases.Experience.Queries;
 using PortfolioApp.Application.Use_Cases.Project.Commands;
 using PortfolioApp.Application.Use_Cases.Project.Queries;
 using PortfolioApp.Core.Common;
@@ -32,6 +33,13 @@ public class ProjectService : IProjectService
     public async Task<ServiceResult<List<ProjectDto>>> GetAllAsync()
     {
         var result = await _mediator.Send(new GetProjectsQuery());
+
+        return result;
+    }
+
+    public async Task<ServiceResult<ProjectDto>> GetByIdAsync(int id)
+    {
+        var result = await _mediator.Send(new GetProjectByIdQuery(id));
 
         return result;
     }

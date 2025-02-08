@@ -29,6 +29,7 @@ public class GetEducationByIdHandler : IRequestHandler<GetEducationByIdQuery, Se
             Degree = entity.Degree,
             StartDate = entity.StartDate,
             EndDate = entity.EndDate,
+            IsVisible = entity.IsVisible,
         };
 
         return new ServiceResult<EducationDto>(true, null , dto);

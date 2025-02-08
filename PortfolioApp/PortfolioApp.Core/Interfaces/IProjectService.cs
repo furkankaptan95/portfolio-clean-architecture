@@ -8,4 +8,5 @@ public interface IProjectService
     Task<ServiceResult<List<ProjectDto>>> GetAllAsync();
     Task<ServiceResult> DeleteAsync(int id);
     Task<ServiceResult> UpdateAsync(UpdateProjectApiDto dto);
+    Task<ServiceResult<ProjectDto>> GetByIdAsync(int id);
 }
