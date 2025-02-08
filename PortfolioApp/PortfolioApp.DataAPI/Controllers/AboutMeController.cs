@@ -36,7 +36,7 @@ public class AboutMeController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         return Ok(result);
@@ -49,7 +49,7 @@ public class AboutMeController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         return Ok(result);

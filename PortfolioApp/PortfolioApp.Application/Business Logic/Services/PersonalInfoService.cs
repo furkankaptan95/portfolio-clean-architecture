@@ -1,5 +1,8 @@
 ﻿using MediatR;
+using PortfolioApp.Application.Use_Cases.AboutMe.Commands;
+using PortfolioApp.Application.Use_Cases.AboutMe.Queries;
 using PortfolioApp.Application.Use_Cases.PersonalInfo.Commands;
+using PortfolioApp.Application.Use_Cases.PersonalInfo.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 using PortfolioApp.Core.Interfaces;
@@ -16,6 +19,18 @@ public class PersonalInfoService : IPersonalInfoService
     {
         var result = await _mediator.Send(new CreatePersonalInfoCommand(dto));
 
+        return result;
+    }
+
+    public async Task<ServiceResult<PersonalInfoDto>> GetAsync()
+    {
+        var result = await _mediator.Send(new GetPersonalInfoQuery());
+        return result;
+    }
+
+    public async Task<ServiceResult> UpdateAsync(UpdatePersonalInfoDto dto)
+    {
+        var result = await _mediator.Send(new UpdatePersonalInfoCommand(dto));
         return result;
     }
 }
