@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.Core.DTOs.Admin.BlogPost;
+using PortfolioApp.Application.Business_Logic.Services;
+using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BlogPostController : ControllerBase
+public class EducationController : ControllerBase
 {
-    private readonly IBlogPostService _blogPostService;
-    public BlogPostController(IBlogPostService blogPostService)
+    private readonly IEducationService _educationService;
+    public EducationController(IEducationService educationService)
     {
-        _blogPostService = blogPostService;
+        _educationService = educationService;
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] AddBlogPostDto dto)
+    public async Task<IActionResult> Create([FromBody] AddEducationDto dto)
     {
-        var result = await _blogPostService.AddBlogPostAsync(dto);
+        var result = await _educationService.AddAsync(dto);
 
         return Ok(result);
     }
@@ -25,7 +26,7 @@ public class BlogPostController : ControllerBase
     [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _blogPostService.GetAllAsync();
+        var result = await _educationService.GetAllAsync();
 
         return Ok(result);
     }
@@ -33,7 +34,7 @@ public class BlogPostController : ControllerBase
     [HttpGet("delete/{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        var result = await _blogPostService.DeleteAsync(id);
+        var result = await _educationService.DeleteAsync(id);
 
         if (!result.IsSuccess)
         {
@@ -44,9 +45,9 @@ public class BlogPostController : ControllerBase
     }
 
     [HttpPost("update")]
-    public async Task<IActionResult> Update([FromBody] UpdateBlogPostDto dto)
+    public async Task<IActionResult> Update([FromBody] UpdateEducationDto dto)
     {
-        var result = await _blogPostService.UpdateAsync(dto);
+        var result = await _educationService.UpdateAsync(dto);
 
         if (!result.IsSuccess)
         {
@@ -59,7 +60,7 @@ public class BlogPostController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Get([FromRoute] int id)
     {
-        var result = await _blogPostService.GetByIdAsync(id);
+        var result = await _educationService.GetByIdAsync(id);
 
         if (!result.IsSuccess)
         {
@@ -72,7 +73,7 @@ public class BlogPostController : ControllerBase
     [HttpGet("visibility/{id:int}")]
     public async Task<IActionResult> Visibility([FromRoute] int id)
     {
-        var result = await _blogPostService.ChangeVisibilityAsync(id);
+        var result = await _educationService.ChangeVisibilityAsync(id);
 
         if (!result.IsSuccess)
         {
@@ -81,5 +82,4 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
-    
 }
