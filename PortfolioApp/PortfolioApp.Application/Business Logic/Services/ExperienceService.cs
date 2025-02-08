@@ -38,6 +38,13 @@ public class ExperienceService : IExperienceService
         return result;
     }
 
+    public async Task<ServiceResult<ExperienceDto>> GetByIdAsync(int id)
+    {
+        var result = await _mediator.Send(new GetExperienceByIdQuery(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult> UpdateAsync(UpdateExperienceDto dto)
     {
         var result = await _mediator.Send(new UpdateExperienceCommand(dto));

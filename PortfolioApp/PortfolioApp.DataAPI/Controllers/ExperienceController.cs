@@ -60,5 +60,18 @@ public class ExperienceController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Get([FromRoute] int id)
+    {
+        var result = await _experienceService.GetByIdAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
 
 }
