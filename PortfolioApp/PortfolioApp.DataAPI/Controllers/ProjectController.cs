@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Application.Business_Logic.Services;
+using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.Interfaces;
 
@@ -35,6 +36,19 @@ public class ProjectController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var result = await _projectService.DeleteAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateProjectApiDto dto)
+    {
+        var result = await _projectService.UpdateAsync(dto);
 
         if (!result.IsSuccess)
         {

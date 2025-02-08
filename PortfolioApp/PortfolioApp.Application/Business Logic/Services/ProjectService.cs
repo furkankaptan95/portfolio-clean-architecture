@@ -35,4 +35,11 @@ public class ProjectService : IProjectService
 
         return result;
     }
+
+    public async Task<ServiceResult> UpdateAsync(UpdateProjectApiDto dto)
+    {
+        var result = await _mediator.Send(new UpdateProjectCommand(dto));
+
+        return result;
+    }
 }
