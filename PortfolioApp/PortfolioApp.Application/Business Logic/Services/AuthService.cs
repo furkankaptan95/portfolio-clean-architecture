@@ -34,4 +34,11 @@ public class AuthService : IAuthService
 
         return result;
     }
+
+    public async Task<ServiceResult> RevokeTokenAsync(string token)
+    {
+        var result = await _mediator.Send(new RevokeTokenCommand(token));
+
+        return result;
+    }
 }
