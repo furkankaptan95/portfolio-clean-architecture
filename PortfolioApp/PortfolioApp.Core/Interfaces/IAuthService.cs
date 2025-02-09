@@ -6,4 +6,5 @@ namespace PortfolioApp.Core.Interfaces;
 public interface IAuthService
 {
     Task<ServiceResult<RegistrationError>> RegisterAsync(RegisterDto dto);
+    Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto);
 }

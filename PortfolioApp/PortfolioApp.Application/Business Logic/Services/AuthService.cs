@@ -13,6 +13,14 @@ public class AuthService : IAuthService
     {
         _mediator = mediator;
     }
+
+    public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
+    {
+        var result = await _mediator.Send(new LoginCommand(loginDto));
+
+        return result;
+    }
+
     public async Task<ServiceResult<RegistrationError>> RegisterAsync(RegisterDto dto)
     {
         var result = await _mediator.Send(new RegisterCommand(dto));
