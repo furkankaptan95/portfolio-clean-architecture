@@ -6,6 +6,10 @@ using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var authDbConnectionString = builder.Configuration.GetConnectionString("AuthDb");
+builder.Services.AddDbContext<AuthDbContext>(options =>
+    options.UseSqlServer(authDbConnectionString));
+
 var dataDbConnectionString = builder.Configuration.GetConnectionString("DataDb");
 builder.Services.AddDbContext<DataDbContext>(options =>
     options.UseSqlServer(dataDbConnectionString));
