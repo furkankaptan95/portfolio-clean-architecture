@@ -60,7 +60,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
         };
 
         await _authDbContext.UserVerifications.AddAsync(userVerification);
-        await _authDbContext.SaveChangesAsync();
+        await _authDbContext.SaveChangesAsync(cancellationToken);
 
         return new ServiceResult<RegistrationError>(true, null, RegistrationError.None);
     }

@@ -21,6 +21,13 @@ public class AuthService : IAuthService
         return result;
     }
 
+    public async Task<ServiceResult<TokensDto>> RefreshTokenAsync(string token)
+    {
+        var result = await _mediator.Send(new RefreshTokenCommand(token));
+
+        return result;
+    }
+
     public async Task<ServiceResult<RegistrationError>> RegisterAsync(RegisterDto dto)
     {
         var result = await _mediator.Send(new RegisterCommand(dto));
