@@ -1,0 +1,22 @@
+﻿using MediatR;
+using PortfolioApp.Application.Use_Cases.Auth.Commands;
+using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Auth;
+using PortfolioApp.Core.Enums;
+using PortfolioApp.Core.Interfaces;
+
+namespace PortfolioApp.Application.Business_Logic.Services;
+public class AuthService : IAuthService
+{
+    private readonly IMediator _mediator;
+    public AuthService(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+    public async Task<ServiceResult<RegistrationError>> RegisterAsync(RegisterDto dto)
+    {
+        var result = await _mediator.Send(new RegisterCommand(dto));
+
+        return result;
+    }
+}
