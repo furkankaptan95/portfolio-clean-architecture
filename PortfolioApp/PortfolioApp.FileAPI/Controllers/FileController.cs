@@ -32,4 +32,15 @@ public class FileController : ControllerBase
 
         return BadRequest(result);
     }
+
+    [HttpGet("download/{fileUrl}")]
+    public async Task<IActionResult> Download([FromRoute] string fileUrl)
+    {
+        var result = await _fileService.DownloadAsync(fileUrl);
+
+        if (!result.IsSuccess)
+            return NotFound(result);
+    
+        return Ok(result);
+    }
 }

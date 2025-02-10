@@ -33,6 +33,21 @@ public class FileService : IFileService
         return new ServiceResult(false, "Dosya silinirken bir hatayla karşılaşıldı.");
     }
 
+    public async Task<ServiceResult<FileDownloadDto>> DownloadAsync(string fileUrl)
+    {
+        var filePath = Path.Combine(_uploadsFolder, fileUrl);
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            return new ServiceResult<FileDownloadDto>(false,"Dosya bulunamadı.",null);
+        }
+
+        var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+        var fileName = Path.GetFileName(filePath) ?? "downloaded_file";
+
+        return new ServiceResult<FileDownloadDto>(true,"Dosya başarıyla indirildi.", new FileDownloadDto(fileBytes, fileName));
+    }
+
     public async Task<ServiceResult<FileNameDto>> UploadFileAsync(IFormFile file)
     {
         var result = await SaveFileAsync(file);
