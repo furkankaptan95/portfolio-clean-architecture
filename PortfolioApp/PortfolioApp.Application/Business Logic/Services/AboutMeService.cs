@@ -19,6 +19,11 @@ public class AboutMeService : IAboutMeService
         return await _mediator.Send(command);
     }
 
+    public Task<ServiceResult> CreateAboutMeAsync(AddAboutMeMvcDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResult<AboutMeDto>> GetAsync()
     {
         var result = await _mediator.Send(new GetAboutMeQuery());

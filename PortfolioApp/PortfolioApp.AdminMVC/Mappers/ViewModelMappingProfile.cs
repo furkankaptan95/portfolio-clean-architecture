@@ -8,5 +8,7 @@ public class ViewModelMappingProfile : Profile
     public ViewModelMappingProfile()
     {
         CreateMap<AboutMeDto, AboutMeViewModel>();
+        CreateMap<AddAboutMeViewModel, AddAboutMeMvcDto>();
+        CreateMap<AddAboutMeMvcDto, AddAboutMeApiDto>();
     }
 }

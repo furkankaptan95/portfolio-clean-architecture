@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using PortfolioApp.AdminMVC.Mappers;
 using PortfolioApp.AdminMVC.Services;
 using PortfolioApp.Core.Config;
@@ -18,6 +19,17 @@ builder.Services.AddHttpClient("dataApi", c =>
 {
     c.BaseAddress = new Uri(dataApiUrl);
 });
+
+var fileApiUrl = builder.Configuration.GetValue<string>("FileApiUrl");
+if (string.IsNullOrWhiteSpace(fileApiUrl))
+{
+    throw new InvalidOperationException("FileApiUrl is required in appsettings.json");
+}
+builder.Services.AddHttpClient("fileApi", c =>
+{
+    c.BaseAddress = new Uri(fileApiUrl);
+});
+
 
 builder.Services.AddScoped<IAboutMeService, AboutMeService>();
 

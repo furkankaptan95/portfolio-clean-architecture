@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
+using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.AdminMVC.Controllers;
@@ -33,6 +34,27 @@ public class AboutMeController : Controller
     [HttpGet]
     public async Task<IActionResult> Create()
     {
+        var result = await _aboutMeService.GetAsync();
+
+        if (result.IsSuccess)
+            return RedirectToAction(nameof(AboutMe));
+
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromForm] AddAboutMeViewModel model)
+    {
+        var dto = _mapper.Map<AddAboutMeMvcDto>(model);
+
+        var result = await _aboutMeService.CreateAboutMeAsync(dto);
+
+        if (result.IsSuccess)
+            TempData["Message"] = result.Message;
+        else
+            TempData["ErrorMessage"] = result.Message;
+
+
+        return RedirectToAction(nameof(AboutMe));
     }
 }
