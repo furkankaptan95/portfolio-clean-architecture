@@ -57,4 +57,37 @@ public class AboutMeController : Controller
 
         return RedirectToAction(nameof(AboutMe));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Update()
+    {
+        var result = await _aboutMeService.GetAsync();
+
+        if (!result.IsSuccess)
+        {
+            TempData["ErrorMessage"] = result.Message;
+            return RedirectToAction(nameof(Create));
+        }
+
+        var model = _mapper.Map<UpdateAboutMeViewModel>(result.Data);
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdateAboutMeViewModel model)
+    {
+        var dto = _mapper.Map<UpdateAboutMeMVCDto>(model);
+
+        var result = await _aboutMeService.UpdateAboutMeAsync(dto);
+
+        if (result.IsSuccess)
+        {
+            TempData["Message"] = result.Message;
+            return RedirectToAction(nameof(AboutMe));
+        }
+
+        TempData["ErrorMessage"] = result.Message;
+        return Redirect("/");
+    }
 }

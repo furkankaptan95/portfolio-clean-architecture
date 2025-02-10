@@ -35,4 +35,9 @@ public class AboutMeService : IAboutMeService
         var result = await _mediator.Send(new UpdateAboutMeCommand(dto));
         return result;
     }
+
+    public Task<ServiceResult> UpdateAboutMeAsync(UpdateAboutMeMVCDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
