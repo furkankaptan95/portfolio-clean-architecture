@@ -6,4 +6,5 @@ namespace PortfolioApp.Core.Interfaces;
 public interface IFileService
 {
     Task<ServiceResult<FileNameDto>> UploadFileAsync(IFormFile file);
+    ServiceResult DeleteFile(string fileName);
 }

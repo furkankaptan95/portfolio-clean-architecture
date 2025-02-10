@@ -18,6 +18,21 @@ public class FileService : IFileService
             Directory.CreateDirectory(_uploadsFolder);
         }
     }
+
+    public ServiceResult DeleteFile(string fileName)
+    {
+        var filePath = Path.Combine(_uploadsFolder, fileName);
+
+        if (System.IO.File.Exists(filePath))
+        {
+            System.IO.File.Delete(filePath);
+
+            return new ServiceResult(true,"Dosya başarıyla silindi.");
+        }
+
+        return new ServiceResult(false, "Dosya silinirken bir hatayla karşılaşıldı.");
+    }
+
     public async Task<ServiceResult<FileNameDto>> UploadFileAsync(IFormFile file)
     {
         var result = await SaveFileAsync(file);

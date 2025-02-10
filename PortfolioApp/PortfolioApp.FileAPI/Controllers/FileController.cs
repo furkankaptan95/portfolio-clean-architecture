@@ -21,4 +21,15 @@ public class FileController : ControllerBase
         
         return Ok(result);
     }
+
+    [HttpGet("delete/{fileName}")]
+    public IActionResult Delete([FromRoute] string fileName)
+    {
+        var result = _fileService.DeleteFile(fileName);
+
+        if(result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
 }
