@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PortfolioApp.Application\PortfolioApp.Application.csproj" />
     <ProjectReference Include="..\PortfolioApp.Core\PortfolioApp.Core.csproj" />
   </ItemGroup>
 
