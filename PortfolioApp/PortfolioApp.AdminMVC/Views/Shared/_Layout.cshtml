@@ -1,49 +1,80 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="~/assets/"
+      data-template="vertical-menu-template-free">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PortfolioApp.AdminMVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PortfolioApp.AdminMVC.styles.css" asp-append-version="true" />
+    <partial name="Partials/PageHead.cshtml" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PortfolioApp.AdminMVC</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    @{
+        if (TempData["Message"] is not null)
+        {
+            <div class="alert custom-alert-success mt-5">
+                @TempData["Message"]
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        }
+
+        if (TempData["ErrorMessage"] is not null)
+        {
+            <div class="alert custom-alert-error mt-5">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        if (ViewData["Message"] is not null)
+        {
+            <div class="alert custom-alert-success mt-5">
+                @ViewData["Message"]
+            </div>
+        }
+        if (ViewData["ErrorMessage"] is not null)
+        {
+            <div class="alert custom-alert-error mt-5">
+                @ViewData["ErrorMessage"]
+            </div>
+        }
+    }
+
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+
+            <partial name="Partials/Menu.cshtml" />
+            <div class="layout-page">
+
+                <partial name="Partials/Navbar.cshtml" />
+
+                <div class="content-wrapper">
+                    <style>
+                        .content-wrapper {
+                            padding-top: 20px; /* Yukarıdan 20px boşluk bırakır. */
+                        }
+                    </style>
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+                        @RenderBody()
+
+                    </div>
+
+                    <partial name="Partials/Footer.cshtml" />
+
+                    <div class="content-backdrop fade"></div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - PortfolioApp.AdminMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <partial name="Partials/PageScripts.cshtml" />
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

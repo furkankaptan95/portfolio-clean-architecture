@@ -4,8 +4,17 @@ using PortfolioApp.Application.Common.Configurations;
 using PortfolioApp.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder =>
+    {
+        builder.AllowAnyOrigin() // Tüm origin'lere izin verir.
+               .AllowAnyMethod() // Tüm HTTP yöntemlerine izin verir.
+               .AllowAnyHeader(); // Tüm baþlýklara izin verir.
+    });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
