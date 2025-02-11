@@ -1,0 +1,244 @@
+﻿@model UpdateAboutMeViewModel
+
+@using Microsoft.Extensions.Options
+@using PortfolioApp.Core.Config
+@inject IOptions<FileApiSettings> fileSettings
+
+@{
+    ViewData["Title"] = "Hakkmda - Güncelle";
+    var fileApiUrl = fileSettings.Value.FileApiUrl;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Hakkımda</h5>
+                <small class="text-muted float-end">Güncelleme</small>
+            </div>
+            <div class="card-body">
+
+                <form asp-controller="AboutMe" asp-action="Update" method="post" enctype="multipart/form-data">
+
+                    @* @Html.AntiForgeryToken() *@
+
+                    <input type="hidden" asp-for="CvUrl" />
+
+                    <input type="hidden" asp-for="AboutMeImageUrl" />
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label mb-1">Tam İsim</label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span id="FullNameError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label asp-for="Introduction" class="form-label mb-1">Giriş</label>
+                        <textarea asp-for="Introduction" rows="6" class="form-control"></textarea>
+                        <span id="IntroductionError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Field" class="form-label mb-1">Alan</label>
+                        <input asp-for="Field" class="form-control" />
+                        <span id="FieldError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="LinkedInUrl" class="form-label mb-1">LinkedIn</label>
+                        <input asp-for="LinkedInUrl" class="form-control" />
+                        <span id="LinkenInUrlError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="GithubUrl" class="form-label mb-1">Github</label>
+                        <input asp-for="GithubUrl" class="form-control" />
+                        <span id="GithubUrlError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label mb-1">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span id="EmailError" class="text-danger"></span>
+                    </div>
+                    <div class="container">
+                        <div class="row mb-3">
+                            <div class="col-12 col-md-6 mb-3 d-flex justify-content-center">
+                                <div class="text-center">
+                                    <h4 class="mb-3">Mevcut Fotoğraf</h4>
+                                    <img src="@($"{fileApiUrl}/{Model.AboutMeImageUrl}")" class="img-fluid" alt="Mevcut Fotoğraf" style="max-width: 100%; max-height: 200px; object-fit: cover;">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-3 d-flex justify-content-center">
+                                <div class="text-center">
+                                    <h4 class="mb-3">CV</h4>
+                                    <img src="@($"{fileApiUrl}/{Model.CvUrl}")" class="img-fluid" alt="CV" style="max-width: 100%; max-height: 200px; object-fit: cover;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="AboutMeImage" class="form-label mb-1">Yeni Fotoğraf</label>
+                        <p style="font-size:14px;">İlk fotoğrafınızı değiştirmek istiyorsanız fotoğraf dosyası yükleyiniz.</p>
+
+                        <p style="font-size:12px;">**Yüklemezseniz fotoğrafınız aynı kalacaktır.</p>
+                        <input asp-for="AboutMeImage" class="form-control" type="file" accept="image/*">
+                        <span class="text-danger" id="AboutMeImageError"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CvFile" class="form-label mb-1">Yeni CV</label>
+                        <p style="font-size:14px;">İkinci fotoğrafınızı değiştirmek istiyorsanız fotoğraf dosyası yükleyiniz.</p>
+
+                        <p style="font-size:12px;">**Yüklemezseniz CV aynı kalacaktır.</p>
+                        <input asp-for="CvFile" class="form-control" type="file" accept=".pdf">
+                        <span class="text-danger" id="CvFileError"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+ @section Scripts {
+
+   <script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    
+    const inputs = {
+        FullName: document.querySelector("#FullName"),
+        Introduction: document.querySelector("#Introduction"),
+        Field: document.querySelector("#Field"),
+        LinkedInUrl: document.querySelector("#LinkedInUrl"),
+        GithubUrl: document.querySelector("#GithubUrl"),
+        Email: document.querySelector("#Email"),
+        AboutMeImage: document.querySelector("#AboutMeImage"),
+        CvFile: document.querySelector("#CvFile")
+    };
+
+    const errors = {
+        FullName: document.querySelector("#FullNameError"),
+        Introduction: document.querySelector("#IntroductionError"),
+        Field: document.querySelector("#FieldError"),
+        LinkedInUrl: document.querySelector("#LinkenInUrlError"),
+        GithubUrl: document.querySelector("#GithubUrlError"),
+        Email: document.querySelector("#EmailError"),
+        AboutMeImage: document.querySelector("#AboutMeImageError"),
+        CvFile: document.querySelector("#CvFileError")
+    };
+
+    function validateNotEmpty(value) {
+        return value.trim().length > 0;
+    }
+
+    function validateMaxLength(value, max) {
+        return value.length <= max;
+    }
+
+    function validateEmail(value) {
+                                        const emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        return emailPattern.test(value);
+    }
+
+    function validateUrl(value) {
+        return value.length <= 255;
+    }
+
+    function validateImageFile(file) {
+        if (!file) return true; // Boş bırakılabilir
+        const validExtensions = ["image/jpeg", "image/png", "image/gif"];
+        return validExtensions.includes(file.type);
+    }
+
+    function validatePdfFile(file) {
+        if (!file) return true; // Boş bırakılabilir
+        return file.type === "application/pdf";
+    }
+
+    function showError(input, message) {
+        errors[input].textContent = message;
+    }
+
+    function clearError(input) {
+        errors[input].textContent = "";
+    }
+
+    function validateInput(event) {
+        const { name, value, files } = event.target;
+
+        switch (name) {
+            case "FullName":
+                if (!validateNotEmpty(value)) showError(name, "Tam isim boş olamaz.");
+                else if (!validateMaxLength(value, 50)) showError(name, "Tam isim en fazla 50 karakter olmalıdır.");
+                else clearError(name);
+                break;
+
+            case "Introduction":
+                if (!validateNotEmpty(value)) showError(name, "Giriş kısmı boş olamaz.");
+                else if (!validateMaxLength(value, 100)) showError(name, "Giriş en fazla 100 karakter olmalıdır.");
+                else clearError(name);
+                break;
+
+            case "Field":
+                if (!validateNotEmpty(value)) showError(name, "Alan boş olamaz.");
+                else if (!validateMaxLength(value, 50)) showError(name, "Alan en fazla 50 karakter olmalıdır.");
+                else clearError(name);
+                break;
+
+            case "LinkedInUrl":
+            case "GithubUrl":
+                if (!validateNotEmpty(value)) showError(name, "Bu alan boş olamaz.");
+                else if (!validateUrl(value)) showError(name, "URL en fazla 255 karakter olmalıdır.");
+                else clearError(name);
+                break;
+
+            case "Email":
+                if (!validateNotEmpty(value)) showError(name, "Email boş olamaz.");
+                else if (!validateEmail(value)) showError(name, "Geçerli bir email giriniz.");
+                else clearError(name);
+                break;
+
+            case "AboutMeImage":
+                if (files.length > 0 && !validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, GIF).");
+                else clearError(name);
+                break;
+
+            case "CvFile":
+                if (files.length > 0 && !validatePdfFile(files[0])) showError(name, "CV yalnızca PDF formatında olmalıdır.");
+                else clearError(name);
+                break;
+        }
+    }
+
+    // Tüm inputlara canlı doğrulama ekle
+    Object.values(inputs).forEach(input => {
+        input.addEventListener("input", validateInput);
+        input.addEventListener("change", validateInput);
+    });
+
+    // Form gönderilmeden önce son kontrol
+    form.addEventListener("submit", function (event) {
+        let isValid = true;
+
+        Object.values(inputs).forEach(input => {
+            const event = new Event("input");
+            input.dispatchEvent(event);
+
+            if (errors[input.name].textContent !== "") {
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+});
+
+</script>
+
+}

@@ -6,4 +6,24 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\login\css\.DS_Store" />
+    <None Include="wwwroot\login\css\bootstrap\.DS_Store" />
+    <None Include="wwwroot\login\css\bootstrap\mixins\.DS_Store" />
+    <None Include="wwwroot\login\fonts\.DS_Store" />
+    <None Include="wwwroot\login\images\.DS_Store" />
+    <None Include="wwwroot\login\js\.DS_Store" />
+    <None Include="wwwroot\login\scss\.DS_Store" />
+    <None Include="wwwroot\login\scss\bootstrap\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PortfolioApp.Application\PortfolioApp.Application.csproj" />
+    <ProjectReference Include="..\PortfolioApp.Core\PortfolioApp.Core.csproj" />
+  </ItemGroup>
+
 </Project>

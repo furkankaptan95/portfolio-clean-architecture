@@ -5,6 +5,8 @@ namespace PortfolioApp.Core.Interfaces;
 public interface IAboutMeService
 {
     Task<ServiceResult> CreateAboutMeAsync(AddAboutMeApiDto dto);
+    Task<ServiceResult> CreateAboutMeAsync(AddAboutMeMvcDto dto);
     Task<ServiceResult<AboutMeDto>> GetAsync();
     Task<ServiceResult> UpdateAboutMeAsync(UpdateAboutMeApiDto dto);
+    Task<ServiceResult> UpdateAboutMeAsync(UpdateAboutMeMVCDto dto);
 }
