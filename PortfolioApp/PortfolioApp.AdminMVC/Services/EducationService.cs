@@ -1,4 +1,5 @@
 ﻿using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
@@ -28,9 +29,11 @@ public class EducationService : IEducationService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult<List<EducationDto>>> GetAllAsync()
+    public async Task<ServiceResult<List<EducationDto>>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync("education/all");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<List<EducationDto>>>();
     }
 
     public Task<ServiceResult<EducationDto>> GetByIdAsync(int id)

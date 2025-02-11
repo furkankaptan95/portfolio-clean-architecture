@@ -1,0 +1,125 @@
+﻿@model List<EducationViewModel>
+
+@{
+    ViewData["Title"] = "Eğitimler";
+}
+
+@if (Model.Count == 0)
+{
+    <h2 class="text-center my-4" style="font-weight: 600; color: #333;">Eğitimler</h2>
+
+    <div class="alert alert-info text-center mt-5 p-4" style="border-radius: 10px;">
+        <h4 class="font-weight-bold">Şu anda görüntülenecek bir Eğitim bilgisi bulunmuyor.</h4>
+        <p class="mb-4 text-muted">Yeni eğitim ekleyerek içeriği zenginleştirebilirsiniz.</p>
+        <a href="/Education/Create" class="btn btn-sm btn-primary">
+            <i class="fas fa-plus mr-2"></i>Eğitim Ekle
+        </a>
+    </div>
+}
+
+else
+{
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 class="text-start" style="font-weight: 600; color: #333;">Eğitimler</h2>
+        <a href="/Education/Create" class="btn btn-success">Eğitim Ekle</a>
+    </div>
+
+    <div class="table-responsive text-nowrap" style="padding-bottom:100px;">
+        <table class="table card-table">
+            <thead>
+                <tr>
+                    <th>Okul</th>
+                    <th>Derece</th>
+                    <th>Başlangıç Tarihi</th>
+                    <th>Bitiş Tarihi</th>
+                    <th>Görünürlük</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var education in Model)
+                {
+                    <tr>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@education.School</strong></td>
+                        <td>@education.Degree</td>
+                        <td>@education.StartDate.ToString("dd MMM yyyy")</td>
+                        @if (@education.EndDate is null)
+                        {
+                            <td>
+                                <span> Devam Ediyor </span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@education.EndDate?.ToString("dd MMM yyyy")</td>
+                        }
+                        <td>
+                            @if (education.IsVisible)
+                            {
+                                <span>Görünür ✅</span>
+                            }
+                            else
+                            {
+                                <span>Gizli ❌</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+
+                                    @if (education.IsVisible)
+                                    {
+                                        <a class="dropdown-item" href="/Education/Visibility/@education.Id">
+                                            <i class='bx bx-hide'></i>
+                                            Gizle
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+
+                                        <a class="dropdown-item" href="/Education/Visibility/@education.Id">
+                                            <i class='bx bx-show'></i>
+                                            Görünür Yap
+                                        </a>
+                                    }
+                                    <a class="dropdown-item" href="/Education/Update/@education.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal-@education.Id"><i class="bx bx-trash me-1"></i> Sil</a>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <!-- Silme Onay Modalı -->
+                    <div class="modal fade" id="deleteModal-@education.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-@education.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-@education.Id">Silme Onayı</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><b>@education.School</b> kurumundaki eğitimi silmek istediğinize emin misiniz?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="/Education/Delete/@education.Id" method="get">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                                        <button type="submit" class="btn btn-danger">Sil</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

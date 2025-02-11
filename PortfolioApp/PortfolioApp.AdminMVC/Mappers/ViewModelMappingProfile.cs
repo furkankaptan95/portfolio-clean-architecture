@@ -24,5 +24,6 @@ public class ViewModelMappingProfile : Profile
         CreateMap<UpdateBlogPostViewModel, UpdateBlogPostDto>();
 
         CreateMap<AddEducationViewModel, AddEducationDto>();
+        CreateMap<EducationDto, EducationViewModel>();
     }
 }

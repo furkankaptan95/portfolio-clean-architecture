@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.AdminMVC.Models.ViewModels.Education;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
@@ -36,5 +37,15 @@ public class EducationController : Controller
 
         ViewData["ErrorMessage"] = result.Message;
         return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> All()
+    {
+        var result = await _educationService.GetAllAsync();
+
+        var models = _mapper.Map<List<EducationViewModel>>(result.Data);
+
+        return View(models);
     }
 }
