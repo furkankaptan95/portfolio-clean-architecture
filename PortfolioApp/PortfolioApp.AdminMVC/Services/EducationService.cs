@@ -43,8 +43,10 @@ public class EducationService : IEducationService
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<EducationDto>>();
     }
 
-    public Task<ServiceResult> UpdateAsync(UpdateEducationDto dto)
+    public async Task<ServiceResult> UpdateAsync(UpdateEducationDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.PostAsJsonAsync("education/update", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 }

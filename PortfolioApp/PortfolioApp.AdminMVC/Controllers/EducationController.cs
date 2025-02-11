@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.AdminMVC.Models.ViewModels.Education;
+using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
@@ -69,5 +70,20 @@ public class EducationController : Controller
         var model = _mapper.Map<UpdateEducationViewModel>(result.Data);
 
         return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdateEducationViewModel model)
+    {
+        var dto = _mapper.Map<UpdateEducationDto>(model);
+
+        var result = await _educationService.UpdateAsync(dto);
+
+        if (!result.IsSuccess)
+            TempData["ErrorMessage"] = result.Message;
+        else
+            TempData["Message"] = result.Message;
+
+        return RedirectToAction(nameof(All));
     }
 }
