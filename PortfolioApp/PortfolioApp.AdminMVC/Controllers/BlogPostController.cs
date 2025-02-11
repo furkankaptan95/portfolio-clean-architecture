@@ -37,4 +37,14 @@ public class BlogPostController : Controller
         ViewData["ErrorMessage"] = result.Message;
         return View(model);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> All()
+    {
+        var result = await _blogPostService.GetAllAsync();
+
+        var models = _mapper.Map<List<BlogPostViewModel>>(result.Data);
+
+        return View(models);
+    }
 }

@@ -32,9 +32,11 @@ public class BlogPostService : IBlogPostService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult<List<BlogPostDto>>> GetAllAsync()
+    public async Task<ServiceResult<List<BlogPostDto>>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync("blogpost/all");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<List<BlogPostDto>>>();
     }
 
     public Task<ServiceResult<BlogPostDto>> GetByIdAsync(int id)
