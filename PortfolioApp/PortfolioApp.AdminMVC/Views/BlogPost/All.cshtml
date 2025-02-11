@@ -78,7 +78,7 @@ else
                                         </a>
                                     }
 
-                                    <a class="dropdown-item" href="/update-blog-post-@post.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+                                    <a class="dropdown-item" asp-action="Update" asp-controller="BlogPost" asp-route-id="@post.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
 
                                     <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal-@post.Id"><i class="bx bx-trash me-1"></i> Sil</a>
                                 </div>
