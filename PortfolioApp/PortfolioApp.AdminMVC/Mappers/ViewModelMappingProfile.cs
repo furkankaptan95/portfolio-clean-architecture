@@ -18,5 +18,6 @@ public class ViewModelMappingProfile : Profile
         CreateMap<AddBlogPostViewModel, AddBlogPostDto>();
         CreateMap<BlogPostDto, BlogPostViewModel>();
         CreateMap<BlogPostDto, UpdateBlogPostViewModel>();
+        CreateMap<UpdateBlogPostViewModel, UpdateBlogPostDto>();
     }
 }

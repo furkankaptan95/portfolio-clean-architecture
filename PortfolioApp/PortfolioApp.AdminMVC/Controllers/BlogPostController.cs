@@ -69,4 +69,19 @@ public class BlogPostController : Controller
 
         return View(model);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdateBlogPostViewModel model)
+    {
+        var dto = _mapper.Map<UpdateBlogPostDto>(model);
+
+        var result = await _blogPostService.UpdateAsync(dto);
+
+        if (!result.IsSuccess)
+            TempData["ErrorMessage"] = result.Message;
+        else
+            TempData["Message"] = result.Message;
+
+        return RedirectToAction(nameof(All));
+    }
 }

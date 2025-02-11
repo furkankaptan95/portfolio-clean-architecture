@@ -47,8 +47,10 @@ public class BlogPostService : IBlogPostService
 
     }
 
-    public Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)
+    public async Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.PostAsJsonAsync("blogpost/update", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 }
