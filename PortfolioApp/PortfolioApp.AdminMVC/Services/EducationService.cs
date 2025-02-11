@@ -36,9 +36,11 @@ public class EducationService : IEducationService
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<List<EducationDto>>>();
     }
 
-    public Task<ServiceResult<EducationDto>> GetByIdAsync(int id)
+    public async Task<ServiceResult<EducationDto>> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"education/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<EducationDto>>();
     }
 
     public Task<ServiceResult> UpdateAsync(UpdateEducationDto dto)

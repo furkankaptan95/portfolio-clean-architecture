@@ -1,0 +1,151 @@
+﻿@model UpdateEducationViewModel
+
+@{
+    ViewData["Title"] = "Eğitim - Güncelle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Eğitim</h5>
+                <small class="text-muted float-end">Güncelleme</small>
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Update" asp-controller="Education" method="post">
+
+                    @* @Html.AntiForgeryToken() *@
+
+                    <input asp-for="Id" type="hidden" />
+
+                    <div class="mb-3 mt-3">
+                        <label asp-for="School" class="form-label mb-1">Okul</label>
+                        <input asp-for="School" class="form-control" placeholder="Okul bilgisini buraya yazınız" />
+                        <span id="SchoolError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Degree" class="form-label mb-1">Derece</label>
+                        <input asp-for="Degree" class="form-control" placeholder="Derece bilgisini buraya yazınız" />
+                        <span id="DegreeError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="StartDate" class="form-label mb-1">Başlangıç Tarihi</label>
+                        <input asp-for="StartDate" class="form-control" type="datetime-local" />
+                        <span id="StartDateError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EndDate" class="form-label mb-1">Bitiş Tarihi</label>
+                        <input asp-for="EndDate" class="form-control" type="datetime-local" />
+                        <span id="EndDateError" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+
+            // Inputlar ve hata mesajları
+            const inputs = {
+                School: document.querySelector("#School"),
+                Degree: document.querySelector("#Degree"),
+                StartDate: document.querySelector("#StartDate"),
+                EndDate: document.querySelector("#EndDate")
+            };
+
+            const errors = {
+                School: document.querySelector("#SchoolError"),
+                Degree: document.querySelector("#DegreeError"),
+                StartDate: document.querySelector("#StartDateError"),
+                EndDate: document.querySelector("#EndDateError")
+            };
+
+            // Validasyon fonksiyonları
+            function validateNotEmpty(value) {
+                return value.trim().length > 0;
+            }
+
+            function validateMaxLength(value, max) {
+                return value.length <= max;
+            }
+
+            function validateDate(value) {
+                const currentDate = new Date();
+                const inputDate = new Date(value);
+                return inputDate < currentDate;
+            }
+
+            function showError(input, message) {
+                errors[input].textContent = message;
+            }
+
+            function clearError(input) {
+                errors[input].textContent = "";
+            }
+
+            function validateInput(event) {
+                const { name, value } = event.target;
+
+                switch (name) {
+                    case "School":
+                        if (!validateNotEmpty(value)) showError(name, "Okul bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 100)) showError(name, "Okul adı en fazla 100 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "Degree":
+                        if (!validateNotEmpty(value)) showError(name, "Derece bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 50)) showError(name, "Derece en fazla 50 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "StartDate":
+                        if (!validateNotEmpty(value)) showError(name, "Başlangıç tarihi gereklidir.");
+                        else if (!validateDate(value)) showError(name, "Başlangıç tarihi şu anki tarihten önce olmalı.");
+                        else clearError(name);
+                        break;
+
+                    case "EndDate":
+                        if (value && !validateDate(value)) showError(name, "Bitiş tarihi şu anki tarihten önce olmalı.");
+                        else clearError(name);
+                        break;
+                }
+            }
+
+            // Canlı validasyon için event ekleme
+            Object.values(inputs).forEach(input => {
+                input.addEventListener("input", validateInput);
+                input.addEventListener("blur", validateInput);
+            });
+
+            // Form gönderilmeden önce kontrol
+            form.addEventListener("submit", function (event) {
+                let isValid = true;
+
+                Object.values(inputs).forEach(input => {
+                    const event = new Event("input");
+                    input.dispatchEvent(event);
+
+                    if (errors[input.name].textContent !== "") {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault(); // Formun gönderilmesini engelle
+                }
+            });
+        });
+    </script>
+
+}
