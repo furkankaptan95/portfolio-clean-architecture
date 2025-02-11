@@ -7,11 +7,9 @@ namespace PortfolioApp.AdminMVC.Services;
 public class BlogPostService : IBlogPostService
 {
     private readonly IHttpClientFactory _factory;
-    private readonly IMapper _mapper;
-    public BlogPostService(IHttpClientFactory factory, IMapper mapper)
+    public BlogPostService(IHttpClientFactory factory)
     {
         _factory = factory;
-        _mapper = mapper;
     }
     private HttpClient DataApiClient => _factory.CreateClient("dataApi");
     public async Task<ServiceResult> AddBlogPostAsync(AddBlogPostDto dto)

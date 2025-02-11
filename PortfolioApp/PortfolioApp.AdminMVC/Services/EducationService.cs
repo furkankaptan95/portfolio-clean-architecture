@@ -5,9 +5,17 @@ using PortfolioApp.Core.Interfaces;
 namespace PortfolioApp.AdminMVC.Services;
 public class EducationService : IEducationService
 {
-    public Task<ServiceResult> AddAsync(AddEducationDto dto)
+    private readonly IHttpClientFactory _factory;
+    public EducationService(IHttpClientFactory factory)
     {
-        throw new NotImplementedException();
+        _factory = factory;
+    }
+    private HttpClient DataApiClient => _factory.CreateClient("dataApi");
+    public async Task<ServiceResult> AddAsync(AddEducationDto dto)
+    {
+        var apiResponse = await DataApiClient.PostAsJsonAsync("education/create", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public Task<ServiceResult> ChangeVisibilityAsync(int id)
