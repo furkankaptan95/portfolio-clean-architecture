@@ -1,32 +1,38 @@
-﻿@model AddEducationViewModel
+﻿@model AddExperienceViewModel
 
 @{
-    ViewData["Title"] = "Eğitim - Ekle";
+    ViewData["Title"] = "Deneyim - Ekle";
 }
 
 <div class="row justify-content-center">
     <div class="col-md-5">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Eğitim</h5>
+                <h5 class="mb-0">Deneyim</h5>
                 <small class="text-muted float-end">Ekleme</small>
             </div>
             <div class="card-body">
 
-                <form asp-action="Create" asp-controller="Education" method="post">
+                <form asp-action="Create" asp-controller="Experience" method="post">
 
                     @* @Html.AntiForgeryToken() *@
 
                     <div class="mb-3 mt-3">
-                        <label asp-for="School" class="form-label mb-1">Okul</label>
-                        <input asp-for="School" class="form-control" placeholder="Okul bilgisini buraya yazınız" />
-                        <span id="SchoolError" class="text-danger"></span>
+                        <label asp-for="Title" class="form-label mb-1">Başlık</label>
+                        <input asp-for="Title" class="form-control" placeholder="Başlık bilgisini buraya yazınız" />
+                        <span id="TitleError" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="Degree" class="form-label mb-1">Derece</label>
-                        <input asp-for="Degree" class="form-control" placeholder="Derece bilgisini buraya yazınız" />
-                        <span id="DegreeError" class="text-danger"></span>
+                        <label asp-for="Company" class="form-label mb-1">Firma</label>
+                        <input asp-for="Company" class="form-control" placeholder="Firma bilgisini buraya yazınız" />
+                        <span id="CompanyError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label mb-1">Açıklama</label>
+                        <textarea asp-for="Description" rows="4" class="form-control"></textarea>
+                        <span id="DescriptionError" class="text-danger" data-valmsg-replace="true"></span>
                     </div>
 
                     <div class="mb-3">
@@ -36,7 +42,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="EndDate" class="form-label mb-1">Bitiş Tarihi</label>
+                        <label asp-for="EndDate" class="form-label">Bitiş Tarihi</label>
                         <input asp-for="EndDate" class="form-control" type="datetime-local" />
                         <span id="EndDateError" class="text-danger"></span>
                     </div>
@@ -55,15 +61,17 @@
 
             // Inputlar ve hata mesajları
             const inputs = {
-                School: document.querySelector("#School"),
-                Degree: document.querySelector("#Degree"),
+                Title: document.querySelector("#Title"),
+                Company: document.querySelector("#Company"),
+                Description: document.querySelector("#Description"),
                 StartDate: document.querySelector("#StartDate"),
                 EndDate: document.querySelector("#EndDate")
             };
 
             const errors = {
-                School: document.querySelector("#SchoolError"),
-                Degree: document.querySelector("#DegreeError"),
+                Title: document.querySelector("#TitleError"),
+                Company: document.querySelector("#CompanyError"),
+                Description: document.querySelector("#DescriptionError"),
                 StartDate: document.querySelector("#StartDateError"),
                 EndDate: document.querySelector("#EndDateError")
             };
@@ -83,7 +91,7 @@
                 return inputDate < currentDate;
             }
 
-             function validateDateOrder(startDate, endDate) {
+            function validateDateOrder(startDate, endDate) {
                 return new Date(startDate) <= new Date(endDate);
             }
 
@@ -99,15 +107,20 @@
                 const { name, value } = event.target;
 
                 switch (name) {
-                    case "School":
-                        if (!validateNotEmpty(value)) showError(name, "Okul bilgisi gereklidir.");
-                        else if (!validateMaxLength(value, 100)) showError(name, "Okul adı en fazla 100 karakter olabilir.");
+                    case "Title":
+                        if (!validateNotEmpty(value)) showError(name, "Başlık bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 100)) showError(name, "Başlık en fazla 100 karakter olabilir.");
                         else clearError(name);
                         break;
 
-                    case "Degree":
-                        if (!validateNotEmpty(value)) showError(name, "Derece bilgisi gereklidir.");
-                        else if (!validateMaxLength(value, 50)) showError(name, "Derece en fazla 50 karakter olabilir.");
+                    case "Company":
+                        if (!validateNotEmpty(value)) showError(name, "Firma bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 100)) showError(name, "Firma en fazla 100 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "Description":
+                        if (!validateNotEmpty(value)) showError(name, "Açıklama gereklidir.");
                         else clearError(name);
                         break;
 
@@ -153,6 +166,7 @@
                 }
             });
         });
+
     </script>
 
 }
