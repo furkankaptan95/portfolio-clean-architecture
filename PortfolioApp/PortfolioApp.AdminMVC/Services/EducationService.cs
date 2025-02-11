@@ -26,9 +26,11 @@ public class EducationService : IEducationService
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
-    public Task<ServiceResult> DeleteAsync(int id)
+    public async Task<ServiceResult> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"education/delete/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public async Task<ServiceResult<List<EducationDto>>> GetAllAsync()
