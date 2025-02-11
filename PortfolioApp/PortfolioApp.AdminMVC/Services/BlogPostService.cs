@@ -22,9 +22,12 @@ public class BlogPostService : IBlogPostService
         
     }
 
-    public Task<ServiceResult> ChangeVisibilityAsync(int id)
+    public async Task<ServiceResult> ChangeVisibilityAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"blogpost/visibility/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
+
     }
 
     public Task<ServiceResult> DeleteAsync(int id)
