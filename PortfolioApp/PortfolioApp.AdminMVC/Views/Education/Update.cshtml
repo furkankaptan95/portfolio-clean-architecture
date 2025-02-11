@@ -85,10 +85,6 @@
                 return inputDate < currentDate;
             }
 
-            function validateDateOrder(startDate, endDate) {
-                return new Date(startDate) <= new Date(endDate);
-            }
-
             function showError(input, message) {
                 errors[input].textContent = message;
             }
@@ -120,13 +116,8 @@
                         break;
 
                     case "EndDate":
-                        if (value && !validateDate(value)) {
-                            showError(name, "Bitiş tarihi şu anki tarihten önce olmalı.");
-                        } else if (inputs.StartDate.value && value && !validateDateOrder(inputs.StartDate.value, value)) {
-                            showError(name, "Bitiş tarihi, başlangıç tarihinden önce olamaz.");
-                        } else {
-                            clearError(name);
-                        }
+                        if (value && !validateDate(value)) showError(name, "Bitiş tarihi şu anki tarihten önce olmalı.");
+                        else clearError(name);
                         break;
                 }
             }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.AdminMVC.Models.ViewModels.Education;
+using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
@@ -31,7 +33,7 @@ public class EducationController : Controller
         if (result.IsSuccess)
         {
             TempData["Message"] = result.Message;
-            return RedirectToAction(nameof(All));
+            return RedirectToAction(nameof(Create));
         }
 
         ViewData["ErrorMessage"] = result.Message;
