@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
 using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
+using PortfolioApp.AdminMVC.Models.ViewModels.Education;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
+using PortfolioApp.Core.DTOs.Admin.Education;
 
 namespace PortfolioApp.AdminMVC.Mappers;
 public class ViewModelMappingProfile : Profile
@@ -15,9 +17,15 @@ public class ViewModelMappingProfile : Profile
         CreateMap<AboutMeDto, UpdateAboutMeViewModel>();
         CreateMap<UpdateAboutMeViewModel, UpdateAboutMeMVCDto>();
         CreateMap<UpdateAboutMeMVCDto, UpdateAboutMeApiDto>();
+
         CreateMap<AddBlogPostViewModel, AddBlogPostDto>();
         CreateMap<BlogPostDto, BlogPostViewModel>();
         CreateMap<BlogPostDto, UpdateBlogPostViewModel>();
         CreateMap<UpdateBlogPostViewModel, UpdateBlogPostDto>();
+
+        CreateMap<AddEducationViewModel, AddEducationDto>();
+        CreateMap<EducationDto, EducationViewModel>();
+        CreateMap<EducationDto, UpdateEducationViewModel>();
+        CreateMap<UpdateEducationViewModel,UpdateEducationDto >();
     }
 }
