@@ -19,7 +19,9 @@ public class CommentService : ICommentService
 
     public async Task<ServiceResult> ApprovalAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"comment/approval/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public async Task<ServiceResult> DeleteAsync(int id)

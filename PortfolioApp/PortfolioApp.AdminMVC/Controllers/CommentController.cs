@@ -23,6 +23,25 @@ public class CommentController : Controller
         var models = _mapper.Map<List<CommentViewModel>>(result.Data);
 
         return View(models);
-                
+
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Approval([FromRoute] int id)
+    {
+        if (id < 1)
+        {
+            TempData["ErrorMessage"] = "Geçersiz ID";
+            return RedirectToAction(nameof(All));
+        }
+
+        var result = await _commentService.ApprovalAsync(id);
+
+        if (!result.IsSuccess)
+            TempData["ErrorMessage"] = result.Message;
+        else
+            TempData["Message"] = result.Message;
+
+        return RedirectToAction(nameof(All));
     }
 }
