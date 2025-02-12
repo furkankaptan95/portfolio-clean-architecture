@@ -39,6 +39,8 @@ public class ViewModelMappingProfile : Profile
 
         CreateMap<AddPersonalInfoViewModel, AddPersonalInfoDto>();
         CreateMap<PersonalInfoDto, PersonalInfoViewModel>();
+        CreateMap<PersonalInfoDto, UpdatePersonalInfoViewModel>();
+
 
     }
 }

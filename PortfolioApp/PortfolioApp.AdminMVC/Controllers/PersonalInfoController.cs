@@ -57,4 +57,20 @@ public class PersonalInfoController : Controller
 
         return View(model);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Update()
+    {
+        var result = await _personalInfoService.GetAsync();
+
+        if (!result.IsSuccess)
+        {
+            TempData["ErrorMessage"] = result.Message;
+            return RedirectToAction(nameof(Create));
+        }
+
+        var model = _mapper.Map<UpdatePersonalInfoViewModel>(result.Data);
+
+        return View(model);
+    }
 }

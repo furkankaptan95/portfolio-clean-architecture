@@ -1,0 +1,170 @@
+﻿@model UpdatePersonalInfoViewModel
+
+@{
+    ViewData["Title"] = "Kişisel Bilgiler - Güncelle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Kişisel Bilgiler</h5>
+                <small class="text-muted float-end">Güncelleme</small>
+            </div>
+            <div class="card-body">
+
+                <form action="/PersonalInfo/Update" method="post">
+
+                    @* @Html.AntiForgeryToken() *@
+
+                    <div class="mb-3 mt-3">
+                        <label asp-for="Name" class="form-label mb-1">İsim</label>
+                        <input asp-for="Name" class="form-control" placeholder="İsminiz" />
+                        <span id="NameError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Surname" class="form-label mb-1">Soyisim</label>
+                        <input asp-for="Surname" class="form-control" placeholder="Soyisminiz" />
+                        <span id="SurnameError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Adress" class="form-label mb-1">Adres</label>
+                        <input asp-for="Adress" class="form-control" placeholder="Adres bilgisi" />
+                        <span id="AdressError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="About" class="form-label mb-1">Hakkımda</label>
+                        <textarea asp-for="About" rows="8" class="form-control"></textarea>
+                        <span id="AboutError" class="text-danger" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="BirthDate" class="form-label mb-1">Doğum Tarihi</label>
+                        <input asp-for="BirthDate" class="form-control" type="datetime-local" />
+                        <span id="BirthDateError" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+
+            // Inputlar ve hata mesajları
+            const inputs = {
+                Name: document.querySelector("#Name"),
+                Surname: document.querySelector("#Surname"),
+                Adress: document.querySelector("#Adress"),
+                BirthDate: document.querySelector("#BirthDate"),
+                About: document.querySelector("#About")
+            };
+
+            const errors = {
+                Name: document.querySelector("#NameError"),
+                Surname: document.querySelector("#SurnameError"),
+                Adress: document.querySelector("#AdressError"),
+                BirthDate: document.querySelector("#BirthDateError"),
+                About: document.querySelector("#AboutError")
+            };
+
+            // Validasyon fonksiyonları
+            function validateNotEmpty(value) {
+                return value.trim().length > 0;
+            }
+
+            function validateMaxLength(value, max) {
+                return value.length <= max;
+            }
+
+            function validateDate(value) {
+                const currentDate = new Date();
+                const inputDate = new Date(value);
+                return inputDate < currentDate;
+            }
+
+            function validateDateOrder(startDate, endDate) {
+                return new Date(startDate) <= new Date(endDate);
+            }
+
+            function showError(input, message) {
+                errors[input].textContent = message;
+            }
+
+            function clearError(input) {
+                errors[input].textContent = "";
+            }
+
+            function validateInput(event) {
+                const { name, value } = event.target;
+
+                switch (name) {
+                    case "Name":
+                        if (!validateNotEmpty(value)) showError(name, "İsim bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 50)) showError(name, "İsim en fazla 50 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "Surname":
+                        if (!validateNotEmpty(value)) showError(name, "Soyisim bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 50)) showError(name, "Soyisim en fazla 50 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "Adress":
+                        if (!validateNotEmpty(value)) showError(name, "Adress gereklidir.");
+                        else if (!validateMaxLength(value, 50)) showError(name, "Adress en fazla 50 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "BirthDate":
+                        if (!validateNotEmpty(value)) showError(name, "Doğum tarihi gereklidir.");
+                        else if (!validateDate(value)) showError(name, "Doğum tarihi şu anki tarihten önce olmalı.");
+                        else clearError(name);
+                        break;
+
+                    case "About":
+                        if (!validateNotEmpty(value)) showError(name, "Hakkımda bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 300)) showError(name, "Hakkımda bilgisi en fazla 300 karakter olabilir.");
+                        else clearError(name);
+                        break;
+                }
+            }
+
+            // Canlı validasyon için event ekleme
+            Object.values(inputs).forEach(input => {
+                input.addEventListener("input", validateInput);
+                input.addEventListener("blur", validateInput);
+            });
+
+            // Form gönderilmeden önce kontrol
+            form.addEventListener("submit", function (event) {
+                let isValid = true;
+
+                Object.values(inputs).forEach(input => {
+                    const event = new Event("input");
+                    input.dispatchEvent(event);
+
+                    if (errors[input.name].textContent !== "") {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault(); // Formun gönderilmesini engelle
+                }
+            });
+        });
+
+    </script>
+
+}
