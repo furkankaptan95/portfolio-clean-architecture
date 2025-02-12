@@ -9,15 +9,17 @@ public class HomeService
     private readonly IEducationService _educationService;
     private readonly IExperienceService _experienceService;
     private readonly IProjectService _projectService;
+    IPersonalInfoService _personalInfoService;
 
     private readonly IMapper _mapper;
-    public HomeService(IMapper mapper, IAboutMeService aboutMeService, IEducationService educationService,IExperienceService experienceService, IProjectService projecService)
+    public HomeService(IMapper mapper, IAboutMeService aboutMeService, IEducationService educationService,IExperienceService experienceService, IProjectService projectService, IPersonalInfoService personalInfoService)
     {
         _aboutMeService = aboutMeService;
         _mapper = mapper;
         _educationService = educationService;
         _experienceService = experienceService;
-        _projectService = projecService;
+        _projectService = projectService;
+        _personalInfoService = personalInfoService;
     }
 
     public async Task<HomeIndexViewModel> GetHomeModel()
@@ -26,7 +28,7 @@ public class HomeService
 
         model.AboutMe = await AboutMe();
 
-        model.PersonalInfo = new PersonalInfoViewModel();
+        model.PersonalInfo = await PersonalInfo();
 
         model.Educations = await Educations();
 
@@ -41,6 +43,11 @@ public class HomeService
     {
        var result = await _aboutMeService.GetAsync();
        return _mapper.Map<AboutMeViewModel>(result.Data);
+    }
+    private async Task<PersonalInfoViewModel> PersonalInfo()
+    {
+        var result = await _personalInfoService.GetAsync();
+        return _mapper.Map<PersonalInfoViewModel>(result.Data);
     }
 
     private async Task<List<EducationViewModel>> Educations()

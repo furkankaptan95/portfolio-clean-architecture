@@ -4,6 +4,7 @@ using AutoMapper;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.Project;
+using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 
 namespace PortfolioApp.WebMVC.Mappers;
 public class ViewModelMappingProfile : Profile
@@ -14,6 +15,7 @@ public class ViewModelMappingProfile : Profile
         CreateMap<EducationDto, EducationViewModel>();
         CreateMap<ExperienceDto, ExperienceViewModel>();
         CreateMap<ProjectDto, ProjectViewModel>();
+        CreateMap<PersonalInfoDto, PersonalInfoViewModel>();
 
     }
     
