@@ -38,7 +38,9 @@ public class ExperienceService : IExperienceService
 
     public async Task<ServiceResult<ExperienceDto>> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"experience/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<ExperienceDto>>();
     }
 
     public async Task<ServiceResult> UpdateAsync(UpdateExperienceDto dto)

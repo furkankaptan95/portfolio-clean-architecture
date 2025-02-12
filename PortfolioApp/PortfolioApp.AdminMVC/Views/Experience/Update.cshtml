@@ -1,0 +1,174 @@
+﻿@model UpdateExperienceViewModel
+
+@{
+    ViewData["Title"] = "Deneyim - Güncelle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Deneyim</h5>
+                <small class="text-muted float-end">Güncelleme</small>
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Update" asp-controller="Experience" method="post">
+
+                    @* @Html.AntiForgeryToken() *@
+
+                    <input asp-for="Id" type="hidden" />
+
+                    <div class="mb-3 mt-3">
+                        <label asp-for="Title" class="form-label mb-1">Başlık</label>
+                        <input asp-for="Title" class="form-control" placeholder="Başlık bilgisini buraya yazınız" />
+                        <span id="TitleError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Company" class="form-label mb-1">Firma</label>
+                        <input asp-for="Company" class="form-control" placeholder="Firma bilgisini buraya yazınız" />
+                        <span id="CompanyError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label mb-1">Açıklama</label>
+                        <textarea asp-for="Description" rows="4" class="form-control"></textarea>
+                        <span id="DescriptionError" class="text-danger" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="StartDate" class="form-label mb-1">Başlangıç Tarihi</label>
+                        <input asp-for="StartDate" class="form-control" type="datetime-local" />
+                        <span id="StartDateError" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EndDate" class="form-label">Bitiş Tarihi</label>
+                        <input asp-for="EndDate" class="form-control" type="datetime-local" />
+                        <span id="EndDateError" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+
+            // Inputlar ve hata mesajları
+            const inputs = {
+                Title: document.querySelector("#Title"),
+                Company: document.querySelector("#Company"),
+                Description: document.querySelector("#Description"),
+                StartDate: document.querySelector("#StartDate"),
+                EndDate: document.querySelector("#EndDate")
+            };
+
+            const errors = {
+                Title: document.querySelector("#TitleError"),
+                Company: document.querySelector("#CompanyError"),
+                Description: document.querySelector("#DescriptionError"),
+                StartDate: document.querySelector("#StartDateError"),
+                EndDate: document.querySelector("#EndDateError")
+            };
+
+            // Validasyon fonksiyonları
+            function validateNotEmpty(value) {
+                return value.trim().length > 0;
+            }
+
+            function validateMaxLength(value, max) {
+                return value.length <= max;
+            }
+
+            function validateDate(value) {
+                const currentDate = new Date();
+                const inputDate = new Date(value);
+                return inputDate < currentDate;
+            }
+
+            function validateDateOrder(startDate, endDate) {
+                return new Date(startDate) <= new Date(endDate);
+            }
+
+            function showError(input, message) {
+                errors[input].textContent = message;
+            }
+
+            function clearError(input) {
+                errors[input].textContent = "";
+            }
+
+            function validateInput(event) {
+                const { name, value } = event.target;
+
+                switch (name) {
+                    case "Title":
+                        if (!validateNotEmpty(value)) showError(name, "Başlık bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 100)) showError(name, "Başlık en fazla 100 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "Company":
+                        if (!validateNotEmpty(value)) showError(name, "Firma bilgisi gereklidir.");
+                        else if (!validateMaxLength(value, 100)) showError(name, "Firma en fazla 100 karakter olabilir.");
+                        else clearError(name);
+                        break;
+
+                    case "Description":
+                        if (!validateNotEmpty(value)) showError(name, "Açıklama gereklidir.");
+                        else clearError(name);
+                        break;
+
+                    case "StartDate":
+                        if (!validateNotEmpty(value)) showError(name, "Başlangıç tarihi gereklidir.");
+                        else if (!validateDate(value)) showError(name, "Başlangıç tarihi şu anki tarihten önce olmalı.");
+                        else clearError(name);
+                        break;
+
+                    case "EndDate":
+                        if (value && !validateDate(value)) {
+                            showError(name, "Bitiş tarihi şu anki tarihten önce olmalı.");
+                        } else if (inputs.StartDate.value && value && !validateDateOrder(inputs.StartDate.value, value)) {
+                            showError(name, "Bitiş tarihi, başlangıç tarihinden önce olamaz.");
+                        } else {
+                            clearError(name);
+                        }
+                        break;
+                }
+            }
+
+            // Canlı validasyon için event ekleme
+            Object.values(inputs).forEach(input => {
+                input.addEventListener("input", validateInput);
+                input.addEventListener("blur", validateInput);
+            });
+
+            // Form gönderilmeden önce kontrol
+            form.addEventListener("submit", function (event) {
+                let isValid = true;
+
+                Object.values(inputs).forEach(input => {
+                    const event = new Event("input");
+                    input.dispatchEvent(event);
+
+                    if (errors[input.name].textContent !== "") {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault(); // Formun gönderilmesini engelle
+                }
+            });
+        });
+
+    </script>
+
+}

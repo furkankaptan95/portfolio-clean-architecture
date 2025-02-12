@@ -50,4 +50,25 @@ public class ExperienceController : Controller
         return View(models);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Update([FromRoute] int id)
+    {
+        if (id < 1)
+        {
+            TempData["ErrorMessage"] = "Geçersiz Blog Post ID'si.";
+            return RedirectToAction(nameof(All));
+        }
+
+        var result = await _experienceService.GetByIdAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            TempData["ErrorMessage"] = result.Message;
+            return RedirectToAction(nameof(All));
+        }
+
+        var model = _mapper.Map<UpdateExperienceViewModel>(result.Data);
+
+        return View(model);
+    }
 }
