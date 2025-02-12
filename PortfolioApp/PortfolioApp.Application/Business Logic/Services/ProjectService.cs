@@ -60,4 +60,9 @@ public class ProjectService : IProjectService
 
         return result;
     }
+
+    public Task<ServiceResult> UpdateAsync(UpdateProjectMVCDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }

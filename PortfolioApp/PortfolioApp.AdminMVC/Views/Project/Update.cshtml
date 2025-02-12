@@ -108,7 +108,7 @@
             }
 
             function validateImageFile(file) {
-                if (!file) return false;
+                if (!file) return true;
                 const validExtensions = ["image/jpeg", "image/png", "image/gif"];
                 return validExtensions.includes(file.type);
             }
@@ -137,8 +137,7 @@
                         break;
 
                     case "ImageFile":
-                        if (files.length === 0) showError(name, "Fotoğraf yüklenmelidir.");
-                        else if (!validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, GIF).");
+                        if (!validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, GIF).");
                         else clearError(name);
                         break;
                 }

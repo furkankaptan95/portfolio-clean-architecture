@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.BlogPost;
-using PortfolioApp.Core.DTOs.Admin.Experience;
+using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.DTOs.File;
 using PortfolioApp.Core.Interfaces;
@@ -68,5 +67,26 @@ public class ProjectService : IProjectService
     public async Task<ServiceResult> UpdateAsync(UpdateProjectApiDto dto)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<ServiceResult> UpdateAsync(UpdateProjectMVCDto dto)
+    {
+        var dataApiDto = _mapper.Map<UpdateProjectApiDto>(dto);
+
+        if (dto.ImageFile is not null)
+        {
+            var cvResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
+              {
+                 { new StreamContent(dto.ImageFile.OpenReadStream()), "file", dto.ImageFile.FileName }
+             });
+
+            var cvResult = await cvResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+
+            dataApiDto.ImageUrl = cvResult.Data.FileName;
+        }
+
+        var dataApiResponse = await DataApiClient.PostAsJsonAsync("project/update", dataApiDto);
+
+        return await dataApiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 }

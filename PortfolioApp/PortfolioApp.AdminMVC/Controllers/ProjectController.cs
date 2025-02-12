@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
 using PortfolioApp.AdminMVC.Models.ViewModels.Experience;
 using PortfolioApp.AdminMVC.Models.ViewModels.Project;
+using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.Interfaces;
 
@@ -69,5 +71,22 @@ public class ProjectController : Controller
         var model = _mapper.Map<UpdateProjectViewModel>(result.Data);
 
         return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdateProjectViewModel model)
+    {
+        var dto = _mapper.Map<UpdateProjectMVCDto>(model);
+
+        var result = await _projecService.UpdateAsync(dto);
+
+        if (result.IsSuccess)
+        {
+            TempData["Message"] = result.Message;
+            return RedirectToAction(nameof(All));
+        }
+
+        TempData["ErrorMessage"] = result.Message;
+        return Redirect("/");
     }
 }
