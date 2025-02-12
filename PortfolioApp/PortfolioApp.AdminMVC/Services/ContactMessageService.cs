@@ -1,5 +1,4 @@
 ﻿using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.Comment;
 using PortfolioApp.Core.DTOs.Admin.ContactMessage;
 using PortfolioApp.Core.DTOs.Web.ContactMessage;
 using PortfolioApp.Core.Interfaces;
@@ -27,11 +26,15 @@ public class ContactMessageService : IContactMessageService
 
     public async Task<ServiceResult<ContactMessageDto>> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"contactmessage/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<ContactMessageDto>>();
     }
 
     public async Task<ServiceResult> ReplyAsync(ReplyContactMessageDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.PostAsJsonAsync("contactmessage/reply", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 }

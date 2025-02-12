@@ -1,0 +1,165 @@
+﻿@model ContactMessageViewModel
+
+@{
+    ViewData["Title"] = "Mesaj-Yanıt";
+}
+
+<div class="container">
+    <div class="profile-card">
+        <h2 class="profile-title">Mesaj Bilgileri</h2>
+        <hr>
+        <div class="profile-detail mb-3">
+            <span class="profile-label">İsim: </span> @Model.Name
+        </div>
+        <div class="profile-detail mb-3">
+            <span class="profile-label">Email: </span> @Model.Email
+        </div>
+        <div class="profile-detail mb-3">
+            <span class="profile-label">Konu: </span> @Model.Subject
+        </div>
+        <div class="profile-detail mb-3">
+            <span class="profile-label">Tarih: </span> @Model.SentDate.ToString("dd MMMM yyyy HH:mm")
+        </div>
+        <div class="profile-detail mb-3">
+            <span class="profile-label">Mesaj İçeriği: </span>
+            <div class="message-content mt-3">
+                <p>@Model.Message</p>
+            </div>
+        </div>
+
+        <form action="/ContactMessage/Reply" method="post">
+
+           @*  @Html.AntiForgeryToken() *@
+
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="form-group">
+                <label for="Message" class="form-label">Yanıt</label>
+                <textarea id="Message" name="Message" rows="6" class="form-control" placeholder="Yanıtınızı buraya yazınız.."></textarea>
+                <span id="ReplyMessageError" class="text-danger"></span> <!-- Hata mesajı için boş bir span -->
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Yanıtı Gönder</button>
+        </form>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .message-content {
+            max-height: 250px; /* Yüksekliği sınırlandırmak için */
+            overflow-y: auto; /* Dikey kaydırma çubuğunu aktif eder */
+            padding: 10px; /* İçerik ile kenarlar arasında boşluk bırakır */
+            background-color: #f1f1f1; /* Arka plan rengi ekleyebiliriz */
+            border-radius: 10px; /* Kenarlara hafif yuvarlaklık verir */
+        }
+
+        .profile-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .profile-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .profile-detail {
+            font-size: 16px;
+            color: #495057;
+        }
+
+        .profile-label {
+            font-weight: bold;
+            color: #6c757d;
+        }
+
+        .btn {
+            font-size: 14px;
+        }
+
+        @@media (max-width: 576px) {
+            .profile-card {
+                padding: 15px;
+            }
+
+            .profile-title {
+                font-size: 20px;
+            }
+
+            .profile-detail {
+                font-size: 14px;
+            }
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+
+            // Inputlar ve hata mesajları
+            const inputs = {
+                Message: document.querySelector("#Message")
+            };
+
+            const errors = {
+                Message: document.querySelector("#ReplyMessageError")
+            };
+
+            // Validasyon fonksiyonları
+            function validateNotEmpty(value) {
+                return value.trim().length > 0;
+            }
+
+            function showError(input, message) {
+                errors[input].textContent = message;
+            }
+
+            function clearError(input) {
+                errors[input].textContent = "";
+            }
+
+            function validateInput(event) {
+                const { name, value } = event.target;
+
+                switch (name) {
+                    case "Message":
+                        if (!validateNotEmpty(value)) showError(name, "Yanıt boş olamaz.");
+                        else clearError(name);
+                        break;
+                }
+            }
+
+            // Canlı validasyon için event ekleme
+            Object.values(inputs).forEach(input => {
+                input.addEventListener("input", validateInput);
+                input.addEventListener("blur", validateInput);
+            });
+
+            // Form gönderilmeden önce kontrol
+            form.addEventListener("submit", function (event) {
+                let isValid = true;
+
+                Object.values(inputs).forEach(input => {
+                    const event = new Event("input");
+                    input.dispatchEvent(event);
+
+                    if (errors[input.name].textContent !== "") {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault(); // Formun gönderilmesini engelle
+                }
+            });
+        });
+    </script>
+}

@@ -37,6 +37,6 @@ public class GetContactMessageByIdHandler : IRequestHandler<GetContactMessageByI
             Name = entity.Name,
         };
 
-        return new ServiceResult<ContactMessageDto>(false, null , dto);
+        return new ServiceResult<ContactMessageDto>(true, null , dto);
     }
 }
