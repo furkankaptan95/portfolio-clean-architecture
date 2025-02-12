@@ -6,11 +6,13 @@ namespace PortfolioApp.WebMVC.Services;
 public class HomeService
 {
     private readonly IAboutMeService _aboutMeService;
+    private readonly IEducationService _educationService;
     private readonly IMapper _mapper;
-    public HomeService(IMapper mapper, IAboutMeService aboutMeService)
+    public HomeService(IMapper mapper, IAboutMeService aboutMeService, IEducationService educationService)
     {
         _aboutMeService = aboutMeService;
         _mapper = mapper;
+        _educationService = educationService;
     }
 
     public async Task<HomeIndexViewModel> GetHomeModel()
@@ -21,10 +23,7 @@ public class HomeService
 
         model.PersonalInfo = new PersonalInfoViewModel();
 
-        var educations = new List<EducationViewModel>();
-        var education = new EducationViewModel();
-        educations.Add(education);
-        model.Educations = educations;
+        model.Educations = await Educations();
 
         var projects = new List<ProjectViewModel>();
         var project = new ProjectViewModel();
@@ -43,5 +42,11 @@ public class HomeService
     {
        var result = await _aboutMeService.GetAsync();
        return _mapper.Map<AboutMeViewModel>(result.Data);
+    }
+
+    private async Task<List<EducationViewModel>> Educations()
+    {
+        var result = await _educationService.GetAllAsync();
+        return _mapper.Map<List<EducationViewModel>>(result.Data);
     }
 }
