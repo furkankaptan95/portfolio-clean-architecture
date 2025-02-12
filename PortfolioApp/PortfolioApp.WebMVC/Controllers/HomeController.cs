@@ -1,32 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.WebMVC.Models;
-using System.Diagnostics;
+using PortfolioApp.WebMVC.Services;
 
-namespace PortfolioApp.WebMVC.Controllers
+namespace PortfolioApp.WebMVC.Controllers;
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly HomeService _homeService;
+    public HomeController(HomeService homeService)
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        _homeService = homeService;
+    }
+    public async Task<IActionResult> Index()
+    {
+        var model = await _homeService.GetHomeModel();
+        
+        return View(model);
     }
 }

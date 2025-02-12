@@ -1,0 +1,13 @@
+﻿@model List<EducationViewModel>
+
+<h3 class="resume-title">Eğitim</h3>
+
+@foreach (var education in Model)
+{
+    <div class="resume-item">
+        <h4>@education.Degree</h4>
+        <h5>@education.StartDate.ToString("yyyy-MM") / @(education.EndDate?.ToString("yyyy-MM") ?? "Devam Ediyor")</h5>
+        <p><em>@education.School</em></p>
+    </div>
+
+}

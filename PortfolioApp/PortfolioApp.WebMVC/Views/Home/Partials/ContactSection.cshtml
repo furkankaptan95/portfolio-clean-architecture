@@ -1,0 +1,282 @@
+﻿@model AddContactMessageViewModel
+
+@using PortfolioApp.Core.Config
+@using Microsoft.Extensions.Options
+@inject IOptions<FileApiSettings> fileSettings
+
+@{
+    var imgUrl = ViewData["AboutMeImageUrl"];
+    var link = ViewData["Link"];
+    var email = ViewData["Email"];
+    var fileApiUrl = fileSettings.Value.FileApiUrl;
+}
+
+<section id="contact" class="contact section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>İletişim</h2>
+        <span class="inline-span-text">Mail adresim ve LinkedIn hesabım üzerinden veya aşağıdaki formu doldurarak benimle iletişime geçebilirsiniz!</span>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-sm-10 mb-4 d-flex align-items-center justify-content-center">
+                <div class="contact-box text-center">
+                    <a href="mailto:{@email}" style="color: inherit; text-decoration: none;">
+                        <i class="fas fa-envelope fa-2x mb-3"></i>
+                        <h4>Email</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-10 mb-4 d-flex align-items-center justify-content-center">
+                <div class="contact-box text-center">
+                    <a href="@link" style="color: inherit; text-decoration: none;">
+                        <i class="fab fa-linkedin fa-2x mb-3"></i>
+                        <h4>LinkedIn</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-5 d-flex align-items-stretch">
+                <div class="image-wrap w-100" data-aos="fade-up" data-aos-delay="200">
+                    <img src="@($"{fileApiUrl}/letter.png")" alt="Contact Image" class="img-fluid rounded shadow h-100">
+                </div>
+            </div>
+
+
+            <div class="col-lg-7">
+                <form class="bg-light p-4 p-md-5 contact-form" asp-controller="ContactMessage" asp-action="Add" method="post" data-aos="fade-up" data-aos-delay="200">
+
+                    @* @Html.AntiForgeryToken() *@
+
+                    <div class="row gy-4">
+
+                        <div class="col-md-6">
+                            <label asp-for="Name" class="control-label">İsim</label>
+                            <input asp-for="Name" class="form-control" placeholder="İsminiz" />
+                            <span asp-validation-for="Name" style="color:red;"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="control-label">Mail Adresi</label>
+                            <input asp-for="Email" class="form-control" placeholder="Mail Adresiniz" />
+                            <span asp-validation-for="Email" style="color:red;"></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label asp-for="Subject" class="control-label">Başlık</label>
+                            <input asp-for="Subject" class="form-control" placeholder="Mesaj Başlığı" />
+                            <span asp-validation-for="Subject" style="color:red;"></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label asp-for="Message" class="form-label">Mesaj</label>
+                            <textarea asp-for="Message" rows="7" class="form-control" placeholder="Mesajınız.."></textarea>
+                            <span asp-validation-for="Message" style="color:red;"></span>
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn py-3 px-4 btn-primary">Gönder</button>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- End Contact Form -->
+
+        </div>
+
+    </div>
+
+</section>
+
+<style>
+    /* Genel Form Stili */
+    .contact-form {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        width: 100%;
+    }
+
+    /* Bilgi paneli ve form arasındaki boşluk */
+    .contact .row.gy-4 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    /* Sol taraf (bilgi paneli) ve sağ taraf (form) genişliği */
+    .contact .col-lg-5 {
+        flex: 0 0 35%; /* Sol tarafta 5/12'lik alan */
+        max-width: 35%;
+    }
+
+    .contact .col-lg-7 {
+        flex: 0 0 58%; /* Sağ tarafta 7/12'lik alan */
+        max-width: 58%;
+    }
+
+    /* Etiket Stili */
+    .contact-form label {
+        font-weight: bold;
+        color: #333333;
+        margin-bottom: 5px;
+    }
+
+    /* Input ve Textarea Stili */
+    .contact-form .form-control {
+        border: 2px solid #cccccc;
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 16px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Input ve Textarea Hover ve Focus Efektleri */
+    .contact-form .form-control:focus {
+        border-color: #4A90E2;
+        box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+        outline: none;
+    }
+
+    /* Hata Mesajı Stili */
+    .contact-form span {
+        font-size: 14px;
+        display: block;
+        margin-top: 5px;
+        color: red;
+    }
+
+    /* Button Stili */
+    .contact-form button {
+        background-color: #4A90E2;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    /* Button Hover Efekti */
+    .contact-form button:hover {
+        background-color: #357ABD;
+        cursor: pointer;
+    }
+
+    /* Harita Stili */
+    iframe {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    /* Küçük ekranlar için düzenleme */
+    @@media (max-width: 991px) {
+        .contact .col-lg-5,
+        .contact .col-lg-7 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    .image-wrap img {
+        object-fit: cover; /* Görselin taşmasını önler ve alanı doldurur */
+        width: 100%; /* Görsel genişliği, alan genişliği ile eşleşir */
+        height: 100%; /* Görsel yüksekliği, alan yüksekliği ile eşleşir */
+    }
+</style>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('form').submit(function (e) {
+            let isValid = true;
+
+            // İsim kontrolü
+            let name = $('input[name="Name"]').val();
+            let nameTrim = $('input[name="Name"]').val().trim();
+            if (nameTrim === "") {
+                showError('Name', 'İsim kısmı zorunludur.');
+                isValid = false;
+            } else if (name.length > 50) {
+                showError('Name', 'İsim en fazla 50 karakter olabilir.');
+                isValid = false;
+            } else {
+                clearError('Name');
+            }
+
+            // Email kontrolü
+            let emailTrim = $('input[name="Email"]').val().trim();
+            if (emailTrim === "") {
+                showError('Email', 'Email kısmı zorunludur.');
+                isValid = false;
+            } else if (!/\S+@@\S+\.\S+/.test(emailTrim)) {
+                showError('Email', 'Geçerli bir email adresi giriniz.');
+                isValid = false;
+            } else if (emailTrim.length > 100) {
+                showError('Email', 'Email en fazla 100 karakter olabilir.');
+                isValid = false;
+            } else {
+                clearError('Email');
+            }
+
+            // Başlık kontrolü
+            let subject = $('input[name="Subject"]').val();
+            let subjectTrim = $('input[name="Subject"]').val().trim();
+            if (subject.length > 100) {
+                showError('Subject', 'Konu en fazla 100 karakter olabilir.');
+                isValid = false;
+            } else if (subject && subjectTrim === "") {
+                showError('Subject', 'Konu sadece boşluk olamaz.');
+                isValid = false;
+            } else {
+                clearError('Subject');
+            }
+
+            // Mesaj kontrolü
+            let message = $('textarea[name="Message"]').val();
+            let messageTrim = $('textarea[name="Message"]').val().trim();
+            if (messageTrim === "") {
+                showError('Message', 'Mesaj kısmı zorunludur.');
+                isValid = false;
+            } else {
+                clearError('Message');
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Formu göndermeyi durdur
+            }
+        });
+
+        // Hata gösterme fonksiyonu
+        function showError(inputName, errorMessage) {
+            let input = $('input[name="' + inputName + '"], textarea[name="' + inputName + '"]');
+            input.next('span').text(errorMessage).css('color', 'red');
+        }
+
+        // Hata temizleme fonksiyonu
+        function clearError(inputName) {
+            let input = $('input[name="' + inputName + '"], textarea[name="' + inputName + '"]');
+            input.next('span').text('');
+        }
+    });
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Gerekli CSS (FontAwesome gibi iconlar için) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
