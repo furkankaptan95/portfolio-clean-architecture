@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
 using PortfolioApp.AdminMVC.Models.ViewModels.PersonalInfo;
-using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 using PortfolioApp.Core.Interfaces;
 

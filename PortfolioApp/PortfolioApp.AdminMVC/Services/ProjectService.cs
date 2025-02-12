@@ -42,7 +42,9 @@ public class ProjectService : IProjectService
 
     public async Task<ServiceResult> ChangeVisibilityAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"project/visibility/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public async Task<ServiceResult> DeleteAsync(int id)
