@@ -22,6 +22,8 @@ builder.Services.AddHttpClient("dataApi", c =>
 
 builder.Services.AddScoped<IAboutMeService, AboutMeService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
+builder.Services.AddScoped<IExperienceService, ExperienceService>();
+
 builder.Services.AddScoped<HomeService>();
 
 builder.Services.AddAutoMapper(typeof(ViewModelMappingProfile));
