@@ -106,4 +106,23 @@ public class ExperienceController : Controller
 
         return RedirectToAction(nameof(All));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        if (id < 1)
+        {
+            TempData["ErrorMessage"] = "Geçersiz Blog Post ID'si.";
+            return RedirectToAction(nameof(All));
+        }
+
+        var result = await _experienceService.DeleteAsync(id);
+
+        if (!result.IsSuccess)
+            TempData["ErrorMessage"] = result.Message;
+        else
+            TempData["Message"] = result.Message;
+
+        return RedirectToAction(nameof(All));
+    }
 }

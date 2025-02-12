@@ -28,7 +28,9 @@ public class ExperienceService : IExperienceService
 
     public async Task<ServiceResult> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"experience/delete/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public async Task<ServiceResult<List<ExperienceDto>>> GetAllAsync()
