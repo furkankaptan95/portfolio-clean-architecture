@@ -1,5 +1,5 @@
 ﻿namespace PortfolioApp.Core.DTOs.Admin.Project;
-public class AddProjectDto
+public class AddApiProjectDto
 {
     public string Title { get; set; }
     public string Description { get; set; }

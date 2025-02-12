@@ -1,0 +1,172 @@
+﻿@model UpdateProjectViewModel
+
+@using Microsoft.Extensions.Options
+@using PortfolioApp.Core.Config
+@inject IOptions<FileApiSettings> fileSettings
+
+@{
+    var fileApiUrl = fileSettings.Value.FileApiUrl;
+    ViewData["Title"] = "Proje - Düzenle";
+}
+
+<div class="container">
+    <div class="form-container">
+        <div class="form-title">Projeyi Güncelle</div>
+        <form action="/Project/Update" method="post" enctype="multipart/form-data">
+
+           @*  @Html.AntiForgeryToken() *@
+
+            <input type="hidden" asp-for="Id" />
+
+            <input type="hidden" asp-for="ImageUrl" />
+
+            <div class="mb-3 mt-3">
+                <label asp-for="Title" class="form-label mb-1">Başlık</label>
+                <input asp-for="Title" class="form-control" placeholder="Başlığı buraya yazınız" />
+                <span id="TitleError" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label mb-1">Açıklama</label>
+                <textarea asp-for="Description" rows="7" class="form-control"></textarea>
+                <span id="DescriptionError" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <h4 class="mb-3">Mevcut Fotoğraf</h4>
+                <img src="@($"{fileApiUrl}/{Model.ImageUrl}")" alt="@Model.Title" class="img-thumbnail" style="max-width: 200px; height: auto;">
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ImageFile" class="form-label mb-1">Yeni Fotoğraf</label>
+                <p>Fotoğrafı değiştirmek istiyorsanız yeni fotoğraf yükleyiniz.</p>
+                <p>** Yeni fotoğraf yüklemezseniz fotoğraf aynı kalacaktır.</p>
+                <input asp-for="ImageFile" class="form-control" type="file" accept="image/*">
+                <span id="ImageFileError" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-custom mt-2">Güncelle</button>
+        </form>
+
+
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 25px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+            }
+
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+
+            const inputs = {
+                Title: document.querySelector("#Title"),
+                Description: document.querySelector("#Description"),
+                ImageFile: document.querySelector("#ImageFile")
+            };
+
+            const errors = {
+                Title: document.querySelector("#TitleError"),
+                Description: document.querySelector("#DescriptionError"),
+                ImageFile: document.querySelector("#ImageFileError")
+            };
+
+            function validateNotEmpty(value) {
+                return value.trim().length > 0;
+            }
+
+            function validateMaxLength(value, max) {
+                return value.length <= max;
+            }
+
+            function validateImageFile(file) {
+                if (!file) return true;
+                const validExtensions = ["image/jpeg", "image/png", "image/gif"];
+                return validExtensions.includes(file.type);
+            }
+
+            function showError(input, message) {
+                errors[input].textContent = message;
+            }
+
+            function clearError(input) {
+                errors[input].textContent = "";
+            }
+
+            function validateInput(event) {
+                const { name, value, files } = event.target;
+
+                switch (name) {
+                    case "Title":
+                        if (!validateNotEmpty(value)) showError(name, "Başlık boş olamaz.");
+                        else if (!validateMaxLength(value, 100)) showError(name, "Başlık en fazla 100 karakter olmalıdır.");
+                        else clearError(name);
+                        break;
+
+                    case "Description":
+                        if (!validateNotEmpty(value)) showError(name, "Açıklama kısmı boş olamaz.");
+                        else clearError(name);
+                        break;
+
+                    case "ImageFile":
+                        if (!validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, GIF).");
+                        else clearError(name);
+                        break;
+                }
+            }
+
+            // Tüm inputlara canlı doğrulama ekle
+            Object.values(inputs).forEach(input => {
+                input.addEventListener("input", validateInput);
+                input.addEventListener("change", validateInput);
+            });
+
+            // Form gönderilmeden önce son kontrol
+            form.addEventListener("submit", function (event) {
+                let isValid = true;
+
+                Object.values(inputs).forEach(input => {
+                    const event = new Event("input");
+                    input.dispatchEvent(event);
+
+                    if (errors[input.name].textContent !== "") {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+
+}

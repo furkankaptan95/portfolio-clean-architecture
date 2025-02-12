@@ -5,8 +5,8 @@ using PortfolioApp.Core.DTOs.Admin.Project;
 namespace PortfolioApp.Application.Use_Cases.Project.Commands;
 public class CreateProjectCommand : IRequest<ServiceResult>
 {
-    public AddProjectDto Project { get; set; }
-    public CreateProjectCommand(AddProjectDto project)
+    public AddApiProjectDto Project { get; set; }
+    public CreateProjectCommand(AddApiProjectDto project)
     {
         Project = project;
     }

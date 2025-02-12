@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.AdminMVC.Models.ViewModels.Experience;
-using PortfolioApp.Core.DTOs.Admin.Experience;
+using PortfolioApp.AdminMVC.Models.ViewModels.Project;
+using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.AdminMVC.Controllers;
-public class ExperienceController : Controller
+public class ProjectController : Controller
 {
-    private readonly IExperienceService _experienceService;
+    private readonly IProjectService _projecService;
     private readonly IMapper _mapper;
-    public ExperienceController(IMapper mapper, IExperienceService experienceService)
+    public ProjectController(IMapper mapper, IProjectService projecService)
     {
-        _experienceService = experienceService;
+        _projecService = projecService;
         _mapper = mapper;
     }
 
@@ -22,11 +22,11 @@ public class ExperienceController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] AddExperienceViewModel model)
+    public async Task<IActionResult> Create([FromForm] AddProjectViewModel model)
     {
-        var dto = _mapper.Map<AddExperienceDto>(model);
+        var dto = _mapper.Map<AddMvcProjectDto>(model);
 
-        var result = await _experienceService.AddAsync(dto);
+        var result = await _projecService.AddAsync(dto);
 
         if (result.IsSuccess)
         {
@@ -41,9 +41,9 @@ public class ExperienceController : Controller
     [HttpGet]
     public async Task<IActionResult> All()
     {
-        var result = await _experienceService.GetAllAsync();
+        var result = await _projecService.GetAllAsync();
 
-        var models = _mapper.Map<List<ExperienceViewModel>>(result.Data);
+        var models = _mapper.Map<List<ProjectViewModel>>(result.Data);
 
         return View(models);
     }
@@ -57,7 +57,7 @@ public class ExperienceController : Controller
             return RedirectToAction(nameof(All));
         }
 
-        var result = await _experienceService.GetByIdAsync(id);
+        var result = await _projecService.GetByIdAsync(id);
 
         if (!result.IsSuccess)
         {
@@ -65,24 +65,26 @@ public class ExperienceController : Controller
             return RedirectToAction(nameof(All));
         }
 
-        var model = _mapper.Map<UpdateExperienceViewModel>(result.Data);
+        var model = _mapper.Map<UpdateProjectViewModel>(result.Data);
 
         return View(model);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Update([FromForm] UpdateExperienceViewModel model)
+    public async Task<IActionResult> Update([FromForm] UpdateProjectViewModel model)
     {
-        var dto = _mapper.Map<UpdateExperienceDto>(model);
+        var dto = _mapper.Map<UpdateProjectMVCDto>(model);
 
-        var result = await _experienceService.UpdateAsync(dto);
+        var result = await _projecService.UpdateAsync(dto);
 
-        if (!result.IsSuccess)
-            TempData["ErrorMessage"] = result.Message;
-        else
+        if (result.IsSuccess)
+        {
             TempData["Message"] = result.Message;
+            return RedirectToAction(nameof(All));
+        }
 
-        return RedirectToAction(nameof(All));
+        TempData["ErrorMessage"] = result.Message;
+        return Redirect("/");
     }
 
     [HttpGet]
@@ -94,7 +96,7 @@ public class ExperienceController : Controller
             return RedirectToAction(nameof(All));
         }
 
-        var result = await _experienceService.ChangeVisibilityAsync(id);
+        var result = await _projecService.ChangeVisibilityAsync(id);
 
         if (!result.IsSuccess)
             TempData["ErrorMessage"] = result.Message;
@@ -113,7 +115,7 @@ public class ExperienceController : Controller
             return RedirectToAction(nameof(All));
         }
 
-        var result = await _experienceService.DeleteAsync(id);
+        var result = await _projecService.DeleteAsync(id);
 
         if (!result.IsSuccess)
             TempData["ErrorMessage"] = result.Message;

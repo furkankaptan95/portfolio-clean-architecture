@@ -17,7 +17,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> Create([FromBody] AddProjectDto dto)
+    public async Task<IActionResult> Create([FromBody] AddApiProjectDto dto)
     {
         var result = await _projectService.AddAsync(dto);
 
