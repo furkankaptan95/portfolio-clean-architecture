@@ -5,6 +5,7 @@ using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
+using PortfolioApp.Core.DTOs.Web.ContactMessage;
 
 namespace PortfolioApp.WebMVC.Mappers;
 public class ViewModelMappingProfile : Profile
@@ -16,6 +17,7 @@ public class ViewModelMappingProfile : Profile
         CreateMap<ExperienceDto, ExperienceViewModel>();
         CreateMap<ProjectDto, ProjectViewModel>();
         CreateMap<PersonalInfoDto, PersonalInfoViewModel>();
+        CreateMap<AddContactMessageViewModel, AddContactMessageDto>();
 
     }
     
