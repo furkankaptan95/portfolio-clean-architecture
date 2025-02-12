@@ -1,18 +1,24 @@
-﻿@model AddProjectViewModel
+﻿@model UpdateProjectViewModel
+
+@using Microsoft.Extensions.Options
+@using PortfolioApp.Core.Config
+@inject IOptions<FileApiSettings> fileSettings
 
 @{
-    ViewData["Title"] = "Proje - Ekle";
+    var fileApiUrl = fileSettings.Value.FileApiUrl;
+    ViewData["Title"] = "Proje - Düzenle";
 }
 
 <div class="container">
     <div class="form-container">
-        <div class="form-title">Proje Ekle</div>
+        <div class="form-title">Projeyi Güncelle</div>
+        <form action="/Project/Update" method="post" enctype="multipart/form-data">
 
-        <form action="/Project/Create" method="post" enctype="multipart/form-data">
+           @*  @Html.AntiForgeryToken() *@
 
-            @* @Html.AntiForgeryToken() *@
+            <input type="hidden" asp-for="Id" />
 
-            <div id="validationSummary" class="text-danger"></div>
+            <input type="hidden" asp-for="ImageUrl" />
 
             <div class="mb-3 mt-3">
                 <label asp-for="Title" class="form-label mb-1">Başlık</label>
@@ -27,13 +33,21 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="ImageFile" class="form-label mb-1">Fotoğraf</label>
+                <h4 class="mb-3">Mevcut Fotoğraf</h4>
+                <img src="@($"{fileApiUrl}/{Model.ImageUrl}")" alt="@Model.Title" class="img-thumbnail" style="max-width: 200px; height: auto;">
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ImageFile" class="form-label mb-1">Yeni Fotoğraf</label>
+                <p>Fotoğrafı değiştirmek istiyorsanız yeni fotoğraf yükleyiniz.</p>
+                <p>** Yeni fotoğraf yüklemezseniz fotoğraf aynı kalacaktır.</p>
                 <input asp-for="ImageFile" class="form-control" type="file" accept="image/*">
                 <span id="ImageFileError" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-custom mt-2">Ekle</button>
+            <button type="submit" class="btn btn-custom mt-2">Güncelle</button>
         </form>
+
 
     </div>
 </div>
@@ -42,7 +56,7 @@
     <style>
         .form-container {
             max-width: 600px;
-            margin: 35px auto;
+            margin: 25px auto;
             padding: 20px;
             background-color: #f9f9f9;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -64,6 +78,7 @@
             .btn-custom:hover {
                 background-color: #0056b3;
             }
+
     </style>
 }
 

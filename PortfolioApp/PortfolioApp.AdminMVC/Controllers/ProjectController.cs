@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.AdminMVC.Models.ViewModels.Experience;
 using PortfolioApp.AdminMVC.Models.ViewModels.Project;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.Interfaces;
@@ -46,5 +47,27 @@ public class ProjectController : Controller
         var models = _mapper.Map<List<ProjectViewModel>>(result.Data);
 
         return View(models);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Update([FromRoute] int id)
+    {
+        if (id < 1)
+        {
+            TempData["ErrorMessage"] = "Geçersiz Blog Post ID'si.";
+            return RedirectToAction(nameof(All));
+        }
+
+        var result = await _projecService.GetByIdAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            TempData["ErrorMessage"] = result.Message;
+            return RedirectToAction(nameof(All));
+        }
+
+        var model = _mapper.Map<UpdateProjectViewModel>(result.Data);
+
+        return View(model);
     }
 }
