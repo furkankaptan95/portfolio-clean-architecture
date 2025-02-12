@@ -1,0 +1,150 @@
+﻿@model List<ExperienceViewModel>
+
+@{
+    ViewData["Title"] = "Deneyimler";
+}
+
+@if (Model.Count == 0)
+{
+    <h2 class="text-center my-4" style="font-weight: 600; color: #333;">Deneyimler</h2>
+
+    <div class="alert alert-info text-center mt-5 p-4" style="border-radius: 10px;">
+        <h4 class="font-weight-bold">Şu anda görüntülenecek bir Deneyim bilgisi bulunmuyor.</h4>
+        <p class="mb-4 text-muted">Yeni deneyim ekleyerek içeriği zenginleştirebilirsiniz.</p>
+        <a href="/Experience/Create" class="btn btn-sm btn-primary">
+            <i class="fas fa-plus mr-2"></i>Deneyim Ekle
+        </a>
+    </div>
+}
+
+else
+{
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 class="text-start" style="font-weight: 600; color: #333;">Deneyimler</h2>
+        <a href="/Experience/Create" class="btn btn-success">Deneyim Ekle</a>
+    </div>
+
+    <div class="table-responsive text-nowrap" style="padding-bottom:100px;">
+        <table class="table card-table">
+            <thead>
+                <tr>
+                    <th>Başlık</th>
+                    <th>Firma</th>
+                    <th>Başlangıç Tarihi</th>
+                    <th>Bitiş Tarihi</th>
+                    <th>Açıklama</th>
+                    <th>Görünürlük</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var experience in Model)
+                {
+                    <tr>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@experience.Title</strong></td>
+                        <td>@experience.Company</td>
+                        <td>@experience.StartDate.ToString("dd MMM yyyy")</td>
+                        @if (experience.EndDate is null)
+                        {
+                            <td>
+                                <span> Aktif </span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@experience.EndDate?.ToString("dd MMM yyyy")</td>
+                        }
+
+                        <td>
+                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modal-@experience.Id" aria-haspopup="true" aria-expanded="false">Açıklamayı Görüntüle</button>
+                        </td>
+
+                        <td>
+                            @if (experience.IsVisible)
+                            {
+                                <span>Görünür ✅</span>
+                            }
+                            else
+                            {
+                                <span>Gizli ❌</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+
+                                    @if (experience.IsVisible)
+                                    {
+                                        <a class="dropdown-item" href="/Experience/Visibility/@experience.Id">
+                                            <i class='bx bx-hide'></i>
+                                            Gizle
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+
+                                        <a class="dropdown-item" href="/Experience/Visibility/@experience.Id">
+                                            <i class='bx bx-show'></i>
+                                            Görünür Yap
+                                        </a>
+                                    }
+
+                                    <a class="dropdown-item" href="/Experience/Update/@experience.Id"><i class="bx bx-edit-alt me-1"></i> Düzenle</a>
+
+                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal-@experience.Id"><i class="bx bx-trash me-1"></i> Sil</a>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <div class="modal fade" id="modal-@experience.Id" tabindex="-1" role="dialog" aria-labelledby="modalLabel-@experience.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel-@experience.Id">@experience.Title</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>@experience.Description</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Silme Onay Modalı -->
+                    <div class="modal fade" id="deleteModal-@experience.Id" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-@experience.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-@experience.Id">Silme Onayı</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><b>@experience.Title</b> başlıklı tecrübeyi silmek istediğinize emin misiniz?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="/Experience/Delete/@experience.Id" method="get">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                                        <button type="submit" class="btn btn-danger">Sil</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </tbody>
+        </table>
+    </div>
+}

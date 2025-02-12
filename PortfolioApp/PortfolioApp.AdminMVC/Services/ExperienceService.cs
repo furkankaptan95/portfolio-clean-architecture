@@ -1,4 +1,5 @@
 ﻿using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.Interfaces;
 
@@ -30,7 +31,9 @@ public class ExperienceService : IExperienceService
 
     public async Task<ServiceResult<List<ExperienceDto>>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync("experience/all");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<List<ExperienceDto>>>();
     }
 
     public async Task<ServiceResult<ExperienceDto>> GetByIdAsync(int id)

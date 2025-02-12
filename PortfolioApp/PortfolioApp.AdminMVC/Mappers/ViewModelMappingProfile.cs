@@ -31,5 +31,6 @@ public class ViewModelMappingProfile : Profile
         CreateMap<UpdateEducationViewModel,UpdateEducationDto >();
 
         CreateMap<AddExperienceViewModel, AddExperienceDto>();
+        CreateMap<ExperienceDto, ExperienceViewModel>();
     }
 }
