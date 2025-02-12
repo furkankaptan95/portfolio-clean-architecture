@@ -5,14 +5,16 @@
 
 @{
     var fileApiUrl = fileSettings.Value.FileApiUrl;
+    var fullName = ViewData["FullName"];
+    var field = ViewData["Field"];
 }
 <section id="hero" class="hero section dark-background">
 
-    <img src="@($"{fileApiUrl}/back.jpg")" alt="" data-aos="fade-in" class="">
+    <img src="@($"{fileApiUrl}/hero.jpg")" alt="" data-aos="fade-in" class="">
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Furkan Kaptan</h2>
-        <p><span class="typed" data-typed-items="Yazılımcı"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+        <h2>@fullName</h2>
+        <p><span class="typed" data-typed-items="@field"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
     </div>
 
 </section>

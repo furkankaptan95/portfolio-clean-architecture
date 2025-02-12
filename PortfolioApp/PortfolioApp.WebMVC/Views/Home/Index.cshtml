@@ -1,6 +1,12 @@
 ﻿@model HomeIndexViewModel
 
 @{
+    ViewData["Link"] = Model.AboutMe.LinkedInUrl;
+    ViewData["FullName"] = Model.AboutMe.FullName;
+    ViewData["Field"] = Model.AboutMe.Field;
+}
+
+@{
     if (TempData["SuccessMessage"] is not null)
     {
         <div class="alert custom-alert-success mt-5">

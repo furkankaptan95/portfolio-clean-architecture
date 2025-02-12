@@ -6,7 +6,6 @@
 
 @{
     var fileApiUrl = fileSettings.Value.FileApiUrl;
-    var link = ViewData["Link"];
 }
 
 <header id="header" class="header dark-background d-flex flex-column">
@@ -22,19 +21,19 @@
 
     <div class="social-links text-center">
         <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-        <a href="https://github.com/furkankaptan95" class="github"><i class="bi bi-github"></i></a>
+        <a href="@Model.GithubUrl" class="github"><i class="bi bi-github"></i></a>
         <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="https://medium.com/@@furkan.kaptan.work" class="linkedin"><i class="fab fa-medium"></i></a>
-        <a href="@link" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        <a href="@Model.LinkedInUrl" class="linkedin"><i class="bi bi-linkedin"></i></a>
     </div>
 
     <nav id="navmenu" class="navmenu">
         <ul>
             <li><a href="/#hero" class="active"><i class="bi bi-house navicon"></i>Anasayfa</a></li>
             <li><a href="/#about"><i class="bi bi-person navicon"></i> Hakkımda</a></li>
-            <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Özgeçmiş</a></li>
-            <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Projeler</a></li>
-            <li><a href="#contact"><i class="bi bi-envelope navicon"></i> İletişim</a></li>
+            <li><a href="/#resume"><i class="bi bi-file-earmark-text navicon"></i> Özgeçmiş</a></li>
+            <li><a href="/#portfolio"><i class="bi bi-images navicon"></i> Projeler</a></li>
+            <li><a href="/#contact"><i class="bi bi-envelope navicon"></i> İletişim</a></li>
         </ul>
     </nav>
 
