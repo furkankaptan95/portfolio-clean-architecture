@@ -41,4 +41,20 @@ public class PersonalInfoController : Controller
 
         return RedirectToAction("PersonalInfo");
     }
+
+    [HttpGet]
+    public async Task<IActionResult> PersonalInfo()
+    {
+        var result = await _personalInfoService.GetAsync();
+
+        if (!result.IsSuccess)
+        {
+            TempData["Message"] = result.Message;
+            return RedirectToAction(nameof(Create));
+        }
+
+        var model = _mapper.Map<PersonalInfoViewModel>(result.Data);
+
+        return View(model);
+    }
 }
