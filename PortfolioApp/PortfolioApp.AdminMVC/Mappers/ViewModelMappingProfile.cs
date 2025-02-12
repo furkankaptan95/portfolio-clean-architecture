@@ -2,9 +2,11 @@
 using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
 using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.AdminMVC.Models.ViewModels.Education;
+using PortfolioApp.AdminMVC.Models.ViewModels.Experience;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Education;
+using PortfolioApp.Core.DTOs.Admin.Experience;
 
 namespace PortfolioApp.AdminMVC.Mappers;
 public class ViewModelMappingProfile : Profile
@@ -27,5 +29,13 @@ public class ViewModelMappingProfile : Profile
         CreateMap<EducationDto, EducationViewModel>();
         CreateMap<EducationDto, UpdateEducationViewModel>();
         CreateMap<UpdateEducationViewModel,UpdateEducationDto >();
+
+        CreateMap<AddExperienceViewModel, AddExperienceDto>();
+        CreateMap<ExperienceDto, ExperienceViewModel>();
+        CreateMap<ExperienceDto, UpdateExperienceViewModel>();
+        CreateMap<UpdateExperienceViewModel, UpdateExperienceDto>();
+
+
+
     }
 }
