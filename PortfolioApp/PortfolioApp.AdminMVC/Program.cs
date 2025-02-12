@@ -1,4 +1,5 @@
 using PortfolioApp.AdminMVC.Mappers;
+using PortfolioApp.AdminMVC.Service;
 using PortfolioApp.AdminMVC.Services;
 using PortfolioApp.Core.Config;
 using PortfolioApp.Core.Interfaces;
@@ -37,6 +38,7 @@ builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<IPersonalInfoService, PersonalInfoService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IContactMessageService,ContactMessageService>();
 
 builder.Services.AddAutoMapper(typeof(ViewModelMappingProfile));
 

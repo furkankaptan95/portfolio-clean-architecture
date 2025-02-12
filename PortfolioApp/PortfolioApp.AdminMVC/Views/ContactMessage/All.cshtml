@@ -1,0 +1,141 @@
+﻿@model List<ContactMessageViewModel>
+
+@{
+    ViewData["Title"] = "Mesajlar";
+}
+
+@if (Model.Count == 0)
+{
+    <h2 class="text-center my-4" style="font-weight: 600; color: #333;">Mesajlar</h2>
+
+    <div class="alert alert-info text-center mt-5 p-4" style="border-radius: 10px;">
+        <h4 class="font-weight-bold">Şu anda görüntülenecek bir Mesaj bulunmuyor.</h4>
+    </div>
+}
+
+else
+{
+    <h2 class="text-center my-4" style="font-weight: 600; color: #333;">Mesajlar</h2>
+
+    <div class="table-responsive text-nowrap" style="padding-bottom:100px;">
+        <table class="table card-table">
+            <thead>
+                <tr>
+                    <th>Gönderen</th>
+                    <th>Email</th>
+                    <th>Başlık</th>
+                    <th>Mesaj</th>
+                    <th>Tarih</th>
+                    <th>Okundu Mu?</th>
+                    <th>Yanıt</th>
+                    <th>Yanıt Tarihi</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @foreach (var contactMessage in Model)
+                {
+                    <tr>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@contactMessage.Name</strong></td>
+                        <td>
+                            @contactMessage.Email
+                        </td>
+                        <td>
+                            @contactMessage.Subject
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modal-@contactMessage.Id" aria-haspopup="true" aria-expanded="false">Mesajı Görüntüle</button>
+                        </td>
+                        <td>
+                            @contactMessage.SentDate.ToString("dd MMMM yyyy HH:mm")
+                        </td>
+                        <td>
+                            @if (contactMessage.IsRead)
+                            {
+                                <span>Okundu ✅</span>
+                            }
+                            else
+                            {
+                                <span>Okunmadı ❌</span>
+                            }
+                        </td>
+                        <td>
+                            @if (contactMessage.Reply is null)
+                            {
+                                <a href="/ContactMessage/Reply/@contactMessage.Id" class="btn btn-sm btn-secondary">Hemen Yanıtla</a>
+                            }
+                            else
+                            {
+
+                                <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#modalReply-@contactMessage.Id" aria-haspopup="true" aria-expanded="false">Yanıtı Görüntüle</button>
+
+                            }
+                        </td>
+                        @if (contactMessage.ReplyDate is not null)
+                        {
+                            <td class="text-center">@contactMessage.ReplyDate?.ToString("dd MMMM yyyy HH:mm")</td>
+                        }
+                        else
+                        {
+                            <td class="text-center">-</td>
+                        }
+                    </tr>
+
+                    <div class="modal fade" id="modal-@contactMessage.Id" tabindex="-1" role="dialog" aria-labelledby="modalLabel-@contactMessage.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel-@contactMessage.Id">@contactMessage.Name</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>@contactMessage.Message</p>
+                                </div>
+                                @if (contactMessage.IsRead)
+                                {
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                        <span class="badge bg-success text-white" style="padding: 10px 20px; display: inline-block;">Mesaj Okundu</span>
+
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="modal-footer">
+                                        <form action="/ContactMessage/MakeRead/@contactMessage.Id" method="get">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                            <button type="submit" class="btn btn-warning">Okundu Olarak İşaretle</button>
+                                        </form>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="modalReply-@contactMessage.Id" tabindex="-1" role="dialog" aria-labelledby="modalLabelReply-@contactMessage.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabelReply-@contactMessage.Id">Yanıtım</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>@contactMessage.Reply</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </tbody>
+        </table>
+    </div>
+}

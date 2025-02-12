@@ -52,4 +52,17 @@ public class ContactMessageController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("make-read/{id:int}")]
+    public async Task<IActionResult> MakeRead([FromRoute] int id)
+    {
+        var result = await _contactMessageService.MakeReadAsync(id);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }
