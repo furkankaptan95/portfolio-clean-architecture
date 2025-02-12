@@ -49,7 +49,9 @@ public class ProjectService : IProjectService
 
     public async Task<ServiceResult> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"project/delete/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public async Task<ServiceResult<List<ProjectDto>>> GetAllAsync()
