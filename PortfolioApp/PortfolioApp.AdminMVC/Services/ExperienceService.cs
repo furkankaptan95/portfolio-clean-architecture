@@ -45,6 +45,8 @@ public class ExperienceService : IExperienceService
 
     public async Task<ServiceResult> UpdateAsync(UpdateExperienceDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.PostAsJsonAsync("experience/update", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 }

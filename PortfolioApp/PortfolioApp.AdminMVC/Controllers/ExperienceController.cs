@@ -4,6 +4,7 @@ using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.AdminMVC.Models.ViewModels.Education;
 using PortfolioApp.AdminMVC.Models.ViewModels.Experience;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
+using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.Interfaces;
 
@@ -70,5 +71,20 @@ public class ExperienceController : Controller
         var model = _mapper.Map<UpdateExperienceViewModel>(result.Data);
 
         return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdateExperienceViewModel model)
+    {
+        var dto = _mapper.Map<UpdateExperienceDto>(model);
+
+        var result = await _experienceService.UpdateAsync(dto);
+
+        if (!result.IsSuccess)
+            TempData["ErrorMessage"] = result.Message;
+        else
+            TempData["Message"] = result.Message;
+
+        return RedirectToAction(nameof(All));
     }
 }
