@@ -14,11 +14,16 @@ public class ProjectService : IProjectService
         _mediator = mediator;
     }
     
-    public async Task<ServiceResult> AddAsync(AddProjectDto dto)
+    public async Task<ServiceResult> AddAsync(AddApiProjectDto dto)
     {
         var result = await _mediator.Send(new CreateProjectCommand(dto));
 
         return result;
+    }
+
+    public Task<ServiceResult> AddAsync(AddMvcProjectDto dto)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<ServiceResult> ChangeVisibilityAsync(int id)
