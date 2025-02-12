@@ -31,6 +31,13 @@ public class ContactMessageService : IContactMessageService
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<ContactMessageDto>>();
     }
 
+    public async Task<ServiceResult> MakeReadAsync(int id)
+    {
+        var apiResponse = await DataApiClient.GetAsync($"contactmessage/make-read/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
+    }
+
     public async Task<ServiceResult> ReplyAsync(ReplyContactMessageDto dto)
     {
         var apiResponse = await DataApiClient.PostAsJsonAsync("contactmessage/reply", dto);

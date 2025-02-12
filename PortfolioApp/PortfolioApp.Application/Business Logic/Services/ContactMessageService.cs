@@ -35,6 +35,13 @@ public class ContactMessageService : IContactMessageService
         return result;
     }
 
+    public async Task<ServiceResult> MakeReadAsync(int id)
+    {
+        var result = await _mediator.Send(new MakeContactMessageReadCommand(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult> ReplyAsync(ReplyContactMessageDto dto)
     {
         var result = await _mediator.Send(new ReplyContactMessageCommand(dto));

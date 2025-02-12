@@ -68,4 +68,23 @@ public class ContactMessageController : Controller
         return RedirectToAction(nameof(All));
 
     }
+
+    [HttpGet]
+    public async Task<IActionResult> MakeRead([FromRoute] int id)
+    {
+        if (id < 1)
+        {
+            TempData["ErrorMessage"] = "Geçersiz ID";
+            return RedirectToAction(nameof(All));
+        }
+
+        var result = await _contactMessageService.MakeReadAsync(id);
+
+        if (!result.IsSuccess)
+            TempData["ErrorMessage"] = result.Message;
+        else
+            TempData["Message"] = result.Message;
+
+        return RedirectToAction(nameof(All));
+    }
 }
