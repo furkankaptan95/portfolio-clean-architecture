@@ -1,5 +1,4 @@
 ﻿using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 

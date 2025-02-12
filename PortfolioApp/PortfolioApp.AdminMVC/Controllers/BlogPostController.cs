@@ -53,7 +53,7 @@ public class BlogPostController : Controller
     {
         if (id < 1)
         {
-            TempData["ErrorMessage"] = "Geçersiz Blog Post ID'si.";
+            TempData["ErrorMessage"] = "Geçersiz ID";
             return RedirectToAction(nameof(All));
         }
 
@@ -90,7 +90,7 @@ public class BlogPostController : Controller
     {
         if (id < 1)
         {
-            TempData["ErrorMessage"] = "Geçersiz Blog Post ID'si.";
+            TempData["ErrorMessage"] = "Geçersiz ID";
             return RedirectToAction(nameof(All));
         }
 
@@ -109,7 +109,7 @@ public class BlogPostController : Controller
     {
         if (id < 1)
         {
-            TempData["ErrorMessage"] = "Geçersiz Blog Post ID'si.";
+            TempData["ErrorMessage"] = "Geçersiz ID";
             return RedirectToAction(nameof(All));
         }
 
