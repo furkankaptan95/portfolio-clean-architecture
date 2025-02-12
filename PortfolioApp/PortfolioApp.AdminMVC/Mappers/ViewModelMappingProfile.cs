@@ -46,6 +46,7 @@ public class ViewModelMappingProfile : Profile
 
         CreateMap<AddProjectViewModel, AddMvcProjectDto>();
         CreateMap<AddMvcProjectDto, AddApiProjectDto>();
+        CreateMap<ProjectDto, ProjectViewModel>();
 
     }
 }

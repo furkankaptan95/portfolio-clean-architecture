@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.AdminMVC.Models.ViewModels.Experience;
 using PortfolioApp.AdminMVC.Models.ViewModels.Project;
-using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.Interfaces;
 
@@ -33,10 +31,20 @@ public class ProjectController : Controller
         if (result.IsSuccess)
         {
             TempData["Message"] = result.Message;
-            return RedirectToAction(nameof(Create));
+            return RedirectToAction(nameof(All));
         }
 
         ViewData["ErrorMessage"] = result.Message;
         return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> All()
+    {
+        var result = await _projecService.GetAllAsync();
+
+        var models = _mapper.Map<List<ProjectViewModel>>(result.Data);
+
+        return View(models);
     }
 }

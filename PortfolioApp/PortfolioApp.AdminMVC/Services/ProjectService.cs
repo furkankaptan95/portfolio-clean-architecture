@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.DTOs.File;
 using PortfolioApp.Core.Interfaces;
@@ -51,7 +52,9 @@ public class ProjectService : IProjectService
 
     public async Task<ServiceResult<List<ProjectDto>>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync("project/all");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<List<ProjectDto>>>();
     }
 
     public async Task<ServiceResult<ProjectDto>> GetByIdAsync(int id)
