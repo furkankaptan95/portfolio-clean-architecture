@@ -7,11 +7,11 @@ using PortfolioApp.Core.Interfaces;
 namespace PortfolioApp.AdminMVC.Controllers;
 public class ProjectController : Controller
 {
-    private readonly IProjectService _projecService;
+    private readonly IProjectService _projectService;
     private readonly IMapper _mapper;
-    public ProjectController(IMapper mapper, IProjectService projecService)
+    public ProjectController(IMapper mapper, IProjectService projectService)
     {
-        _projecService = projecService;
+        _projectService = projectService;
         _mapper = mapper;
     }
 
@@ -26,7 +26,7 @@ public class ProjectController : Controller
     {
         var dto = _mapper.Map<AddMvcProjectDto>(model);
 
-        var result = await _projecService.AddAsync(dto);
+        var result = await _projectService.AddAsync(dto);
 
         if (result.IsSuccess)
         {
@@ -41,7 +41,7 @@ public class ProjectController : Controller
     [HttpGet]
     public async Task<IActionResult> All()
     {
-        var result = await _projecService.GetAllAsync();
+        var result = await _projectService.GetAllAsync();
 
         var models = _mapper.Map<List<ProjectViewModel>>(result.Data);
 
@@ -57,7 +57,7 @@ public class ProjectController : Controller
             return RedirectToAction(nameof(All));
         }
 
-        var result = await _projecService.GetByIdAsync(id);
+        var result = await _projectService.GetByIdAsync(id);
 
         if (!result.IsSuccess)
         {
@@ -75,7 +75,7 @@ public class ProjectController : Controller
     {
         var dto = _mapper.Map<UpdateProjectMVCDto>(model);
 
-        var result = await _projecService.UpdateAsync(dto);
+        var result = await _projectService.UpdateAsync(dto);
 
         if (result.IsSuccess)
         {
@@ -96,7 +96,7 @@ public class ProjectController : Controller
             return RedirectToAction(nameof(All));
         }
 
-        var result = await _projecService.ChangeVisibilityAsync(id);
+        var result = await _projectService.ChangeVisibilityAsync(id);
 
         if (!result.IsSuccess)
             TempData["ErrorMessage"] = result.Message;
@@ -115,7 +115,7 @@ public class ProjectController : Controller
             return RedirectToAction(nameof(All));
         }
 
-        var result = await _projecService.DeleteAsync(id);
+        var result = await _projectService.DeleteAsync(id);
 
         if (!result.IsSuccess)
             TempData["ErrorMessage"] = result.Message;
