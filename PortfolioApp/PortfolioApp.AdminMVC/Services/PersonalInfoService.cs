@@ -28,6 +28,8 @@ public class PersonalInfoService : IPersonalInfoService
 
     public async Task<ServiceResult> UpdateAsync(UpdatePersonalInfoDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.PostAsJsonAsync("personalinfo/update", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 }

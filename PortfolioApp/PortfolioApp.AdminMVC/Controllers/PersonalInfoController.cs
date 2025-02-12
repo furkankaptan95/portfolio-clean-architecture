@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
 using PortfolioApp.AdminMVC.Models.ViewModels.PersonalInfo;
+using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 using PortfolioApp.Core.Interfaces;
 
@@ -72,5 +73,22 @@ public class PersonalInfoController : Controller
         var model = _mapper.Map<UpdatePersonalInfoViewModel>(result.Data);
 
         return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update([FromForm] UpdatePersonalInfoViewModel model)
+    {
+        var dto = _mapper.Map<UpdatePersonalInfoDto>(model);
+
+        var result = await _personalInfoService.UpdateAsync(dto);
+
+        if (result.IsSuccess)
+        {
+            TempData["Message"] = result.Message;
+            return RedirectToAction(nameof(PersonalInfo));
+        }
+
+        TempData["ErrorMessage"] = result.Message;
+        return Redirect("/");
     }
 }
