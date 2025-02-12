@@ -1,8 +1,139 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeIndexViewModel
+
+@{
+    ViewData["Link"] = Model.AboutMe.LinkedInUrl;
+    ViewData["FullName"] = Model.AboutMe.FullName;
+    ViewData["Field"] = Model.AboutMe.Field;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@{
+    if (TempData["SuccessMessage"] is not null)
+    {
+        <div class="alert custom-alert-success mt-5">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    if (TempData["Message"] is not null)
+    {
+        <div class="alert custom-alert-success mt-5">
+            @TempData["Message"]
+        </div>
+    }
+
+    if (TempData["ErrorMessage"] is not null)
+    {
+        <div class="alert custom-alert-error mt-5">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+<!-- Header Section -->
+
+<partial name="Partials/HeaderSection.cshtml" model="Model.AboutMe" />
+
+<main class="main">
+
+    <!-- Hero Section -->
+    <partial name="Partials/HeroSection.cshtml" />
+
+    <!-- About Section -->
+    <partial name="Partials/AboutSection.cshtml" model="Model.AboutMe" />
+
+    <!-- Resume Section -->
+
+    <section id="resume" class="resume section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Özgeçmiş</h2>
+            <span class="inline-span-text">Kısaca kimim , şu ana kadarki eğitim ve iş tecrübelerim gibi bilgilere göz atabilirsiniz.</span>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="resume-title">Kimim ?</h3>
+
+                    <div class="resume-item pb-0">
+                        <h4>@Model.PersonalInfo.Name @Model.PersonalInfo.Surname</h4>
+                        <p><em>@Model.PersonalInfo.About</em></p>
+                        <ul>
+                            <li>@Model.PersonalInfo.Adress</li>
+                            <li>@Model.PersonalInfo.BirthDate.ToString("dd MMMM yyyy")</li>
+                        </ul>
+                    </div><!-- Edn Resume Item -->
+
+                    <partial name="Partials/EducationsSection.cshtml" model="Model.Educations" />
+
+                </div>
+
+                <partial name="Partials/ExperiencesSection.cshtml" model="Model.Experiences" />
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- /Resume Section -->
+    <!-- Portfolio Section -->
+
+    <partial name="Partials/ProjectsSection.cshtml" model="Model.Projects" />
+
+    <!-- /Portfolio Section -->
+    <!-- Contact Section -->
+
+    <partial name="Partials/ContactSection.cshtml" model="Model.ContactMessage" />
+
+    <!-- /Contact Section -->
+
+</main>
+
+<partial name="Partials/FooterSection.cshtml" />
+
+<!-- Scroll Top -->
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Preloader -->
+<div id="preloader"></div>
+
+<style>
+
+    .custom-alert-success {
+        position: fixed; /* Sayfada sabit konumlandırma */
+        top: 10px; /* Ekranın üst kısmından 10px boşluk */
+        left: 50%; /* Ekranın ortasına hizalama */
+        transform: translateX(-50%); /* Ortalamak için translate */
+        z-index: 1000; /* Diğer elementlerin üstünde görünmesini sağlar */
+        background-color: wheat; /* Arka plan rengi */
+        color: #6b4f3a; /* Yazı rengi (daha koyu bir ton) */
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-alert-error {
+        position: fixed; /* Sayfada sabit konumlandırma */
+        top: 10px; /* Ekranın üst kısmından 10px boşluk */
+        left: 50%; /* Ekranın ortasına hizalama */
+        transform: translateX(-50%); /* Ortalamak için translate */
+        z-index: 1000; /* Diğer elementlerin üstünde görünmesini sağlar */
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .inline-span-text {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 17px;
+        color: #333333;
+        line-height: 1.6;
+        text-shadow: 1px 1px 2px #ccc;
+        letter-spacing: 0.5px;
+    }
+</style>

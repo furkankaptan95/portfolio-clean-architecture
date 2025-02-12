@@ -1,0 +1,70 @@
+﻿@model AboutMeViewModel
+
+@using PortfolioApp.Core.Config
+@using Microsoft.Extensions.Options
+@inject IOptions<FileApiSettings> fileSettings
+
+@{
+    var fileApiUrl = fileSettings.Value.FileApiUrl;
+}
+
+<section id="about" class="about section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Hakkımda</h2>
+        <span class="inline-span-text">@Model.Introduction</span>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4 justify-content-center">
+            <div class="col-lg-4">
+                <img src="@($"{fileApiUrl}/{@Model.AboutMeImageUrl}")" class="img-fluid" alt="Profile Image">
+            </div>
+
+            <div class="col-lg-8 content">
+                <h2 class="mb-5">@Model.FullName</h2>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul>
+                            <li>
+                                <i class="bi bi-chevron-right"></i> <strong>Alan:</strong>
+                                <span style="font-family: 'Roboto', Arial, sans-serif; font-weight: normal; font-size: 14px; color: #555555; letter-spacing: 0.3px;">@Model.Field</span>
+                            </li>
+
+                            <li>
+                                <i class="bi bi-chevron-right"></i> <strong>Email:</strong>
+                                <span style="font-family: 'Roboto', Arial, sans-serif; font-weight: normal; font-size: 14px; color: #555555; letter-spacing: 0.3px;">
+                                    <a href="mailto:@Model.Email" style="font-family: 'Roboto', Arial, sans-serif; font-size: 14px; color: #555555; letter-spacing: 0.3px;">
+                                        @Model.Email
+                                    </a>
+                                </span>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul>
+
+                             <li>
+                                <i class="bi bi-chevron-right"></i> <strong>Github:</strong>
+                                <a href="@Model.GithubUrl" style="font-family: 'Roboto', Arial, sans-serif; font-size: 14px; color: #555555; letter-spacing: 0.3px;">Profile Gitmek İçin</a>
+                            </li>
+
+                            <li>
+                                <i class="bi bi-chevron-right"></i> <strong>LinkedIn:</strong>
+                                <a href="@Model.LinkedInUrl" style="font-family: 'Roboto', Arial, sans-serif; font-size: 14px; color: #555555; letter-spacing: 0.3px;">Profile Gitmek İçin</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
