@@ -2,6 +2,7 @@
 using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
 using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.AdminMVC.Models.ViewModels.Comment;
+using PortfolioApp.AdminMVC.Models.ViewModels.ContactMessage;
 using PortfolioApp.AdminMVC.Models.ViewModels.Education;
 using PortfolioApp.AdminMVC.Models.ViewModels.Experience;
 using PortfolioApp.AdminMVC.Models.ViewModels.PersonalInfo;
@@ -9,6 +10,7 @@ using PortfolioApp.AdminMVC.Models.ViewModels.Project;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Comment;
+using PortfolioApp.Core.DTOs.Admin.ContactMessage;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
@@ -55,6 +57,7 @@ public class ViewModelMappingProfile : Profile
 
         CreateMap<CommentDto, CommentViewModel>();
 
+        CreateMap<ContactMessageDto,ContactMessageViewModel>();
 
     }
 }
