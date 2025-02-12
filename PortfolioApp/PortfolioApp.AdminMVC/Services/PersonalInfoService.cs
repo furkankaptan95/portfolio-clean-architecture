@@ -14,7 +14,9 @@ public class PersonalInfoService : IPersonalInfoService
     private HttpClient DataApiClient => _factory.CreateClient("dataApi");
     public async Task<ServiceResult> AddAsync(AddPersonalInfoDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.PostAsJsonAsync("personalinfo/create", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public async Task<ServiceResult<PersonalInfoDto>> GetAsync()
