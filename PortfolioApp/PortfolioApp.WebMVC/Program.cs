@@ -27,6 +27,7 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IPersonalInfoService, PersonalInfoService>();
 builder.Services.AddScoped<IContactMessageService, ContactMessageService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddScoped<HomeService>();
 

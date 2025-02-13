@@ -1,5 +1,9 @@
 ﻿@model List<CommentViewModel>
 
+@{
+    var userId = ViewData["UserId"] as int?;
+}
+
 <ul class="comment-list">
 
     @foreach (var comment in Model)
@@ -10,20 +14,20 @@
             </div>
 
             <div class="comment-body">
-               @*  <h3>
+                <h3>
                     @comment.Commenter
-                    @if (userId.HasValue && userId == comment.CommenterId)
+                    @if (userId.HasValue && userId > 0 && userId == comment.UserId)
                     {
                         <span>(Siz)</span>
                     }
-                </h3> *@
+                </h3>
                 <div class="meta">@comment.CreatedAt.ToString("dd MMMM yyyy HH:mm")</div>
                 <p>@comment.Content</p>
 
-               @*  @if (userId.HasValue && userId == comment.CommenterId)
+                @if (userId.HasValue && userId > 0 && userId == comment.UserId)
                 {
                     <a href="/Comment/Delete/@comment.Id" class="delete-comment-btn">Yorumu Sil</a>
-                } *@
+                }
             </div>
         </li>
     }

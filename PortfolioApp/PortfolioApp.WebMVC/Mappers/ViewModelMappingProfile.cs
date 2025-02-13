@@ -23,6 +23,7 @@ public class ViewModelMappingProfile : Profile
         CreateMap<AddContactMessageViewModel, AddContactMessageDto>();
         CreateMap<CommentWebDto, CommentViewModel>();
         CreateMap<BlogPostDto, AllBlogPostsViewModel>();
+        CreateMap<AddCommentViewModel, AddCommentDto>();
     }
 
 }

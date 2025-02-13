@@ -5,6 +5,6 @@ public class AllBlogPostsViewModel
     public string Title { get; set; }
     public string Content { get; set; }
     public DateTime PublishDate { get; set; }
-    public int CommentsCount { get; set; }
+    public int ApprovedCommentsCount { get; set; }
     public bool IsVisible { get; set; }
 }

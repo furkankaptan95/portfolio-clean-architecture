@@ -33,7 +33,7 @@ public class GetBlogPostsHandler : IRequestHandler<GetBlogPostsQuery, ServiceRes
                PublishDate = item.PublishDate,
                IsVisible = item.IsVisible,
                UpdatedAt = item.UpdatedAt,
-               CommentsCount = item.Comments.Count,
+               ApprovedCommentsCount = item.Comments.Where(c=>c.IsApproved).ToList().Count,
            })
            .ToList();
 

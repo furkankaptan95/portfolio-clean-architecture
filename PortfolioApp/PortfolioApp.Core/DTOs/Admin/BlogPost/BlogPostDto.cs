@@ -7,5 +7,5 @@ public class BlogPostDto
     public DateTime PublishDate { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public bool IsVisible { get; set; }
-    public int CommentsCount { get; set; }
+    public int ApprovedCommentsCount { get; set; }
 }
