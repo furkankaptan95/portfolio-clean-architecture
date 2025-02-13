@@ -28,7 +28,7 @@ public class BlogPostController : Controller
         if (!result.IsSuccess)
         {
             TempData["ErrorMessage"] = result.Message;
-            return Redirect("/BlogPost/All");
+            return RedirectToAction(nameof(All));
         }
 
         var blogPostDto = result.Data;
