@@ -15,4 +15,18 @@
     <ProjectReference Include="..\PortfolioApp.Core\PortfolioApp.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\blog\css\.DS_Store" />
+    <None Include="wwwroot\blog\css\bootstrap\.DS_Store" />
+    <None Include="wwwroot\blog\css\css\.DS_Store" />
+    <None Include="wwwroot\blog\fonts\.DS_Store" />
+    <None Include="wwwroot\blog\fonts\flaticon\.DS_Store" />
+    <None Include="wwwroot\blog\fonts\flaticon\font\.DS_Store" />
+    <None Include="wwwroot\blog\fonts\ionicons\fonts\.DS_Store" />
+    <None Include="wwwroot\blog\images\.DS_Store" />
+    <None Include="wwwroot\blog\js\.DS_Store" />
+    <None Include="wwwroot\blog\scss\.DS_Store" />
+    <None Include="wwwroot\blog\scss\bootstrap\.DS_Store" />
+  </ItemGroup>
+
 </Project>

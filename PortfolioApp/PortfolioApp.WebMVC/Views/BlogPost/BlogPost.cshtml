@@ -1,0 +1,275 @@
+﻿@model BlogPostViewModel
+
+@using System.Security.Claims
+@using PortfolioApp.Core.Config
+@using Microsoft.Extensions.Options
+@inject IOptions<FileApiSettings> fileSettings
+
+@{
+    Layout = "_BlogLayout";
+    var fileApiUrl = fileSettings.Value.FileApiUrl;
+}
+
+@{
+    if (TempData["Message"] is not null)
+    {
+        <div class="alert custom-alert-success mt-5">
+            @TempData["Message"]
+        </div>
+    }
+
+    if (TempData["ErrorMessage"] is not null)
+    {
+        <div class="alert custom-alert-error mt-5">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    if (ViewData["Message"] is not null)
+    {
+        <div class="alert custom-alert-success mt-5">
+            @TempData["Message"]
+        </div>
+    }
+
+    if (ViewData["ErrorMessage"] is not null)
+    {
+        <div class="alert custom-alert-error mt-5">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+
+<section class="hero-wrap js-fullheight" style="background-image: url('blog/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+            <div class="col-md-12 ftco-animate pb-5 text-center">
+                <p class="breadcrumbs" style="margin-top:110px; color: yellow;">
+                    <span class="mr-2"><a href="/#hero" style="color: yellow;">Anasayfa <i class="ion-ios-arrow-forward"></i></a></span>
+                    <span class="mr-2"><a href="/BlogPost/All" style="color: yellow;">Blog Postlar <i class="ion-ios-arrow-forward"></i></a></span>
+
+
+                    @if (Model is not null && Model.Content is not null)
+                    {
+                        <span style="color: yellow;">
+                            @Model.Title
+                        </span>
+                    }
+                    else if (Model is not null && Model.Content is null)
+                    {
+                        <span style="color: yellow;">
+                            Bulunamadı
+                        </span>
+                    }
+                    else
+                    {
+                        <span style="color: yellow;">
+                            Ulaşılamıyor
+                        </span>
+                    }
+
+                    <i class="ion-ios-arrow-forward"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 ftco-animate">
+                @if (Model is not null && Model.Content is not null)
+                {
+                    <h2 class="mb-3"> @Model.Title</h2>
+                    <small class="publish-date">@Model.PublishDate.ToString("dd MMMM yyyy")</small>
+                    <p>
+                        <img src="~/blog/images/blog-post-img.jpg" alt="" class="img-fluid" style="max-height: 400px; width: 100%;">
+                    </p>
+                    <p> @Model.Content</p>
+
+                    <div class="thank-you-note">
+                        Blog Postu buraya kadar okuduğunuz için teşekkür ederim!
+                    </div>
+
+                    <div class="about-author d-flex p-4 bg-dark position-relative">
+                        <div class="desc">
+                            <h3>Furkan Kaptan</h3>
+                            <p>Backend Yazılım Geliştirici</p>
+                        </div>
+                        <span class="author-label">Yazar</span>
+                    </div>
+
+
+
+                   @*  <div class="pt-5 mt-5">
+
+                        @if (Model.Comments is null)
+                        {
+                            <h3 class="mb-5">Şu anda yorumlara ulaşılamıyor</h3>
+                        }
+                        else if (Model.Comments is not null && Model.Comments.Count < 1)
+                        {
+                            <h3 class="mb-5">Henüz yorum yapılmadı.</h3>
+                        }
+                        else if (Model.Comments is not null && Model.Comments.Count > 0)
+                        {
+                            <h3 class="mb-5">@Model.Comments.Count Yorum</h3>
+                        }
+
+                        @if (Model.Comments is not null && Model.Comments.Count > 0)
+                        {
+                            <partial name="Partials/Comments.cshtml" model="Model.Comments" />
+                        }
+
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            <partial name="Partials/SignedCommentForm.cshtml" model="Model.SignedComment" />
+                        }
+                        else
+                        {
+                            <partial name="Partials/UnsignedCommentForm.cshtml" model="Model.UnsignedComment" />
+                        }
+
+                    </div> *@
+                }
+                else if (Model is not null && Model.Content is null)
+                {
+                    <div class="col-12 text-center">
+                        <h3 class="mt-5">Görüntülemek istediğiniz Blog Post bulunamadı.</h3>
+                    </div>
+                }
+                else
+                {
+
+                    <div class="col-12 text-center">
+                        <h3 class="mt-5">Görüntülemek istediğiniz Blog Post'a ulaşılamadı.</h3>
+                    </div>
+                }
+            </div> <!-- .col-md-8 -->
+            <div class="col-lg-4 sidebar ftco-animate">
+               @*  <div class="sidebar-box ftco-animate">
+                    <h3 class="heading-sidebar">En Son Yayınlananlar</h3>
+                    @await Component.InvokeAsync("LastBlogPosts")
+                </div> *@
+
+                <div class="sidebar-box ftco-animate">
+                    <h3 class="heading-sidebar">Merhaba!</h3>
+                    <p>Siz de Blog Post köşemde yazılarınızı paylaşmak isterseniz benimle İletişim bölümündeki form veya iletişim bilgilerim aracılığıyla iletişime geçebilirsiniz!</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section> <!-- .section -->
+
+
+<style>
+
+        .thank-you-note {
+            text-align: center;
+            font-size: 1.1em;
+            color: #f5f5f5; /* Açık bir renk tonunda */
+            background-color: rgba(0, 0, 0, 0.6); /* Siyah arka planla uyumlu transparan arka plan */
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic;
+        }
+        .about-author {
+            max-width: 400px; /* Sağdan küçültmek için genişliği sınırlıyoruz */
+            margin-right: auto; /* Kutuyu sola yaslamak için */
+        }
+
+        .bio img {
+            width: 80px; /* Sabit genişlik */
+            height: auto; /* Otomatik yükseklik, en-boy oranını korur */
+            object-fit: cover; /* Görüntüyü kırpmadan sabit boyutlandırır */
+            border-radius: 50%;
+        }
+
+        .desc {
+            flex-grow: 1; /* Yazıları sola dayalı tutar */
+        }
+
+        .author-label {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: yellow; /* Yazı rengi sarı */
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5); /* Transparan arka plan */
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+        .breadcrumbs {
+            background-color: rgba(0, 0, 0, 0.5); /* Transparan siyah arka plan */
+            border-radius: 10px; /* Yuvarlak kenarlar */
+            padding: 10px 15px; /* İç boşluk */
+            display: inline-block; /* Sadece metin etrafında genişler */
+            color: wheat !important; /* Yazı rengi */
+            margin-top: 110px; /* Mevcut margin */
+        }
+
+        .publish-date {
+            font-size: 0.9em; /* Küçük bir yazı boyutu */
+            color: gray; /* Yazı rengi */
+            display: block;
+            margin-top: -10px; /* Başlığa biraz daha yakınlaştırmak için */
+            margin-bottom: 10px; /* İçerikten ayırmak için */
+        }
+    .hero-wrap {
+        height: 30vh !important; /* Hero yüksekliğini azaltıyoruz */
+        background-position: center !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slider-text {
+        text-align: center;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .col-md-12.ftco-animate {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* İçeriği yatayda ortalar */
+        justify-content: center; /* İçeriği dikeyde ortalar */
+        height: 100%; /* Tüm yüksekliği kapsaması için */
+    }
+
+
+
+        .custom-alert-success {
+            position: fixed; /* Sayfada sabit konumlandırma */
+            top: 10px; /* Ekranın üst kısmından 10px boşluk */
+            left: 50%; /* Ekranın ortasına hizalama */
+            transform: translateX(-50%); /* Ortalamak için translate */
+            z-index: 1000; /* Diğer elementlerin üstünde görünmesini sağlar */
+            background-color: wheat; /* Arka plan rengi */
+            color: #6b4f3a; /* Yazı rengi (daha koyu bir ton) */
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-alert-error {
+            position: fixed; /* Sayfada sabit konumlandırma */
+            top: 10px; /* Ekranın üst kısmından 10px boşluk */
+            left: 50%; /* Ekranın ortasına hizalama */
+            transform: translateX(-50%); /* Ortalamak için translate */
+            z-index: 1000; /* Diğer elementlerin üstünde görünmesini sağlar */
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+</style>
