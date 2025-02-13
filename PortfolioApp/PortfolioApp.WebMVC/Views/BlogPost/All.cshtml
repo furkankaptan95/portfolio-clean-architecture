@@ -1,0 +1,192 @@
+﻿@model List<AllBlogPostsViewModel>
+
+@{
+    Layout = "_BlogLayout";
+}
+
+@{
+    if (TempData["Message"] is not null)
+    {
+        <div class="alert custom-alert-success mt-5">
+            @TempData["Message"]
+        </div>
+    }
+
+    if (TempData["ErrorMessage"] is not null)
+    {
+        <div class="alert custom-alert-error mt-5">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    if (ViewData["Message"] is not null)
+    {
+        <div class="alert custom-alert-success mt-5">
+            @TempData["Message"]
+        </div>
+    }
+
+    if (ViewData["ErrorMessage"] is not null)
+    {
+        <div class="alert custom-alert-error mt-5">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+
+<section class="ftco-section" id="blog-section">
+    <div class="container">
+        <p class="breadcrumbs">
+            <span class="mr-2"><a href="/#hero">Anasayfa <i class="ion-ios-arrow-forward"></i></a></span>
+            <span>Blog Postlar <i class="ion-ios-arrow-forward"></i></span>
+        </p>
+
+        <div class="title-section">
+            <h2>Blog Postlar</h2>
+            <p class="mb-5">Şu ana kadar paylaşılmış blog postları aşağıda bulabilirsiniz.</p>
+        </div>
+        <div class="row d-flex justify-content-center">
+
+            @if (Model.Count > 0)
+            {
+                @foreach (var blogPost in Model)
+                {
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry justify-content-end">
+                            <a href="/BlogPost/BlogPost/@blogPost.Id" class="block-20" style="background-image: url('/blog/images/blog-post-img.jpg');">
+                            </a>
+                            <div class="text mt-3 float-right d-block">
+                                <div class="d-flex align-items-center mb-3 meta">
+                                    <p class="mb-0">
+                                        <span class="mr-2">@blogPost.PublishDate.ToString("dd MMMM yyyy")</span>
+                                        <a class="meta-chat ml-5"><span class="icon-chat"></span> @blogPost.CommentsCount</a>
+                                    </p>
+                                </div>
+                                <h3 class="heading">
+                                    <a href="/BlogPost/BlogPost/@blogPost.Id" class="blog-title" data-title="@blogPost.Title"></a>
+                                </h3>
+                                <p class="blog-content" data-content="@blogPost.Content"></p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            }
+
+            else
+            {
+                <div class="col-12 text-center">
+                    <h3>Şu Anda Görüntülenecek Bir Blog Post Bulunmuyor</h3>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+
+<style>
+        /* Varsayılan olarak 4 sütun düzeni */
+        .col-md-4 {
+            flex: 0 0 25%; /* 4 sütun */
+            max-width: 25%;
+        }
+
+        /* 1200px altında sütun sayısını 3'e düşür */
+        @@media (max-width: 1199px) {
+            .col-md-4 {
+                flex: 0 0 33.3333%; /* 3 sütun */
+                max-width: 33.3333%;
+            }
+        }
+
+        /* 992px altında sütun sayısını 2'ye düşür */
+        @@media (max-width: 991px) {
+            .col-md-4 {
+                flex: 0 0 50%; /* 2 sütun */
+                max-width: 50%;
+            }
+
+            .breadcrumbs{
+                margin-top:-60px;
+            }
+        }
+
+        /* 576px altında sütun sayısını 1'e düşür ve tam ortala */
+     @@media (max-width: 575px) {
+        .row {
+            display: flex;
+            justify-content: center; /* Yatayda ortala */
+            flex-wrap: wrap; /* İçerik sarılabilsin */
+        }
+
+        .col-md-4 {
+            flex: 0 0 100%; /* Sütun genişliğini %100 yap */
+            max-width: 100%;
+            display: flex; /* Flex ayarlarını uyguluyoruz */
+            justify-content: center; /* İçeriği ortala */
+        }
+
+        .blog-entry {
+            width: 100%; /* Kutunun genişliğini tam yap */
+        }
+    }
+       @@media (max-width: 520px) {
+        .title-section p {
+          display: none; /* 520px altında paragrafı gizle */
+        }
+
+            .title-section h2{
+                margin-bottom:35px;
+            }
+      }
+
+
+</style>
+
+
+
+<script>
+    function updateBlogTitlesAndContents() {
+        const titleElements = document.querySelectorAll('.blog-title'); // Tüm blog başlıklarını seç
+        const contentElements = document.querySelectorAll('.blog-content'); // Tüm blog içeriklerini seç
+        const maxTitleLength = 40;
+        const maxContentLengthMobile = 170;
+        const maxContentLengthDesktop = 70;
+
+        titleElements.forEach((titleElement, index) => {
+            const originalTitle = titleElement.getAttribute('data-title'); // Title verisini 'data-title' attribute'undan alıyoruz
+
+            // 768px'in altında tam başlık göster
+            if (window.matchMedia("(max-width: 575px)").matches) {
+                titleElement.textContent = originalTitle;
+            }
+            // 768px ve üzeri için başlık uzunluğunu kontrol et
+            else {
+                if (originalTitle.length > maxTitleLength) {
+                    titleElement.textContent = originalTitle.substring(0, maxTitleLength) + '..';
+                } else {
+                    titleElement.textContent = originalTitle;
+                }
+            }
+
+            // İçerik güncellemesi
+            const contentElement = contentElements[index]; // İlgili içerik elemanını seç
+            const originalContent = contentElement.getAttribute('data-content'); // İçerik verisini 'data-content' attribute'undan alıyoruz
+
+            // 768px'in altında 140 karakter göster
+            if (window.matchMedia("(max-width: 575px)").matches) {
+                contentElement.textContent = `"${originalContent.substring(0, maxContentLengthMobile)}.."`;
+            }
+            // 768px ve üzeri için 80 karakter göster
+            else {
+                contentElement.textContent = `"${originalContent.substring(0, maxContentLengthDesktop)}.."`;
+            }
+        });
+    }
+
+    // Sayfa yüklendiğinde ve pencere yeniden boyutlandırıldığında güncelle
+    window.addEventListener('load', updateBlogTitlesAndContents);
+    window.addEventListener('resize', updateBlogTitlesAndContents);
+</script>

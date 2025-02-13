@@ -47,4 +47,18 @@ public class BlogPostController : Controller
 
         return View(blogPostModel);
     }
+  
+    [HttpGet]
+    public async Task<IActionResult> All()
+    {
+        var result = await _blogPostService.GetAllAsync();
+
+        var dtos = result.Data;
+
+        var models = _mapper.Map<List<AllBlogPostsViewModel>>(dtos);
+
+        var filteredModels = models.Where(m => m.IsVisible).ToList();
+
+        return View(filteredModels);
+    }
 }
