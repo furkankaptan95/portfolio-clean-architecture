@@ -3,6 +3,7 @@ using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
 using PortfolioApp.Application.Use_Cases.BlogPost.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
+using PortfolioApp.Core.DTOs.Web.BlogPost;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.Application.Business_Logic.Services;
@@ -48,10 +49,18 @@ public class BlogPostService : IBlogPostService
         return result;
     }
 
+    public async Task<ServiceResult<BlogPostWebDto>> GetByIdWebAsync(int id)
+    {
+        var result = await _mediator.Send(new GetBlogPostByIdWebQuery(id));
+
+        return result;
+    }
+
     public async Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)
     {
         var result = await _mediator.Send(new UpdateBlogPostCommand(dto));
 
         return result;
     }
+
 }

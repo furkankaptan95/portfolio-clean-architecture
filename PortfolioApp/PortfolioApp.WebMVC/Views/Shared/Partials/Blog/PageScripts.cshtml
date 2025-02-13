@@ -1,0 +1,39 @@
+﻿<script src="~/blog/js/jquery.min.js"></script>
+<script src="~/blog/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="~/blog/js/popper.min.js"></script>
+<script src="~/blog/js/bootstrap.min.js"></script>
+<script src="~/blog/js/jquery.easing.1.3.js"></script>
+<script src="~/blog/js/jquery.waypoints.min.js"></script>
+<script src="~/blog/js/jquery.stellar.min.js"></script>
+<script src="~/blog/js/owl.carousel.min.js"></script>
+<script src="~/blog/js/jquery.magnific-popup.min.js"></script>
+<script src="~/blog/js/aos.js"></script>
+<script src="~/blog/js/jquery.animateNumber.min.js"></script>
+<script src="~/blog/js/scrollax.min.js"></script>
+
+<script src="~/blog/js/main.js"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Hem success hem de error alert'lerini seç
+        var alerts = document.querySelectorAll('.custom-alert-success, .custom-alert-error');
+
+        alerts.forEach(function (alert) {
+            if (alert) {
+                setTimeout(function () {
+                    alert.style.transition = 'opacity 0.5s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(function () {
+                        alert.remove();
+                    }, 500); // Görsel olarak kaybolduktan sonra tamamen kaldır
+                }, 5000); // 5 saniye sonra kaybolmaya başla
+            }
+        });
+    });
+
+</script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+

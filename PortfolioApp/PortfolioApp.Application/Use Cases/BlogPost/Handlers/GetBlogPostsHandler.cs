@@ -17,7 +17,7 @@ public class GetBlogPostsHandler : IRequestHandler<GetBlogPostsQuery, ServiceRes
     {
         var dtos = new List<BlogPostDto>();
 
-        var entities = await _dataDbContext.BlogPosts.ToListAsync();
+        var entities = await _dataDbContext.BlogPosts.Include(bp=>bp.Comments).ToListAsync();
 
         if (entities is null)
         {
@@ -33,6 +33,7 @@ public class GetBlogPostsHandler : IRequestHandler<GetBlogPostsQuery, ServiceRes
                PublishDate = item.PublishDate,
                IsVisible = item.IsVisible,
                UpdatedAt = item.UpdatedAt,
+               CommentsCount = item.Comments.Count,
            })
            .ToList();
 

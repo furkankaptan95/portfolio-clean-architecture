@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
+using PortfolioApp.Core.DTOs.Web.BlogPost;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.AdminMVC.Services;
@@ -49,6 +50,11 @@ public class BlogPostService : IBlogPostService
 
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<BlogPostDto>>();
 
+    }
+
+    public Task<ServiceResult<BlogPostWebDto>> GetByIdWebAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)
