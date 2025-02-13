@@ -26,7 +26,19 @@
 
                 @if (userId.HasValue && userId > 0 && userId == comment.UserId)
                 {
-                    <a href="/Comment/Delete/@comment.Id" class="delete-comment-btn">Yorumu Sil</a>
+                    <form asp-controller="Comment" asp-action="Delete" method="post" class="delete-comment-btn">
+
+                        @* @Html.AntiForgeryToken() *@
+
+                        <input name="UserId" type="hidden" value="@userId" />
+                        <input name="CommenterId" type="hidden" value="@comment.UserId" />
+                        <input name="CommentId" type="hidden" value="@comment.Id" />
+
+                        <div class="form-group">
+                            <button type="submit" class="btn-sm btn-danger">Yorumu Sil</button>
+                        </div>
+
+                    </form>
                 }
             </div>
         </li>

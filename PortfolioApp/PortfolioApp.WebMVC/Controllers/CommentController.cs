@@ -33,4 +33,40 @@ public class CommentController : Controller
 
         return Redirect($"/BlogPost/BlogPost/{model.BlogPostId}");
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete([FromForm] DeleteCommentViewModel model)
+    {
+        var referer = Request.Headers["Referer"].ToString();
+
+        if(model.UserId != model.CommenterId)
+        {
+            TempData["ErrorMessage"] = "Size ait olmayan bir yorumu silmeye çalıştınız!";
+
+            if (!string.IsNullOrEmpty(referer))
+            {
+                return Redirect(referer);
+            }
+
+            return Redirect("/BlogPost/All");
+        }
+
+        var result = await _commentService.DeleteAsync(model.CommentId);
+
+        if (result.IsSuccess)
+        {
+            TempData["Message"] = result.Message;
+        }
+        else
+        {
+            TempData["ErrorMessage"] = result.Message;
+        }
+
+        if (!string.IsNullOrEmpty(referer))
+        {
+            return Redirect(referer);
+        }
+
+        return Redirect("/BlogPost/All");
+    }
 }

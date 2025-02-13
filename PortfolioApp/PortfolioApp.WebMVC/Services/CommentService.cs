@@ -24,9 +24,11 @@ public class CommentService : ICommentService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult> DeleteAsync(int id)
+    public async Task<ServiceResult> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var apiResponse = await DataApiClient.GetAsync($"comment/delete/{id}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public Task<ServiceResult<List<CommentDto>>> GetAllAsync()
