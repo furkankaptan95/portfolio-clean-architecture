@@ -6,8 +6,19 @@
 @inject IOptions<FileApiSettings> fileSettings
 
 @{
+    int userId = 0;
+    string userName = null;
+
+    @if (User?.Identity?.IsAuthenticated == true)
+    {
+         userId = int.Parse(User.Claims.First(claim => claim.Type == "sub").Value);
+        userName = User.Claims.First(claim => claim.Type == "name").Value;
+    }
+
     Layout = "_BlogLayout";
     var fileApiUrl = fileSettings.Value.FileApiUrl;
+
+    ViewData["UserId"] = userId;
 }
 
 @{
@@ -100,14 +111,44 @@
                             <partial name="Partials/Comments.cshtml" model="Model.Comments" />
                         }
 
-                       @*  @if (User?.Identity?.IsAuthenticated == true)
-                        {
-                            <partial name="Partials/SignedCommentForm.cshtml" model="Model.SignedComment" />
-                        }
-                        else
-                        {
-                            <partial name="Partials/UnsignedCommentForm.cshtml" model="Model.UnsignedComment" />
-                        } *@
+                    <div class="comment-form-wrap pt-5">
+                        <h3 class="mb-5">Yorum Yapın</h3>
+                        <form asp-controller="Comment" asp-action="Add" method="post" class="p-5 bg-dark">
+
+                            @* @Html.AntiForgeryToken() *@
+
+                            <input name="BlogPostId" type="hidden" value="@Model.Id" />
+                            <input name="UserId" type="hidden" value="@userId" />
+                            <input name="SignedCommenterName" type="hidden" value="@userName" />
+
+                            @if (User?.Identity?.IsAuthenticated == false)
+                            {
+                                <div class="form-group">
+                                    <label for="UnsignedCommenterName" class="control-label">İsim</label>
+                                    <input id="UnsignedCommenterName" name="UnsignedCommenterName" class="form-control" placeholder="İsminiz" />
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <label for="Content" class="form-label">İçerik</label>
+                                <textarea id="Content" name="Content" rows="6" class="form-control" placeholder="Yorumunuz.."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn py-3 px-4 btn-primary">Gönder</button>
+                            </div>
+
+                            <div class="form-group">
+                                <p class="text-muted mt-2" style="font-size: 14px;">*Yorumunuz Yönetici onayından sonra yayınlanacaktır.</p>
+                                @if (User?.Identity?.IsAuthenticated == false)
+                                {
+                                    <p class="text-muted mt-2" style="font-size: 14px;">*Önemli Not : Kullanıcı girişi yapmadan yapılan yorumlarda daha sonradan yorumu silme yetkiniz olmayacaktır.</p>
+                                }
+
+                            </div>
+                        </form>
+
+                    </div>
 
                     </div> 
 

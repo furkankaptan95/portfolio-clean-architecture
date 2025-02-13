@@ -1,5 +1,9 @@
 ﻿@model List<CommentViewModel>
 
+@{
+    var userId = ViewData["UserId"] as int?;
+}
+
 <ul class="comment-list">
 
     @foreach (var comment in Model)
@@ -10,20 +14,32 @@
             </div>
 
             <div class="comment-body">
-               @*  <h3>
+                <h3>
                     @comment.Commenter
-                    @if (userId.HasValue && userId == comment.CommenterId)
+                    @if (userId.HasValue && userId > 0 && userId == comment.UserId)
                     {
                         <span>(Siz)</span>
                     }
-                </h3> *@
+                </h3>
                 <div class="meta">@comment.CreatedAt.ToString("dd MMMM yyyy HH:mm")</div>
                 <p>@comment.Content</p>
 
-               @*  @if (userId.HasValue && userId == comment.CommenterId)
+                @if (userId.HasValue && userId > 0 && userId == comment.UserId)
                 {
-                    <a href="/Comment/Delete/@comment.Id" class="delete-comment-btn">Yorumu Sil</a>
-                } *@
+                    <form asp-controller="Comment" asp-action="Delete" method="post" class="delete-comment-btn">
+
+                        @* @Html.AntiForgeryToken() *@
+
+                        <input name="UserId" type="hidden" value="@userId" />
+                        <input name="CommenterId" type="hidden" value="@comment.UserId" />
+                        <input name="CommentId" type="hidden" value="@comment.Id" />
+
+                        <div class="form-group">
+                            <button type="submit" class="btn-sm btn-danger">Yorumu Sil</button>
+                        </div>
+
+                    </form>
+                }
             </div>
         </li>
     }
