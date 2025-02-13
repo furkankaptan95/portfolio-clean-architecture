@@ -19,9 +19,9 @@ public class GetBlogPostByIdWebHandler : IRequestHandler<GetBlogPostByIdWebQuery
     }
     public async Task<ServiceResult<BlogPostWebDto>> Handle(GetBlogPostByIdWebQuery request, CancellationToken cancellationToken)
     {
-        var blogPostEntity = await _dataDbContext.BlogPosts.Include(bp=>bp.Comments).FirstOrDefaultAsync(bp=>bp.Id == request.Id);
+        var blogPostEntity = await _dataDbContext.BlogPosts.Include(bp=>bp.Comments.Where(bp=>bp.IsApproved)).FirstOrDefaultAsync(bp=>bp.Id == request.Id);
 
-        if (blogPostEntity is null)
+        if (blogPostEntity is null || blogPostEntity.IsVisible is false)
         {
             return new ServiceResult<BlogPostWebDto>(false, "Blog Post bulunamadı.", null);
         }

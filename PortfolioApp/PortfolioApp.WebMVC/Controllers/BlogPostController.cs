@@ -20,17 +20,31 @@ public class BlogPostController : Controller
         if (id < 1)
         {
             TempData["ErrorMessage"] = "BlogPost bulunamadı.";
-            return Redirect("/all-blog-posts");
+            return Redirect("/BlogPost/All");
         }
 
-        var model = new BlogPostViewModel
+        var result = await _blogPostService.GetByIdWebAsync(id);
+
+        if (!result.IsSuccess)
         {
-            Id = id,
-            Title = "Title",
-            Content = "Content",
-            PublishDate = DateTime.Now,
+            TempData["ErrorMessage"] = result.Message;
+            return Redirect("/BlogPost/All");
+        }
+
+        var blogPostDto = result.Data;
+
+        var blogPostModel = new BlogPostViewModel
+        {
+            Id = blogPostDto.Id,
+            Content = blogPostDto.Content,
+            PublishDate = blogPostDto.PublishDate,
+            Title = blogPostDto.Title,
         };
 
-        return View(model);
+        var commentModels = _mapper.Map<List<CommentViewModel>>(blogPostDto.Comments);
+
+        blogPostModel.Comments = commentModels;
+
+        return View(blogPostModel);
     }
 }

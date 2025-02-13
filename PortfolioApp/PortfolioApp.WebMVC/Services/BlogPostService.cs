@@ -40,9 +40,11 @@ namespace PortfolioApp.WebMVC.Services
             throw new NotImplementedException();
         }
 
-        public Task<ServiceResult<BlogPostWebDto>> GetByIdWebAsync(int id)
+        public async Task<ServiceResult<BlogPostWebDto>> GetByIdWebAsync(int id)
         {
-            throw new NotImplementedException();
+            var apiResponse = await DataApiClient.GetAsync($"blogpost/web/{id}");
+
+            return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<BlogPostWebDto>>();
         }
 
         public Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)

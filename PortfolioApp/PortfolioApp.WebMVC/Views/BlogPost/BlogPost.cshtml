@@ -49,25 +49,9 @@
                     <span class="mr-2"><a href="/#hero" style="color: yellow;">Anasayfa <i class="ion-ios-arrow-forward"></i></a></span>
                     <span class="mr-2"><a href="/BlogPost/All" style="color: yellow;">Blog Postlar <i class="ion-ios-arrow-forward"></i></a></span>
 
-
-                    @if (Model is not null && Model.Content is not null)
-                    {
                         <span style="color: yellow;">
                             @Model.Title
                         </span>
-                    }
-                    else if (Model is not null && Model.Content is null)
-                    {
-                        <span style="color: yellow;">
-                            Bulunamadı
-                        </span>
-                    }
-                    else
-                    {
-                        <span style="color: yellow;">
-                            Ulaşılamıyor
-                        </span>
-                    }
 
                     <i class="ion-ios-arrow-forward"></i>
                 </p>
@@ -80,8 +64,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 ftco-animate">
-                @if (Model is not null && Model.Content is not null)
-                {
+
                     <h2 class="mb-3"> @Model.Title</h2>
                     <small class="publish-date">@Model.PublishDate.ToString("dd MMMM yyyy")</small>
                     <p>
@@ -96,57 +79,40 @@
                     <div class="about-author d-flex p-4 bg-dark position-relative">
                         <div class="desc">
                             <h3>Furkan Kaptan</h3>
-                            <p>Backend Yazılım Geliştirici</p>
+                            <p>.net Yazılım Geliştirici</p>
                         </div>
                         <span class="author-label">Yazar</span>
                     </div>
 
 
 
-                   @*  <div class="pt-5 mt-5">
+                      <div class="pt-5 mt-5">
 
-                        @if (Model.Comments is null)
-                        {
-                            <h3 class="mb-5">Şu anda yorumlara ulaşılamıyor</h3>
-                        }
-                        else if (Model.Comments is not null && Model.Comments.Count < 1)
+                        @if(Model.Comments.Count is 0)
                         {
                             <h3 class="mb-5">Henüz yorum yapılmadı.</h3>
                         }
-                        else if (Model.Comments is not null && Model.Comments.Count > 0)
+                        else
                         {
                             <h3 class="mb-5">@Model.Comments.Count Yorum</h3>
                         }
 
-                        @if (Model.Comments is not null && Model.Comments.Count > 0)
+                        @if (Model.Comments.Count > 0)
                         {
                             <partial name="Partials/Comments.cshtml" model="Model.Comments" />
                         }
 
-                        @if (User?.Identity?.IsAuthenticated == true)
+                       @*  @if (User?.Identity?.IsAuthenticated == true)
                         {
                             <partial name="Partials/SignedCommentForm.cshtml" model="Model.SignedComment" />
                         }
                         else
                         {
                             <partial name="Partials/UnsignedCommentForm.cshtml" model="Model.UnsignedComment" />
-                        }
+                        } *@
 
-                    </div> *@
-                }
-                else if (Model is not null && Model.Content is null)
-                {
-                    <div class="col-12 text-center">
-                        <h3 class="mt-5">Görüntülemek istediğiniz Blog Post bulunamadı.</h3>
-                    </div>
-                }
-                else
-                {
+                    </div> 
 
-                    <div class="col-12 text-center">
-                        <h3 class="mt-5">Görüntülemek istediğiniz Blog Post'a ulaşılamadı.</h3>
-                    </div>
-                }
             </div> <!-- .col-md-8 -->
             <div class="col-lg-4 sidebar ftco-animate">
                @*  <div class="sidebar-box ftco-animate">
