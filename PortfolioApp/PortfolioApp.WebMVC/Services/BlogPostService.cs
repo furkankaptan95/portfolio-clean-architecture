@@ -1,6 +1,6 @@
 ﻿using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
-using PortfolioApp.Core.DTOs.Admin.Education;
+using PortfolioApp.Core.DTOs.Web.BlogPost;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.WebMVC.Services
@@ -39,6 +39,12 @@ namespace PortfolioApp.WebMVC.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<ServiceResult<BlogPostWebDto>> GetByIdWebAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<ServiceResult> UpdateAsync(UpdateBlogPostDto dto)
         {
             throw new NotImplementedException();

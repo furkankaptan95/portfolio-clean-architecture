@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Business_Logic.Services;
+using PortfolioApp.Application.Mappers;
 using PortfolioApp.Application.Use_Cases.AboutMe.Handlers;
 using PortfolioApp.Core.Interfaces;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
@@ -26,7 +27,7 @@ builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<IPersonalInfoService, PersonalInfoService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
