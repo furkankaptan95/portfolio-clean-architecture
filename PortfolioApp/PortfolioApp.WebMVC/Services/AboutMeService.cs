@@ -24,6 +24,11 @@ public class AboutMeService : IAboutMeService
         throw new NotImplementedException();
     }
 
+    public Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResult<AboutMeDto>> GetAsync()
     {
         var apiResponse = await DataApiClient.GetAsync("aboutme/get");

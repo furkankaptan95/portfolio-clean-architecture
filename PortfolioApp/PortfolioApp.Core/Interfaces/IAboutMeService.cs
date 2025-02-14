@@ -9,4 +9,5 @@ public interface IAboutMeService
     Task<ServiceResult<AboutMeDto>> GetAsync();
     Task<ServiceResult> UpdateAboutMeAsync(UpdateAboutMeApiDto dto);
     Task<ServiceResult> UpdateAboutMeAsync(UpdateAboutMeMVCDto dto);
+    Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl);
 }
