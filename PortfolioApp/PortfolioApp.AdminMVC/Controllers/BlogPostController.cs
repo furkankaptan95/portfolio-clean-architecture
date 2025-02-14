@@ -24,6 +24,11 @@ public class BlogPostController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] AddBlogPostViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<AddBlogPostDto>(model);
 
         var result = await _blogPostService.AddBlogPostAsync(dto);
@@ -73,6 +78,11 @@ public class BlogPostController : Controller
     [HttpPost]
     public async Task<IActionResult> Update([FromForm] UpdateBlogPostViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<UpdateBlogPostDto>(model);
 
         var result = await _blogPostService.UpdateAsync(dto);

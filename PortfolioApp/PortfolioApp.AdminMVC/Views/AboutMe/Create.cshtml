@@ -20,48 +20,56 @@
                         <label asp-for="FullName" class="form-label mb-1">Tam İsim</label>
                         <input asp-for="FullName" class="form-control" />
                         <span id="FullNameError" class="text-danger"></span>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3 mt-3">
                         <label asp-for="Introduction" class="form-label mb-1">Giriş</label>
                         <textarea asp-for="Introduction" rows="6" class="form-control"></textarea>
                         <span id="IntroductionError" class="text-danger"></span>
+                        <span asp-validation-for="Introduction" class="text-danger"></span>
                     </div>
                     
                     <div class="mb-3">
                         <label asp-for="Field" class="form-label mb-1">Alan</label>
                         <input asp-for="Field" class="form-control" />
                         <span id="FieldError" class="text-danger"></span>
+                        <span asp-validation-for="Field" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="LinkedInUrl" class="form-label mb-1">LinkedIn</label>
                         <input asp-for="LinkedInUrl" class="form-control" />
                         <span id="LinkenInUrlError" class="text-danger"></span>
+                        <span asp-validation-for="LinkedInUrl" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="GithubUrl" class="form-label mb-1">Github</label>
                         <input asp-for="GithubUrl" class="form-control" />
                         <span id="GithubUrlError" class="text-danger"></span>
+                        <span asp-validation-for="GithubUrl" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Email" class="form-label mb-1">Email</label>
                         <input asp-for="Email" class="form-control" />
                         <span id="EmailError" class="text-danger"></span>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="AboutMeImage" class="form-label mb-1">Fotoğraf</label>
                         <input asp-for="AboutMeImage" class="form-control" type="file" accept="image/*">
                         <span id="AboutMeImageError" class="text-danger"></span>
+                        <span asp-validation-for="AboutMeImage" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="CvFile" class="form-label mb-1">CV</label>
                         <input asp-for="CvFile" class="form-control" type="file" accept=".pdf">
                         <span id="CvFileError" class="text-danger"></span>
+                        <span asp-validation-for="CvFile" class="text-danger"></span>
                     </div>
 
 
