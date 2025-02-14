@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.Home;
 using PortfolioApp.AdminMVC.Services;
-using PortfolioApp.Core.DTOs.Admin.Home;
 
 namespace PortfolioApp.AdminMVC.Controllers;
 public class HomeController(HomeService homeService,IMapper mapper) : Controller
