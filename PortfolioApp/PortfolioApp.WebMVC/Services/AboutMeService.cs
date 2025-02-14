@@ -14,6 +14,7 @@ public class AboutMeService : IAboutMeService
         _mapper = mapper;
     }
     private HttpClient DataApiClient => _factory.CreateClient("dataApi");
+    private HttpClient FileApiClient => _factory.CreateClient("fileApi");
     public Task<ServiceResult> CreateAboutMeAsync(AddAboutMeApiDto dto)
     {
         throw new NotImplementedException();
@@ -24,9 +25,13 @@ public class AboutMeService : IAboutMeService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl)
+    public async Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl)
     {
-        throw new NotImplementedException();
+        var response = await FileApiClient.GetAsync($"download?fileUrl={cvUrl}");
+
+        var result = await response.Content.ReadAsByteArrayAsync();
+
+        return new ServiceResult<byte[]>(true, null, result);
     }
 
     public async Task<ServiceResult<AboutMeDto>> GetAsync()

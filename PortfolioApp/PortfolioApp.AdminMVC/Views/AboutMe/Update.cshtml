@@ -72,7 +72,7 @@
                             <div class="col-12 col-md-6 mb-3 d-flex justify-content-center">
                                 <div class="text-center">
                                     <h4 class="mb-3">CV</h4>
-                                    <img src="@($"{fileApiUrl}/{Model.CvUrl}")" class="img-fluid" alt="CV" style="max-width: 100%; max-height: 200px; object-fit: cover;">
+                                    <a href="@Url.Action("DownloadCv", "AboutMe", new { cvUrl = Model.CvUrl })" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 15px; margin-left:20px;">İndir</a>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
 
                     <div class="mb-3">
                         <label asp-for="AboutMeImage" class="form-label mb-1">Yeni Fotoğraf</label>
-                        <p style="font-size:14px;">İlk fotoğrafınızı değiştirmek istiyorsanız fotoğraf dosyası yükleyiniz.</p>
+                        <p style="font-size:14px;">Fotoğrafınızı değiştirmek istiyorsanız fotoğraf dosyası yükleyiniz.</p>
 
                         <p style="font-size:12px;">**Yüklemezseniz fotoğrafınız aynı kalacaktır.</p>
                         <input asp-for="AboutMeImage" class="form-control" type="file" accept="image/*">
@@ -89,7 +89,7 @@
 
                     <div class="mb-3">
                         <label asp-for="CvFile" class="form-label mb-1">Yeni CV</label>
-                        <p style="font-size:14px;">İkinci fotoğrafınızı değiştirmek istiyorsanız fotoğraf dosyası yükleyiniz.</p>
+                        <p style="font-size:14px;">CV'nizi değiştirmek istiyorsanız pdf dosyası yükleyiniz.</p>
 
                         <p style="font-size:12px;">**Yüklemezseniz CV aynı kalacaktır.</p>
                         <input asp-for="CvFile" class="form-control" type="file" accept=".pdf">
