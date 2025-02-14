@@ -1,11 +1,18 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PortfolioApp.AdminMVC.Models.ViewModels.Home;
+using PortfolioApp.AdminMVC.Services;
+using PortfolioApp.Core.DTOs.Admin.Home;
 
 namespace PortfolioApp.AdminMVC.Controllers;
-public class HomeController : Controller
+public class HomeController(HomeService homeService,IMapper mapper) : Controller
 {
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
-    }
+        var result = await homeService.GetHomeInfosAsync();
 
+        var model = mapper.Map<HomeViewModel>(result.Data);
+
+        return View(model);
+    }
 }

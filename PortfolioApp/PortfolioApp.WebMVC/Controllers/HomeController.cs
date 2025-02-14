@@ -25,7 +25,7 @@ public class HomeController : Controller
         var result = await _aboutMeService.DownloadCvAsync(cvUrl);
 
         var fileBytes = result.Data;
-        var downloadedFileName = "FurkanKaptanÖzgeçmiþ.pdf";
+        var downloadedFileName = "FurkanKaptanCV.pdf";
 
         return File(fileBytes, "application/pdf", downloadedFileName);
     }
