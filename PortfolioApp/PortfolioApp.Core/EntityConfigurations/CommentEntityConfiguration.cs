@@ -28,8 +28,8 @@ public class CommentEntityConfiguration : IEntityTypeConfiguration<CommentEntity
         builder.HasOne(c => c.BlogPost)
             .WithMany(bp => bp.Comments)
             .HasForeignKey(c => c.BlogPostId)
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.SetNull);
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
 }

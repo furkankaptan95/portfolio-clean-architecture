@@ -39,12 +39,15 @@
         </div>
 
         <div class="profile-detail mb-3">
-            <span class="profile-label">CV: </span> @Model.CvUrl
+            <span class="profile-label">CV: </span> 
+
+            <a href="@Url.Action("DownloadCv", "AboutMe", new { cvUrl = Model.CvUrl })" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 15px; margin-left:20px;">İndir</a>
+
         </div>
         
         <div class="row mb-4">
             <div class="col-md-6 text-center mb-3">
-               
+                <span class="profile-label">Fotoğraf: </span>
                 <img src="@($"{fileApiUrl}/{Model.AboutMeImageUrl}")"
                      class="img-thumbnail" 
                      alt="Mevcut Fotoğraf" 

@@ -18,6 +18,7 @@ builder.Services.AddDbContext<DataDbContext>(options =>
 // Add services to the container.
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAboutMeHandler).Assembly));
+builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<IAboutMeService, AboutMeService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();

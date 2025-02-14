@@ -30,7 +30,7 @@ builder.Services.AddHttpClient("fileApi", c =>
     c.BaseAddress = new Uri(fileApiUrl);
 });
 
-
+builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<IAboutMeService, AboutMeService>();
 builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 builder.Services.AddScoped<IEducationService, EducationService>();

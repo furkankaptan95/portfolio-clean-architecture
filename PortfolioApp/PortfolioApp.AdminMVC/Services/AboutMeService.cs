@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Rewrite;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.File;
@@ -47,6 +48,15 @@ public class AboutMeService : IAboutMeService
         var dataApiResult = await dataApiResponse.Content.ReadFromJsonAsync<ServiceResult>();
 
         return dataApiResult;
+    }
+
+    public async Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl)
+    {
+        var response = await FileApiClient.GetAsync($"download?fileUrl={cvUrl}");
+
+        var result = await response.Content.ReadAsByteArrayAsync();
+
+        return new ServiceResult<byte[]>(true,null,result);
     }
 
     public async Task<ServiceResult<AboutMeDto>> GetAsync()

@@ -90,4 +90,15 @@ public class AboutMeController : Controller
         TempData["ErrorMessage"] = result.Message;
         return Redirect("/");
     }
+
+    [HttpGet]
+    public async Task<IActionResult> DownloadCv([FromQuery] string cvUrl)
+    {
+        var result = await _aboutMeService.DownloadCvAsync(cvUrl); 
+
+        var fileBytes = result.Data;
+        var downloadedFileName = "FurkanKaptanÖzgeçmiş.pdf";
+
+        return File(fileBytes, "application/pdf", downloadedFileName);
+    }
 }
