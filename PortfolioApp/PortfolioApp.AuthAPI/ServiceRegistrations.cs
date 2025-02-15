@@ -1,6 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Business_Logic.Services;
+using PortfolioApp.Application.Mappers;
+using PortfolioApp.Application.Use_Cases.AboutMe.Validators;
 using PortfolioApp.Application.Use_Cases.Auth.Handlers;
+using PortfolioApp.Application.Use_Cases.Auth.Validators;
 using PortfolioApp.Core.Interfaces;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
@@ -20,7 +25,12 @@ public static class ServiceRegistrations
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterHandler).Assembly));
         services.AddScoped<IAuthService, AuthService>();
 
-        services.AddControllers();
+		services.AddAutoMapper(typeof(MappingProfile));
+
+		services.AddFluentValidationAutoValidation();
+		services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>();
+
+		services.AddControllers();
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
