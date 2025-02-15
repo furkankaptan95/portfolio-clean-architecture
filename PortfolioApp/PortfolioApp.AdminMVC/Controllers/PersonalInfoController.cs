@@ -29,6 +29,11 @@ public class PersonalInfoController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] AddPersonalInfoViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<AddPersonalInfoDto>(model);
 
         var result = await _personalInfoService.AddAsync(dto);
@@ -76,6 +81,11 @@ public class PersonalInfoController : Controller
     [HttpPost]
     public async Task<IActionResult> Update([FromForm] UpdatePersonalInfoViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<UpdatePersonalInfoDto>(model);
 
         var result = await _personalInfoService.UpdateAsync(dto);
