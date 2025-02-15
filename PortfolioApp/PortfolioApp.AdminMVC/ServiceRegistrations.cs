@@ -19,6 +19,8 @@ public static class ServiceRegistrations
 
         services.Configure<FileApiSettings>(configuration.GetSection("FileApiSettings"));
 
+
+
         var dataApiUrl = configuration.GetValue<string>("DataApiUrl");
         if (string.IsNullOrWhiteSpace(dataApiUrl))
         {
@@ -27,9 +29,11 @@ public static class ServiceRegistrations
         services.AddHttpClient("dataApi", c =>
         {
             c.BaseAddress = new Uri(dataApiUrl);
-        });
+        }).AddHttpMessageHandler<JwtAndRefreshTokenHandler>();
 
-        var fileApiUrl = configuration.GetValue<string>("FileApiUrl");
+
+
+		var fileApiUrl = configuration.GetValue<string>("FileApiUrl");
         if (string.IsNullOrWhiteSpace(fileApiUrl))
         {
             throw new InvalidOperationException("FileApiUrl is required in appsettings.json");
@@ -37,9 +41,11 @@ public static class ServiceRegistrations
         services.AddHttpClient("fileApi", c =>
         {
             c.BaseAddress = new Uri(fileApiUrl);
-        });
+        }).AddHttpMessageHandler<JwtAndRefreshTokenHandler>();
 
-        var authApiUrl = configuration.GetValue<string>("AuthApiUrl");
+
+
+		var authApiUrl = configuration.GetValue<string>("AuthApiUrl");
 
         if (string.IsNullOrWhiteSpace(authApiUrl))
         {
@@ -49,9 +55,12 @@ public static class ServiceRegistrations
         services.AddHttpClient("authApi", c =>
         {
             c.BaseAddress = new Uri(authApiUrl);
-        });
+        }).AddHttpMessageHandler<JwtAndRefreshTokenHandler>();
 
-        services.AddScoped<HomeService>();
+
+
+
+		services.AddScoped<HomeService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAboutMeService, AboutMeService>();
         services.AddScoped<IBlogPostService, BlogPostService>();
