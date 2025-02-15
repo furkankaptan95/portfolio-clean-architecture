@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.FileAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class FileController : ControllerBase
 {
     private readonly IFileService _fileService;
@@ -14,7 +16,7 @@ public class FileController : ControllerBase
         _fileService = fileService;
     }
 
-    [HttpPost("upload")]
+	[HttpPost("upload")]
     public async Task<IActionResult> Upload([FromForm] IFormFile file)
     {
         var result = await _fileService.UploadFileAsync(file);
@@ -33,6 +35,7 @@ public class FileController : ControllerBase
         return BadRequest(result);
     }
 
+    [AllowAnonymous]
     [HttpGet("download")]
     public async Task<IActionResult> Download([FromQuery] string fileUrl)
     {
