@@ -22,6 +22,11 @@ public class AddCommentDtoValidator : AbstractValidator<AddCommentDto>
             .When(x => x.UnsignedCommenterName != null)
             .WithMessage("UnsignedCommenterName en fazla 30 karakter olmalıdır.");
 
+        RuleFor(x => x.SignedCommenterName)
+           .MaximumLength(50)
+           .When(x => x.SignedCommenterName != null)
+           .WithMessage("UnsignedCommenterName en fazla 50 karakter olmalıdır.");
+
         RuleFor(comment => comment.Content)
            .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("İçerik kısmı boş olamaz.")
            .MaximumLength(300).WithMessage("İçerik maksimum 300 karakter olabilir.");

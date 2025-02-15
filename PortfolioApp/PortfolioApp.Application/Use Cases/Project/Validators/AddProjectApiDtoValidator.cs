@@ -7,7 +7,8 @@ public class AddProjectApiDtoValidator : AbstractValidator<AddApiProjectDto>
     public AddProjectApiDtoValidator()
     {
         RuleFor(x => x.ImageUrl)
-            .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("ImageUrl kısmı boş olamaz.");
+            .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("ImageUrl kısmı boş olamaz.")
+            .MaximumLength(255).WithMessage("ImageUrl en fazla 255 karakter olabilir.");
 
         RuleFor(x => x.Title)
             .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("Başlık kısmı boş olamaz.")

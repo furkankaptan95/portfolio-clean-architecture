@@ -12,29 +12,31 @@ public class ContactMessageEntityConfiguration : IEntityTypeConfiguration<Contac
 
         builder.Property(cm => cm.Name)
             .IsRequired()
-            .HasColumnType("nvarchar(50)");  // nvarchar yerine varchar kullanıyoruz
+            .HasColumnType("nvarchar(50)");
 
         builder.Property(cm => cm.Email)
             .IsRequired()
-            .HasColumnType("nvarchar(100)");  // nvarchar yerine varchar kullanıyoruz
+            .HasColumnType("nvarchar(100)");
 
         builder.Property(cm => cm.Subject)
-            .HasColumnType("nvarchar(100)");  // nvarchar yerine varchar kullanıyoruz
+            .HasColumnType("nvarchar(100)");
 
         builder.Property(cm => cm.Message)
             .IsRequired()
-            .HasColumnType("nvarchar(max)");  // nvarchar(max) yerine text kullanıyoruz
+            .HasColumnType("nvarchar(max)");
 
         builder.Property(c => c.SentDate)
             .IsRequired()
-            .HasColumnType("datetime");  // datetime yerine timestamp kullanıyoruz
+            .HasColumnType("datetime");
 
         builder.Property(c => c.IsRead)
             .IsRequired()
-            .HasColumnType("bit");  // bit yerine boolean kullanıyoruz
+            .HasColumnType("bit"); 
 
         builder.Property(c => c.ReplyDate)
-            .HasColumnType("datetime");  // datetime yerine timestamp kullanıyoruz
+            .HasColumnType("datetime");
+
+        builder.Property(c => c.Reply).HasColumnType("nvarchar(max)");
     }
 
 }
