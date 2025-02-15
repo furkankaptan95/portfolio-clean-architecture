@@ -61,4 +61,33 @@ public class AuthController : Controller
 
 		return Redirect("/");
 	}
+
+	[HttpGet]
+	public async Task<IActionResult> LogOut()
+	{
+		var refreshToken = Request.Cookies["RefreshToken"];
+
+		if (string.IsNullOrEmpty(refreshToken))
+		{
+			Response.Cookies.Delete("JwtToken");
+
+			TempData["Message"] = "Hesabınızdan başarıyla çıkış yapıldı.";
+			return Redirect("/Auth/Login");
+
+		}
+
+		var result = await _authService.RevokeTokenAsync(refreshToken);
+
+		if (result.IsSuccess)
+		{
+			Response.Cookies.Delete("JwtToken");
+			Response.Cookies.Delete("RefreshToken");
+
+			TempData["Message"] = "Hesabınızdan başarıyla çıkış yapıldı.";
+			return Redirect("/Auth/Login");
+		}
+
+		TempData["ErrorMessage"] = "Hesabınızdan çıkış yapılırken bir problem oluştu..";
+		return Redirect("/");
+	}
 }

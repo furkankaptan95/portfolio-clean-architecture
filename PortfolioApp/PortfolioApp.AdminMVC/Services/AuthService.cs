@@ -2,6 +2,7 @@
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Interfaces;
+using System.Net;
 
 namespace PortfolioApp.AdminMVC.Services;
 public class AuthService : IAuthService
@@ -32,8 +33,10 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult> RevokeTokenAsync(string token)
+    public async Task<ServiceResult> RevokeTokenAsync(string token)
     {
-        throw new NotImplementedException();
-    }
+	    var apiResponse = await AuthApiClient.PostAsJsonAsync("revoke-token", token);
+
+		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
+	}
 }
