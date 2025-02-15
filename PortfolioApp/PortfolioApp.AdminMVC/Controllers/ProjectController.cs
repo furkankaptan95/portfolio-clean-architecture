@@ -24,6 +24,11 @@ public class ProjectController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] AddProjectViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<AddMvcProjectDto>(model);
 
         var result = await _projectService.AddAsync(dto);
@@ -73,6 +78,11 @@ public class ProjectController : Controller
     [HttpPost]
     public async Task<IActionResult> Update([FromForm] UpdateProjectViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<UpdateProjectMVCDto>(model);
 
         var result = await _projectService.UpdateAsync(dto);

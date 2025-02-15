@@ -18,18 +18,21 @@
                 <label asp-for="Title" class="form-label mb-1">Başlık</label>
                 <input asp-for="Title" class="form-control" placeholder="Başlığı buraya yazınız" />
                 <span id="TitleError" class="text-danger"></span>
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label asp-for="Description" class="form-label mb-1">Açıklama</label>
                 <textarea asp-for="Description" rows="7" class="form-control"></textarea>
                 <span id="DescriptionError" class="text-danger"></span>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
                 <label asp-for="ImageFile" class="form-label mb-1">Fotoğraf</label>
                 <input asp-for="ImageFile" class="form-control" type="file" accept="image/*">
                 <span id="ImageFileError" class="text-danger"></span>
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-custom mt-2">Ekle</button>
