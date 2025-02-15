@@ -1,0 +1,177 @@
+﻿@model LoginViewModel
+
+@{
+	Layout = null;
+}
+
+@{
+	if (TempData["Message"] is not null)
+	{
+		<div class="alert custom-alert-success mt-5">
+			@TempData["Message"]
+		</div>
+	}
+
+	if (TempData["ErrorMessage"] is not null)
+	{
+		<div class="alert custom-alert-error mt-5">
+			@TempData["ErrorMessage"]
+		</div>
+	}
+
+	if (ViewData["Message"] is not null)
+	{
+		<div class="alert custom-alert-success mt-5">
+			@ViewData["Message"]
+		</div>
+	}
+
+	if (ViewData["ErrorMessage"] is not null)
+	{
+		<div class="alert custom-alert-error mt-5">
+			@ViewData["ErrorMessage"]
+		</div>
+	}
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V3</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="~/auth/images/icons/favicon.ico" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/auth/css/util.css">
+	<link rel="stylesheet" type="text/css" href="~/auth/css/main.css">
+	<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100">
+				<form asp-action="Login" asp-controller="Auth" class="login100-form validate-form" method="post">
+					<span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						Giriş yap
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate="Email giriniz">
+						<input class="input100" type="text" asp-for="Email" placeholder="Email">
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Şifre giriniz">
+						<input class="input100" type="password" asp-for="Password" placeholder="Şifre" autocomplete="off">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Giriş yap
+						</button>
+					</div>
+
+					<div class="text-center p-t-90">
+						<a class="txt1" href="#">
+							Şifrenizi mi unuttunuz?
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+	<!--===============================================================================================-->
+	<script src="~/auth/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/auth/vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/auth/vendor/bootstrap/js/popper.js"></script>
+	<script src="~/auth/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/auth/vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/auth/vendor/daterangepicker/moment.min.js"></script>
+	<script src="~/auth/vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/auth/vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/auth/js/main.js"></script>
+
+</body>
+</html>
+
+
+<style>
+
+	.custom-alert-success {
+		position: fixed; /* Sayfada sabit konumlandırma */
+		top: 10px; /* Ekranın üst kısmından 10px boşluk */
+		left: 55%; /* Ekranın ortasına hizalama */
+		transform: translateX(-50%); /* Ortalamak için translate */
+		z-index: 1000; /* Diğer elementlerin üstünde görünmesini sağlar */
+		background-color: #dff0d8;
+		color: #3c763d;
+		padding: 10px 20px;
+		border-radius: 5px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.custom-alert-error {
+		position: fixed; /* Sayfada sabit konumlandırma */
+		top: 10px; /* Ekranın üst kısmından 10px boşluk */
+		left: 55%; /* Ekranın ortasına hizalama */
+		transform: translateX(-50%); /* Ortalamak için translate */
+		z-index: 1000; /* Diğer elementlerin üstünde görünmesini sağlar */
+		background-color: #f8d7da;
+		color: #721c24;
+		padding: 10px 20px;
+		border-radius: 5px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	}
+
+</style>
+
+
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		var alerts = document.querySelectorAll('.custom-alert-success, .custom-alert-error');
+		alerts.forEach(function (alert) {
+			if (alert) {
+				setTimeout(function () {
+					alert.style.transition = 'opacity 0.5s ease';
+					alert.style.opacity = '0';
+					setTimeout(function () {
+						alert.remove();
+					}, 500);
+				}, 5000);
+			}
+		});
+	});
+</script>

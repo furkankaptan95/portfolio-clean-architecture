@@ -7,7 +7,7 @@ public class UserEntity : BaseEntity<int>
     public string? ImageUrl { get; set; }
     public byte[] PasswordHash { get; set; } = default!;
     public byte[] PasswordSalt { get; set; } = default!;
-    public string Role { get; set; } = "commenter";
+    public string Role { get; set; } = "User";
     public virtual ICollection<RefreshTokenEntity> RefreshTokens { get; set; } = default!;
     public virtual ICollection<UserVerificationEntity> UserVerifications { get; set; } = default!;
 

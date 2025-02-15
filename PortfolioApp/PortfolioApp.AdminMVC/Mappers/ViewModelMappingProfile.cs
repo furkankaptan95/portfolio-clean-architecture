@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PortfolioApp.AdminMVC.Models.ViewModels.AboutMe;
+using PortfolioApp.AdminMVC.Models.ViewModels.Auth;
 using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.AdminMVC.Models.ViewModels.Comment;
 using PortfolioApp.AdminMVC.Models.ViewModels.ContactMessage;
@@ -17,6 +18,7 @@ using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.Home;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 using PortfolioApp.Core.DTOs.Admin.Project;
+using PortfolioApp.Core.DTOs.Auth;
 
 namespace PortfolioApp.AdminMVC.Mappers;
 public class ViewModelMappingProfile : Profile
@@ -63,5 +65,6 @@ public class ViewModelMappingProfile : Profile
 
         CreateMap<HomeDto, HomeViewModel>();
 
-    }
+		CreateMap<LoginViewModel, LoginDto>(); 
+	}
 }
