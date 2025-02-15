@@ -18,6 +18,16 @@ public class CommentController : Controller
     [HttpPost]
     public async Task<IActionResult> Add([FromForm] AddCommentViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            if(model.SignedCommenterName is not null)
+                TempData["CommentError"] = "Lütfen formu düzgün şekilde doldurunuz. Yorum zorunlu ve en fazla 300 karakter olabilir.";
+            else
+                TempData["CommentError"] = "Lütfen formu düzgün şekilde doldurunuz. İsim zorunlu ve en fazla 30 , yorum zorunlu ve en fazla 300 karakter olabilir.";
+
+            return Redirect($"/BlogPost/BlogPost/{model.BlogPostId}/#addCommentSection");
+        }
+
         var dto = _mapper.Map<AddCommentDto>(model);
 
         var result =await _commentService.AddAsync(dto);
