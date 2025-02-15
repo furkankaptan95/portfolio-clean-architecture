@@ -1,32 +1,12 @@
 using Microsoft.Extensions.FileProviders;
-using PortfolioApp.Application.Business_Logic.Services;
-using PortfolioApp.Application.Common.Configurations;
-using PortfolioApp.Core.Interfaces;
+using PortfolioApp.FileAPI;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins", builder =>
-    {
-        builder.AllowAnyOrigin() // Tüm origin'lere izin verir.
-               .AllowAnyMethod() // Tüm HTTP yöntemlerine izin verir.
-               .AllowAnyHeader(); // Tüm baþlýklara izin verir.
-    });
-});
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.Configure<FileSettings>(builder.Configuration.GetSection("FileSettings"));
-builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddServices(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
