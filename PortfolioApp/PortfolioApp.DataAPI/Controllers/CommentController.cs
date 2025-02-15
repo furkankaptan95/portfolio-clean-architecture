@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.Application.Business_Logic.Services;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Web.Comment;
 using PortfolioApp.Core.Interfaces;
 
@@ -7,6 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class CommentController : ControllerBase
 {
     private readonly ICommentService _commentService;
@@ -15,6 +16,7 @@ public class CommentController : ControllerBase
         _commentService = commentService;
     }
 
+    [AllowAnonymous]
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] AddCommentDto dto)
     {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.Interfaces;
@@ -7,6 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class AboutMeController : ControllerBase
 {
     private readonly IAboutMeService _aboutMeService;
@@ -28,7 +29,7 @@ public class AboutMeController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("get")]
     public async Task<IActionResult> Get()
     {

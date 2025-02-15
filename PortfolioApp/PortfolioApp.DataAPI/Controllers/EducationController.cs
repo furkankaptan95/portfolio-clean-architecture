@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.Application.Business_Logic.Services;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
@@ -7,6 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class EducationController : ControllerBase
 {
     private readonly IEducationService _educationService;
@@ -22,7 +23,7 @@ public class EducationController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {

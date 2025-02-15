@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.Application.Business_Logic.Services;
-using PortfolioApp.Core.DTOs.Admin.Experience;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.Interfaces;
 
@@ -8,6 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class ProjectController : ControllerBase
 {
     private readonly IProjectService _projectService;
@@ -23,7 +23,7 @@ public class ProjectController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {

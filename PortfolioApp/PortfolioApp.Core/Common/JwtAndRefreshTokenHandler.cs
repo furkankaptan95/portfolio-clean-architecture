@@ -3,7 +3,7 @@
 namespace PortfolioApp.Core.Common;
 public class JwtAndRefreshTokenHandler : DelegatingHandler
 {
-	private readonly IHttpContextAccessor _httpContextAccessor;
+	private readonly IHttpContextAccessor _httpContextAccessor; 
 
 	public JwtAndRefreshTokenHandler(IHttpContextAccessor httpContextAccessor)
 	{

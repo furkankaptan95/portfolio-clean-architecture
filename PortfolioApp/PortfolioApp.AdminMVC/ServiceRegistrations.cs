@@ -14,7 +14,8 @@ public static class ServiceRegistrations
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHttpContextAccessor();
-        AddJwtAuth(services, configuration);
+		services.AddTransient<JwtAndRefreshTokenHandler>();
+		AddJwtAuth(services, configuration);
         services.AddControllersWithViews();
 
         services.Configure<FileApiSettings>(configuration.GetSection("FileApiSettings"));
