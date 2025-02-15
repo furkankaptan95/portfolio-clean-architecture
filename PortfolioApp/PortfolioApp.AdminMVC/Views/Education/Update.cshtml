@@ -23,24 +23,28 @@
                         <label asp-for="School" class="form-label mb-1">Okul</label>
                         <input asp-for="School" class="form-control" placeholder="Okul bilgisini buraya yazınız" />
                         <span id="SchoolError" class="text-danger"></span>
+                        <span asp-validation-for="School" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Degree" class="form-label mb-1">Derece</label>
                         <input asp-for="Degree" class="form-control" placeholder="Derece bilgisini buraya yazınız" />
                         <span id="DegreeError" class="text-danger"></span>
+                        <span asp-validation-for="Degree" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="StartDate" class="form-label mb-1">Başlangıç Tarihi</label>
                         <input asp-for="StartDate" class="form-control" type="datetime-local" />
                         <span id="StartDateError" class="text-danger"></span>
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="EndDate" class="form-label mb-1">Bitiş Tarihi</label>
                         <input asp-for="EndDate" class="form-control" type="datetime-local" />
                         <span id="EndDateError" class="text-danger"></span>
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Güncelle</button>
