@@ -1,9 +1,12 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.Home;
 using PortfolioApp.AdminMVC.Services;
 
 namespace PortfolioApp.AdminMVC.Controllers;
+
+[Authorize(Roles = "Admin")]
 public class HomeController(HomeService homeService,IMapper mapper) : Controller
 {
     public async Task<IActionResult> Index()

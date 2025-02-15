@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.AdminMVC.Controllers;
+
+[Authorize(Roles = "Admin")]
 public class BlogPostController : Controller
 {
     private readonly IBlogPostService _blogPostService;

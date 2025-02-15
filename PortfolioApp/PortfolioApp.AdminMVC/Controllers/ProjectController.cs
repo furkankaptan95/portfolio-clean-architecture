@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.Project;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.AdminMVC.Controllers;
+
+[Authorize(Roles = "Admin")]
 public class ProjectController : Controller
 {
     private readonly IProjectService _projectService;

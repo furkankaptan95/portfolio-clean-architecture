@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.Education;
 using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.AdminMVC.Controllers;
+
+[Authorize(Roles = "Admin")]
 public class EducationController : Controller
 {
     private readonly IEducationService _educationService;

@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.PersonalInfo;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 using PortfolioApp.Core.Interfaces;
 
 namespace PortfolioApp.AdminMVC.Controllers;
+
+[Authorize(Roles = "Admin")]
 public class PersonalInfoController : Controller
 {
     private readonly IPersonalInfoService _personalInfoService;
