@@ -41,7 +41,7 @@ public class CommentController : Controller
             TempData["ErrorMessage"] = result.Message;
         }
 
-        return Redirect($"/BlogPost/BlogPost/{model.BlogPostId}");
+        return Redirect($"/BlogPost/BlogPost/{model.BlogPostId}/#addCommentSection");
     }
 
     [HttpPost]

@@ -6,8 +6,8 @@
 @inject IOptions<FileApiSettings> fileSettings
 
 @{
-    int userId = 0;
-    string userName = null;
+    int? userId = null;
+    string? userName = null;
 
     @if (User?.Identity?.IsAuthenticated == true)
     {
@@ -125,7 +125,7 @@
                             <input name="UserId" type="hidden" value="@userId" />
                             <input name="SignedCommenterName" type="hidden" value="@userName" />
 
-                            @if (User?.Identity?.IsAuthenticated == false)
+                            @if (userId is null)
                             {
                                 <div class="form-group">
                                     <label for="UnsignedCommenterName" class="control-label">İsim</label>
