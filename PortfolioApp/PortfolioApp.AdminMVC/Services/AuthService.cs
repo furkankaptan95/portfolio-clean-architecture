@@ -2,7 +2,6 @@
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Interfaces;
-using System.Net;
 
 namespace PortfolioApp.AdminMVC.Services;
 public class AuthService : IAuthService

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Web.Comment;
 using PortfolioApp.Core.Interfaces;
@@ -44,6 +45,7 @@ public class CommentController : Controller
         return Redirect($"/BlogPost/BlogPost/{model.BlogPostId}/#addCommentSection");
     }
 
+    [Authorize(Roles ="User")]
     [HttpPost]
     public async Task<IActionResult> Delete([FromForm] DeleteCommentViewModel model)
     {
