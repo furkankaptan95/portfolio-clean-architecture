@@ -57,29 +57,35 @@
                     @* @Html.AntiForgeryToken() *@
 
                     <div class="row gy-4">
+                        
+                        <span class="text-danger">@TempData["ContactErrorMessage"]</span>
 
                         <div class="col-md-6">
                             <label asp-for="Name" class="control-label">İsim</label>
                             <input asp-for="Name" class="form-control" placeholder="İsminiz" />
                             <span id="NameError" class="text-danger"></span>
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Email" class="control-label">Mail Adresi</label>
                             <input asp-for="Email" class="form-control" placeholder="Mail Adresiniz" />
                             <span id="EmailError" class="text-danger"></span>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-12">
                             <label asp-for="Subject" class="control-label">Başlık</label>
                             <input asp-for="Subject" class="form-control" placeholder="Mesaj Başlığı" />
                             <span id="SubjectError" class="text-danger"></span>
+                            <span asp-validation-for="Subject" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-12">
                             <label asp-for="Message" class="form-label">Mesaj</label>
                             <textarea asp-for="Message" rows="7" class="form-control" placeholder="Mesajınız.."></textarea>
-                           <span id="MessageError" class="text-danger"></span>
+                            <span id="MessageError" class="text-danger"></span>
+                            <span asp-validation-for="Message" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-12 text-center">

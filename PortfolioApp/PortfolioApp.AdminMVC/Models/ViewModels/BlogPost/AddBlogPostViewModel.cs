@@ -3,7 +3,7 @@
 namespace PortfolioApp.AdminMVC.Models.ViewModels.BlogPost;
 public class AddBlogPostViewModel
 {
-    [Required(ErrorMessage = "Başlık kısmı boş olamaz.")]
+    [Required(ErrorMessage = "Başlık kısmı olamaz.")]
     [StringLength(100, ErrorMessage = "Başlık maksimum 100 karakter olabilir.")]
     public string Title { get; set; }
 
