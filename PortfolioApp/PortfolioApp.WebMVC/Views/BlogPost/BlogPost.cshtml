@@ -6,8 +6,8 @@
 @inject IOptions<FileApiSettings> fileSettings
 
 @{
-    int userId = 0;
-    string userName = null;
+    int? userId = null;
+    string? userName = null;
 
     @if (User?.Identity?.IsAuthenticated == true)
     {
@@ -19,6 +19,8 @@
     var fileApiUrl = fileSettings.Value.FileApiUrl;
 
     ViewData["UserId"] = userId;
+
+    var errorMessage = TempData["CommentError"];
 }
 
 @{
@@ -111,27 +113,32 @@
                             <partial name="Partials/Comments.cshtml" model="Model.Comments" />
                         }
 
-                    <div class="comment-form-wrap pt-5">
+                    <div id="addCommentSection" class="comment-form-wrap pt-5">
                         <h3 class="mb-5">Yorum Yapın</h3>
                         <form asp-controller="Comment" asp-action="Add" method="post" class="p-5 bg-dark">
 
                             @* @Html.AntiForgeryToken() *@
 
+                            <span class="text-danger">@errorMessage</span>
+
                             <input name="BlogPostId" type="hidden" value="@Model.Id" />
                             <input name="UserId" type="hidden" value="@userId" />
                             <input name="SignedCommenterName" type="hidden" value="@userName" />
 
-                            @if (User?.Identity?.IsAuthenticated == false)
+                            @if (userId is null)
                             {
                                 <div class="form-group">
                                     <label for="UnsignedCommenterName" class="control-label">İsim</label>
                                     <input id="UnsignedCommenterName" name="UnsignedCommenterName" class="form-control" placeholder="İsminiz" />
+                                    <span id="UnsignedCommenterNameError" class="text-danger"></span>
+                                   
                                 </div>
                             }
 
                             <div class="form-group">
                                 <label for="Content" class="form-label">İçerik</label>
                                 <textarea id="Content" name="Content" rows="6" class="form-control" placeholder="Yorumunuz.."></textarea>
+                                <span id="ContentError" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
@@ -278,3 +285,79 @@
         }
 
 </style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+
+        // Inputlar ve hata mesajları
+        const inputs = {
+            UnsignedCommenterName: document.querySelector("#UnsignedCommenterName"),
+            Content: document.querySelector("#Content")
+        };
+
+        const errors = {
+            UnsignedCommenterName: document.querySelector("#UnsignedCommenterNameError"),
+            Content: document.querySelector("#ContentError")
+        };
+
+        // Validasyon fonksiyonları
+        function validateNotEmpty(value) {
+            return value.trim().length > 0;
+        }
+
+        function validateMaxLength(value, max) {
+            return value.length <= max;
+        }
+
+        function showError(input, message) {
+            errors[input].textContent = message;
+        }
+
+        function clearError(input) {
+            errors[input].textContent = "";
+        }
+
+        function validateInput(event) {
+            const { name, value } = event.target;
+
+            switch (name) {
+                case "UnsignedCommenterName":
+                    if (!validateNotEmpty(value)) showError(name, "Yorumcu ismi gereklidir.");
+                    else if (!validateMaxLength(value, 30)) showError(name, "Yorumcu ismi en fazla 30 karakter olabilir.");
+                    else clearError(name);
+                    break;
+
+                case "Content":
+                    if (!validateNotEmpty(value)) showError(name, "İçerik gereklidir.");
+                    else if (!validateMaxLength(value, 300)) showError(name, "İçerik en fazla 300 karakter olabilir.");
+                    else clearError(name);
+                    break;
+            }
+        }
+
+        // Canlı validasyon için event ekleme
+        Object.values(inputs).forEach(input => {
+            input.addEventListener("input", validateInput);
+            input.addEventListener("blur", validateInput);
+        });
+
+        // Form gönderilmeden önce kontrol
+        form.addEventListener("submit", function (event) {
+            let isValid = true;
+
+            Object.values(inputs).forEach(input => {
+                const event = new Event("input");
+                input.dispatchEvent(event);
+
+                if (errors[input.name].textContent !== "") {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault(); // Formun gönderilmesini engelle
+            }
+        });
+    });
+</script>

@@ -20,13 +20,15 @@
                     <div class="mb-3 mt-3">
                         <label asp-for="Title" class="form-label mb-1">Başlık</label>
                         <input asp-for="Title" class="form-control" placeholder="Başlığı buraya yazınız" />
-                        <span id="titleError" class="text-danger"></span> 
+                        <span id="titleError" class="text-danger"></span>  
+                        <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Content" class="form-label mb-1">İçerik</label>
                         <textarea asp-for="Content" class="form-control" rows="10" placeholder="Post içeriğini buraya yazınız"></textarea>
-                        <span id="contentError" class="text-danger"></span> 
+                        <span id="contentError" class="text-danger"></span>
+                        <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Ekle</button>

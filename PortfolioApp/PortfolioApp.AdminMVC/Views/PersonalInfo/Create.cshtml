@@ -21,30 +21,35 @@
                         <label asp-for="Name" class="form-label mb-1">İsim</label>
                         <input asp-for="Name" class="form-control" placeholder="İsminiz" />
                         <span id="NameError" class="text-danger"></span>
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Surname" class="form-label mb-1">Soyisim</label>
                         <input asp-for="Surname" class="form-control" placeholder="Soyisminiz" />
                         <span id="SurnameError" class="text-danger"></span>
+                        <span asp-validation-for="Surname" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="Adress" class="form-label mb-1">Adres</label>
                         <input asp-for="Adress" class="form-control" placeholder="Adres bilgisi" />
                         <span id="AdressError" class="text-danger"></span>
+                        <span asp-validation-for="Adress" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="About" class="form-label mb-1">Hakkımda</label>
                         <textarea asp-for="About" rows="8" class="form-control"></textarea>
                         <span id="AboutError" class="text-danger" data-valmsg-replace="true"></span>
+                        <span asp-validation-for="About" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
                         <label asp-for="BirthDate" class="form-label mb-1">Doğum Tarihi</label>
                         <input asp-for="BirthDate" class="form-control" type="datetime-local" />
                         <span id="BirthDateError" class="text-danger"></span>
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Ekle</button>

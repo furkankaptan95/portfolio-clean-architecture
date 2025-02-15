@@ -24,6 +24,11 @@ public class EducationController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] AddEducationViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<AddEducationDto>(model);
 
         var result = await _educationService.AddAsync(dto);
@@ -73,6 +78,11 @@ public class EducationController : Controller
     [HttpPost]
     public async Task<IActionResult> Update([FromForm] UpdateEducationViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<UpdateEducationDto>(model);
 
         var result = await _educationService.UpdateAsync(dto);

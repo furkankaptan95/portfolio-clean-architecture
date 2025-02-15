@@ -1,7 +1,10 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Application.Mappers;
 using PortfolioApp.Application.Use_Cases.AboutMe.Handlers;
+using PortfolioApp.Application.Use_Cases.AboutMe.Validators;
 using PortfolioApp.Core.Interfaces;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
@@ -29,6 +32,9 @@ builder.Services.AddScoped<IPersonalInfoService, PersonalInfoService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<AddAboutMeApiDtoValidator>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

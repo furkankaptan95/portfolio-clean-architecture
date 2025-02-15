@@ -51,6 +51,12 @@ public class ContactMessageController : Controller
     [HttpPost]
     public async Task<IActionResult> Reply([FromForm] ReplyContactMessageViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            TempData["MessageError"] = "Mesaj alanı boş olamaz.";
+
+            return Redirect($"/ContactMessage/Reply/{model.Id}");
+        }
 
         var dto = new ReplyContactMessageDto
         {

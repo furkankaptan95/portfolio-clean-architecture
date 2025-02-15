@@ -45,6 +45,11 @@ public class AboutMeController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] AddAboutMeViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<AddAboutMeMvcDto>(model);
 
         var result = await _aboutMeService.CreateAboutMeAsync(dto);
@@ -77,6 +82,11 @@ public class AboutMeController : Controller
     [HttpPost]
     public async Task<IActionResult> Update([FromForm] UpdateAboutMeViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<UpdateAboutMeMVCDto>(model);
 
         var result = await _aboutMeService.UpdateAboutMeAsync(dto);

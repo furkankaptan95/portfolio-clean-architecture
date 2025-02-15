@@ -24,6 +24,11 @@ public class ExperienceController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] AddExperienceViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<AddExperienceDto>(model);
 
         var result = await _experienceService.AddAsync(dto);
@@ -73,6 +78,11 @@ public class ExperienceController : Controller
     [HttpPost]
     public async Task<IActionResult> Update([FromForm] UpdateExperienceViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<UpdateExperienceDto>(model);
 
         var result = await _experienceService.UpdateAsync(dto);

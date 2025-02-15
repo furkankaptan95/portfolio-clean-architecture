@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Mesaj-Yanıt";
+    var messageError = TempData["MessageError"];
 }
 
 <div class="container">
@@ -37,6 +38,7 @@
                 <label for="Message" class="form-label">Yanıt</label>
                 <textarea id="Message" name="Message" rows="6" class="form-control" placeholder="Yanıtınızı buraya yazınız.."></textarea>
                 <span id="ReplyMessageError" class="text-danger"></span> <!-- Hata mesajı için boş bir span -->
+                <span class="text-danger">@messageError</span>
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Yanıtı Gönder</button>

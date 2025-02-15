@@ -18,6 +18,11 @@ public class ContactMessageController : Controller
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] AddContactMessageViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return Redirect("/#contact");
+        }
+
         var dto = _mapper.Map<AddContactMessageDto>(model);
         var result = await _contactMessageService.AddAsync(dto);
 

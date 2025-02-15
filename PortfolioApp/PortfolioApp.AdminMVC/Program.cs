@@ -6,8 +6,8 @@ using PortfolioApp.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.Configure<FileApiSettings>(builder.Configuration.GetSection("FileApiSettings"));
 
 var dataApiUrl = builder.Configuration.GetValue<string>("DataApiUrl");
