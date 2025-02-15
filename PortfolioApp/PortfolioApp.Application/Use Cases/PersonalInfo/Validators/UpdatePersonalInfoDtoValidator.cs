@@ -24,7 +24,8 @@ public class UpdatePersonalInfoDtoValidator : AbstractValidator<UpdatePersonalIn
 
         RuleFor(x => x.BirthDate)
            .NotEmpty().WithMessage("Doğum tarihi gerekli.")
-           .Must(BeAValidDate).WithMessage("Geçerli bir tarih giriniz.");
+           .Must(BeAValidDate).WithMessage("Geçerli bir tarih giriniz.")
+           .Must(date => date < DateTime.Now).WithMessage("Doğum tarihi şu anki tarihten önce olmalı.");
     }
     private bool BeAValidDate(DateTime date)
     {

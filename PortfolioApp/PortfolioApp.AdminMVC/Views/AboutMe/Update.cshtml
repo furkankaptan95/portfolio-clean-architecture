@@ -159,7 +159,7 @@
 
     function validateImageFile(file) {
         if (!file) return true; // Boş bırakılabilir
-        const validExtensions = ["image/jpeg", "image/png", "image/gif"];
+        const validExtensions = ["image/jpeg", "image/png"];
         return validExtensions.includes(file.type);
     }
 
@@ -208,11 +208,12 @@
             case "Email":
                 if (!validateNotEmpty(value)) showError(name, "Email boş olamaz.");
                 else if (!validateEmail(value)) showError(name, "Geçerli bir email giriniz.");
+                else if (!validateMaxLength(value, 100)) showError(name, "Email en fazla 100 karakter olmalıdır.");
                 else clearError(name);
                 break;
 
             case "AboutMeImage":
-                if (files.length > 0 && !validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, GIF).");
+                if (files.length > 0 && !validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, JPEG).");
                 else clearError(name);
                 break;
 

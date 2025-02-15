@@ -222,6 +222,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return value.trim().length > 0;
     }
 
+    function validateNotJustSpace(value) {
+        return value.length === 0 || value.trim().length > 0;
+    }
+
+
     function validateMaxLength(value, max) {
         return value.length <= max;
     }
@@ -251,6 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             case "Subject":
                 if (!validateMaxLength(value, 100)) showError(name, "Konu en fazla 100 karakter olmalıdır.");
+                else if (!validateNotJustSpace(value)) showError(name, "Konu kısmı yalnızca boşluklardan oluşamaz.");
                 else clearError(name);
                 break;
 
@@ -261,6 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             case "Email":
                 if (!validateNotEmpty(value)) showError(name, "Email boş olamaz.");
+                else if (!validateMaxLength(value, 100)) showError(name, "Email en fazla 100 karakter olmalıdır.");
                 else if (!validateEmail(value)) showError(name, "Geçerli bir email giriniz.");
                 else clearError(name);
                 break;

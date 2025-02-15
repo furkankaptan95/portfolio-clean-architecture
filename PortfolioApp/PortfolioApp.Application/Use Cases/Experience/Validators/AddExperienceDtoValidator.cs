@@ -18,23 +18,24 @@ public class AddExperienceDtoValidator : AbstractValidator<AddExperienceDto>
            .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("Açıklama kısmı boş olamaz.");
 
         RuleFor(x => x.StartDate)
-          .NotEmpty().WithMessage("Başlangıç tarihi gerekli.")  // Boş olamaz
-          .Must(BeAValidStartDate).WithMessage("Geçerli bir tarih olmalı.");
+          .NotEmpty().WithMessage("Başlangıç tarihi gerekli.")
+          .Must(BeAValidStartDate).WithMessage("Geçerli bir tarih olmalı.")
+          .Must(date => date < DateTime.Now).WithMessage("Başlangıç tarihi şu anki tarihten önce olmalı."); // Yeni kural eklendi
 
         RuleFor(x => x.EndDate)
-                .Must(BeAValidEndDate).When(x => x.EndDate.HasValue).WithMessage("Geçerli bir tarih olmalı.") // Değer girildiyse kontrol et
+                .Must(BeAValidEndDate).When(x => x.EndDate.HasValue).WithMessage("Geçerli bir tarih olmalı.")
                 .Must((viewModel, endDate) => !endDate.HasValue || endDate > viewModel.StartDate)
-                .WithMessage("Bitiş tarihi, başlangıç tarihinden sonra olmalı.");
-
+                .WithMessage("Bitiş tarihi, başlangıç tarihinden sonra olmalı.")
+                .Must(date => !date.HasValue || date < DateTime.Now).WithMessage("Bitiş tarihi şu anki tarihten önce olmalı."); // Yeni kural eklendi
     }
+
     private bool BeAValidEndDate(DateTime? date)
     {
-        return date.Value != default;
+        return date.HasValue && date.Value != default;
     }
 
     private bool BeAValidStartDate(DateTime date)
     {
         return date != default;
     }
-
 }
