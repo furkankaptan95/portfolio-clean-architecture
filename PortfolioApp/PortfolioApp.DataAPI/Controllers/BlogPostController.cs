@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.Interfaces;
 
@@ -6,6 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class BlogPostController : ControllerBase
 {
     private readonly IBlogPostService _blogPostService;
@@ -21,7 +23,7 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
@@ -55,7 +57,7 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
-
+    
     [HttpGet("{id:int}")]
     public async Task<IActionResult> Get([FromRoute] int id)
     {
@@ -68,7 +70,7 @@ public class BlogPostController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("web/{id:int}")]
     public async Task<IActionResult> GetWeb([FromRoute] int id)
     {

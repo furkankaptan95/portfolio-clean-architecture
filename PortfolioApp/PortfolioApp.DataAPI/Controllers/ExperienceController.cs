@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.Application.Business_Logic.Services;
-using PortfolioApp.Core.DTOs.Admin.Education;
 using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.Interfaces;
 
@@ -9,6 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class ExperienceController : ControllerBase
 {
     private readonly IExperienceService _experienceService;
@@ -25,7 +24,7 @@ public class ExperienceController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {

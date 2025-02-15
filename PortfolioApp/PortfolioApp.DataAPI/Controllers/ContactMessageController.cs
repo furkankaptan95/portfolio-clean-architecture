@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Core.DTOs.Admin.ContactMessage;
 using PortfolioApp.Core.DTOs.Web.ContactMessage;
@@ -8,6 +9,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class ContactMessageController : ControllerBase
 {
     private readonly IContactMessageService _contactMessageService;
@@ -15,7 +17,7 @@ public class ContactMessageController : ControllerBase
     {
         _contactMessageService = contactMessageService;
     }
-
+    [AllowAnonymous]
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] AddContactMessageDto dto)
     {

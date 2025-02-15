@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PortfolioApp.Application.Business_Logic.Services;
-using PortfolioApp.Core.DTOs.Admin.AboutMe;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 using PortfolioApp.Core.Interfaces;
 
@@ -8,6 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class PersonalInfoController : ControllerBase
 {
     private readonly IPersonalInfoService _personalInfoService;
@@ -29,7 +29,7 @@ public class PersonalInfoController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("get")]
     public async Task<IActionResult> Get()
     {
