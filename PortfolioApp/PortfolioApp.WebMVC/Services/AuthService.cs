@@ -27,10 +27,12 @@ public class AuthService : IAuthService
 		return await response.Content.ReadFromJsonAsync<ServiceResult<TokensDto>>();
 	}
 
-	public Task<ServiceResult<RegistrationError>> RegisterAsync(RegisterDto dto)
+	public async Task<ServiceResult<RegistrationError>> RegisterAsync(RegisterDto dto)
 	{
-		throw new NotImplementedException();
-	}
+        var response = await AuthApiClient.PostAsJsonAsync("register", dto);
+
+        return await response.Content.ReadFromJsonAsync<ServiceResult<RegistrationError>>();
+    }
 
 	public Task<ServiceResult> RevokeTokenAsync(string token)
 	{

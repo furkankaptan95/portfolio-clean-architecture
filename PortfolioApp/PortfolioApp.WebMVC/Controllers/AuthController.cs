@@ -60,5 +60,28 @@ public class AuthController : Controller
 		TempData["Message"] = result.Message;
 
 		return Redirect("/");
-	}
+    }
+
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register([FromForm] RegisterViewModel registerModel)
+	{
+		var registerDto = _mapper.Map<RegisterDto>(registerModel);
+
+        var result = await _authService.RegisterAsync(registerDto);
+
+		if (!result.IsSuccess)
+		{
+			ViewData["ErrorMessage"] = result.Message;
+			return View(registerModel);
+		}
+
+        TempData["Message"] = result.Message;
+        return RedirectToAction(nameof(Login));
+    }
 }

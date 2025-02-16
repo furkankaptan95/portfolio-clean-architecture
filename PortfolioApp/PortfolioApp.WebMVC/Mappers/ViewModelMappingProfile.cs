@@ -26,6 +26,7 @@ public class ViewModelMappingProfile : Profile
         CreateMap<BlogPostDto, AllBlogPostsViewModel>();
         CreateMap<AddCommentViewModel, AddCommentDto>();
 		CreateMap<LoginViewModel, LoginDto>();
-	}
+        CreateMap<RegisterViewModel, RegisterDto>();
+    }
 
 }

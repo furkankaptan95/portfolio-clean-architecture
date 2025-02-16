@@ -22,17 +22,17 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
 
         if (isEmailAlreadyTaken is not null && isUsernameAlreadyTaken is not null)
         {
-            return new ServiceResult<RegistrationError>(false, null, RegistrationError.BothTaken);
+            return new ServiceResult<RegistrationError>(false, "Bu Email ve Kullanıcı Adı zaten daha önce alınmış!", RegistrationError.BothTaken);
         }
 
         else if (isEmailAlreadyTaken is null && isUsernameAlreadyTaken is not null)
         {
-            return new ServiceResult<RegistrationError>(false, null, RegistrationError.UsernameTaken);
+            return new ServiceResult<RegistrationError>(false, "Bu Kullanıcı Adı zaten daha önce alınmış!", RegistrationError.UsernameTaken);
         }
 
         else if (isEmailAlreadyTaken is not null && isUsernameAlreadyTaken is null)
         {
-            return new ServiceResult<RegistrationError>(false, null, RegistrationError.EmailTaken);
+            return new ServiceResult<RegistrationError>(false, "Bu Email zaten daha önce alınmış!", RegistrationError.EmailTaken);
         }
         byte[] passwordHash, passwordSalt;
 
@@ -62,6 +62,6 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
         await _authDbContext.UserVerifications.AddAsync(userVerification);
         await _authDbContext.SaveChangesAsync(cancellationToken);
 
-        return new ServiceResult<RegistrationError>(true, null, RegistrationError.None);
+        return new ServiceResult<RegistrationError>(true, "Kayıt başarılı. Lütfen hesabı aktif etmek için Email hesabınızı kontrol edin.", RegistrationError.None);
     }
 }
