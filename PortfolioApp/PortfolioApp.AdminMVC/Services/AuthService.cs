@@ -37,6 +37,11 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
+    public Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResult> RevokeTokenAsync(string token)
     {
 	    var apiResponse = await AuthApiClient.PostAsJsonAsync("revoke-token", token);

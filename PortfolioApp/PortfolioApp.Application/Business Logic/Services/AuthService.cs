@@ -42,6 +42,13 @@ public class AuthService : IAuthService
         return result;
     }
 
+    public async Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
+    {
+        var result = await _mediator.Send(new RenewPasswordVerifyEmailCommand(dto));
+
+        return result;
+    }
+
     public async Task<ServiceResult> RevokeTokenAsync(string token)
     {
         var result = await _mediator.Send(new RevokeTokenCommand(token));

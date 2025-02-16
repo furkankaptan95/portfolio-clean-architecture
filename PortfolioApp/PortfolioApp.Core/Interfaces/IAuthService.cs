@@ -11,4 +11,5 @@ public interface IAuthService
     Task<ServiceResult> RevokeTokenAsync(string token);
     Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto);
     Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto);
+    Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto);
 }

@@ -39,7 +39,12 @@ public class AuthService : IAuthService
         return await response.Content.ReadFromJsonAsync<ServiceResult<RegistrationError>>();
     }
 
-	public Task<ServiceResult> RevokeTokenAsync(string token)
+    public Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ServiceResult> RevokeTokenAsync(string token)
 	{
 		throw new NotImplementedException();
 	}
