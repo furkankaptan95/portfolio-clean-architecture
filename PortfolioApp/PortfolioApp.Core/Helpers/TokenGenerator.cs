@@ -13,10 +13,10 @@ public static class TokenGenerator
     {
         var claims = new List<Claim>
            {
-                new Claim(JwtClaimTypes.Subject,user.Id.ToString()),
-                new Claim(JwtClaimTypes.Email,user.Email),
+                new Claim("userId",user.Id.ToString()),
+                new Claim("email",user.Email),
                 new Claim(JwtClaimTypes.Role, user.Role),
-                new Claim(JwtClaimTypes.Name,user.Username),
+                new Claim("name",user.Username),
                 new Claim("user-img", user.ImageUrl ?? "default.png"),
             };
 

@@ -9,6 +9,7 @@ using PortfolioApp.Core.DTOs.Web.ContactMessage;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Comment;
 using PortfolioApp.Core.DTOs.Web.Comment;
+using PortfolioApp.Core.DTOs.Auth;
 
 namespace PortfolioApp.WebMVC.Mappers;
 public class ViewModelMappingProfile : Profile
@@ -24,6 +25,8 @@ public class ViewModelMappingProfile : Profile
         CreateMap<CommentWebDto, CommentViewModel>();
         CreateMap<BlogPostDto, AllBlogPostsViewModel>();
         CreateMap<AddCommentViewModel, AddCommentDto>();
+		CreateMap<LoginViewModel, LoginDto>();
+        CreateMap<RegisterViewModel, RegisterDto>();
     }
 
 }
