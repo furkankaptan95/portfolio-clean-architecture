@@ -14,6 +14,13 @@ public class AuthService : IAuthService
         _mediator = mediator;
     }
 
+    public async Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+    {
+        var result = await _mediator.Send(new ForgotPasswordCommand(forgotPasswordDto));
+
+        return result;
+    }
+
     public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
     {
         var result = await _mediator.Send(new LoginCommand(loginDto));

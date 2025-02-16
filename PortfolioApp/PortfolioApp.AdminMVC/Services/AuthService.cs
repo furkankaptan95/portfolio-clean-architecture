@@ -13,6 +13,11 @@ public class AuthService : IAuthService
     }
     private HttpClient AuthApiClient => _factory.CreateClient("authApi");
 
+    public Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
     {
 		var apiResponse = await AuthApiClient.PostAsJsonAsync("login", loginDto);

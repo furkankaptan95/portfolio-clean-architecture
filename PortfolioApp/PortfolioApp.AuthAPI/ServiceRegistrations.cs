@@ -6,6 +6,7 @@ using PortfolioApp.Application.Mappers;
 using PortfolioApp.Application.Use_Cases.AboutMe.Validators;
 using PortfolioApp.Application.Use_Cases.Auth.Handlers;
 using PortfolioApp.Application.Use_Cases.Auth.Validators;
+using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Interfaces;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
@@ -14,6 +15,20 @@ public static class ServiceRegistrations
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var emailApiUrl = configuration.GetValue<string>("EmailApiUrl");
+
+        if (string.IsNullOrWhiteSpace(emailApiUrl))
+        {
+            throw new InvalidOperationException("EmailApiUrl is required in appsettings.json");
+        }
+
+        services.AddHttpClient("emailApi", c =>
+        {
+            c.BaseAddress = new Uri(emailApiUrl);
+        });
+
+        services.Configure<MVCLinksConfiguration>(configuration.GetSection("MVCLinks"));
+
         var authDbConnectionString = configuration.GetConnectionString("AuthDb");
         services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlServer(authDbConnectionString));
