@@ -28,6 +28,7 @@ public static class ServiceRegistrations
 		AddJwtAuth(services, configuration);
 
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAboutMeHandler).Assembly));
+
         services.AddScoped<HomeService>();
         services.AddScoped<IAboutMeService, AboutMeService>();
         services.AddScoped<IBlogPostService, BlogPostService>();
@@ -48,7 +49,19 @@ public static class ServiceRegistrations
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        return services;
+		var emailApiUrl = configuration.GetValue<string>("EmailApiUrl");
+
+		if (string.IsNullOrWhiteSpace(emailApiUrl))
+		{
+			throw new InvalidOperationException("EmailApiUrl is required in appsettings.json");
+		}
+
+		services.AddHttpClient("emailApi", c =>
+		{
+			c.BaseAddress = new Uri(emailApiUrl);
+		});
+
+		return services;
     }
 
 	private static void AddJwtAuth(IServiceCollection services, IConfiguration configuration)

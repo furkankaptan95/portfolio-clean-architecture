@@ -28,7 +28,7 @@ public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, Serv
 
         if (user is null)
         {
-            return new ServiceResult(false, "User not found");
+            return new ServiceResult(false, "Bu Email adresine sahip bir kullanıcı bulunamadı.");
         }
 
         var token = Guid.NewGuid().ToString().Substring(0, 6);
