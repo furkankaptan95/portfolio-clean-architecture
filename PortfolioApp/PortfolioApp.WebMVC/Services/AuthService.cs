@@ -58,4 +58,8 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
+    public Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -111,4 +111,17 @@ public class AuthController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("new-verification")]
+    public async Task<IActionResult> NewVerification([FromBody] NewVerificationMailDto dto)
+    {
+        var result = await _authService.NewVerificationAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }

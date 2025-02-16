@@ -30,6 +30,11 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
+    public Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResult<TokensDto>> RefreshTokenAsync(string token)
     {
 		var response = await AuthApiClient.PostAsJsonAsync("refresh-token", token);
