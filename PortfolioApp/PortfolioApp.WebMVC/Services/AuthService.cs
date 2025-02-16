@@ -13,12 +13,14 @@ public class AuthService : IAuthService
 	}
 	private HttpClient AuthApiClient => _factory.CreateClient("authApi");
 
-    public Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
-    {
-        throw new NotImplementedException();
-    }
+	public async Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+	{
+		var apiResponse = await AuthApiClient.PostAsJsonAsync("forgot-password", forgotPasswordDto);
 
-    public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
+		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
+	}
+
+	public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
 	{
 		var apiResponse = await AuthApiClient.PostAsJsonAsync("login", loginDto);
 
@@ -39,12 +41,14 @@ public class AuthService : IAuthService
         return await response.Content.ReadFromJsonAsync<ServiceResult<RegistrationError>>();
     }
 
-    public Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
-    {
-        throw new NotImplementedException();
-    }
+	public async Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
+	{
+		var response = await AuthApiClient.PostAsJsonAsync("renew-password-verify", dto);
 
-    public Task<ServiceResult> RevokeTokenAsync(string token)
+		return await response.Content.ReadFromJsonAsync<ServiceResult<string>>();
+	}
+
+	public Task<ServiceResult> RevokeTokenAsync(string token)
 	{
 		throw new NotImplementedException();
 	}
@@ -55,12 +59,14 @@ public class AuthService : IAuthService
 
 		return await response.Content.ReadFromJsonAsync<ServiceResult>();
 	}
-    public Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
-    {
-        throw new NotImplementedException();
-    }
+	public async Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
+	{
+		var apiResponse = await AuthApiClient.PostAsJsonAsync("new-password", dto);
 
-    public Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
+		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
+	}
+
+	public Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
     {
         throw new NotImplementedException();
     }

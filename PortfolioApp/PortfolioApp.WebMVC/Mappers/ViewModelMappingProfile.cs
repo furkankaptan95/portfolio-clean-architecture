@@ -27,6 +27,8 @@ public class ViewModelMappingProfile : Profile
         CreateMap<AddCommentViewModel, AddCommentDto>();
 		CreateMap<LoginViewModel, LoginDto>();
         CreateMap<RegisterViewModel, RegisterDto>();
-    }
+		CreateMap<ForgotPasswordViewModel, ForgotPasswordDto>();
+		CreateMap<NewPasswordViewModel, NewPasswordDto>();
+	}
 
 }
