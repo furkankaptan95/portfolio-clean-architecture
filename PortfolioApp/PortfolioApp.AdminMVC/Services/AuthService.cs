@@ -13,12 +13,27 @@ public class AuthService : IAuthService
     }
     private HttpClient AuthApiClient => _factory.CreateClient("authApi");
 
+    public Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
     {
 		var apiResponse = await AuthApiClient.PostAsJsonAsync("login", loginDto);
 
 		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<TokensDto>>();
 	}
+
+    public Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<ServiceResult<TokensDto>> RefreshTokenAsync(string token)
     {
@@ -32,10 +47,20 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
+    public Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ServiceResult> RevokeTokenAsync(string token)
     {
 	    var apiResponse = await AuthApiClient.PostAsJsonAsync("revoke-token", token);
 
 		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
 	}
+
+    public Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }

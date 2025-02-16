@@ -14,6 +14,13 @@ public class AuthService : IAuthService
         _mediator = mediator;
     }
 
+    public async Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+    {
+        var result = await _mediator.Send(new ForgotPasswordCommand(forgotPasswordDto));
+
+        return result;
+    }
+
     public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
     {
         var result = await _mediator.Send(new LoginCommand(loginDto));
@@ -35,9 +42,36 @@ public class AuthService : IAuthService
         return result;
     }
 
+    public async Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
+    {
+        var result = await _mediator.Send(new RenewPasswordVerifyEmailCommand(dto));
+
+        return result;
+    }
+
     public async Task<ServiceResult> RevokeTokenAsync(string token)
     {
         var result = await _mediator.Send(new RevokeTokenCommand(token));
+
+        return result;
+    }
+
+    public async Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
+    {
+        var result = await _mediator.Send(new VerifyEmailCommand(dto));
+
+        return result;
+    }
+    public async Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
+    {
+        var result = await _mediator.Send(new NewPasswordCommand(dto));
+
+        return result;
+    }
+
+    public async Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
+    {
+        var result = await _mediator.Send(new NewVerificationCommand(dto));
 
         return result;
     }

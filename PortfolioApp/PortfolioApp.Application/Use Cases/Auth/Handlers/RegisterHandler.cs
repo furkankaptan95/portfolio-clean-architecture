@@ -2,19 +2,24 @@
 using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Email;
 using PortfolioApp.Core.Entities;
 using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Helpers;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using System.Net.Http.Json;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<RegistrationError>>
 {
-    private readonly AuthDbContext _authDbContext;
-    public RegisterHandler(AuthDbContext authDbContext)
+    private readonly AuthDbContext _authDbContext; 
+    private readonly IHttpClientFactory _factory;
+    public RegisterHandler(IHttpClientFactory factory, AuthDbContext authDbContext)
     {
         _authDbContext = authDbContext;
+        _factory = factory;
     }
+    private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
     public async Task<ServiceResult<RegistrationError>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         var isEmailAlreadyTaken = await _authDbContext.Users.SingleOrDefaultAsync(u => u.Email == request.Register.Email);
@@ -54,14 +59,28 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
         var userVerification = new UserVerificationEntity
         {
             UserId = user.Id,
-            Token = token,
-            ExpireDate = DateTime.UtcNow.AddHours(24),
-            CreatedAt = DateTime.UtcNow
+            Token = token
         };
 
         await _authDbContext.UserVerifications.AddAsync(userVerification);
         await _authDbContext.SaveChangesAsync(cancellationToken);
 
-        return new ServiceResult<RegistrationError>(true, "Kayıt başarılı. Lütfen hesabı aktif etmek için Email hesabınızı kontrol edin.", RegistrationError.None);
+        var verificationLink = $"https://localhost:7296/Auth/VerifyEmail?email={request.Register.Email}&token={token}";
+
+        var htmlMailBody = $"<h1>Lütfen Email adresinizi doğrulayın!</h1><a href='{verificationLink}'>Hesabınızı aktif etmek için tıklayınız.</a>";
+
+        var emailRequest = new EmailRequestDto
+        {
+            Body = htmlMailBody,
+            Subject = "Lütfen email adresinizi doğrulayın.",
+            To = request.Register.Email,
+        };
+
+        var emailResult = await EmailApiClient.PostAsJsonAsync("send", emailRequest);
+
+        if (emailResult.IsSuccessStatusCode)
+            return new ServiceResult<RegistrationError>(true, "Kayıt başarılı. Lütfen hesabı aktif etmek için Email hesabınızı kontrol edin.", RegistrationError.None);
+
+        return new ServiceResult<RegistrationError>(false, "Kayıt başarılı ancak Onay Maili gönderilirken bir hata oluştu..", RegistrationError.None);
     }
 }

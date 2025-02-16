@@ -59,4 +59,69 @@ public class AuthController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost("verify-email")]
+    public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailDto dto)
+    {
+        var result = await _authService.VerifyEmailAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+    {
+        var result = await _authService.ForgotPasswordAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("renew-password-verify")]
+    public async Task<IActionResult> RenewPassword([FromBody] RenewPasswordDto dto)
+    {
+        var result = await _authService.RenewPasswordVerifyEmailAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("new-password")]
+    public async Task<IActionResult> NewPasswordAsync([FromBody] NewPasswordDto dto)
+    {
+        var result = await _authService.NewPasswordAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+
+        return Ok(result);
+    }
+
+    [HttpPost("new-verification")]
+    public async Task<IActionResult> NewVerification([FromBody] NewVerificationMailDto dto)
+    {
+        var result = await _authService.NewVerificationAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }
