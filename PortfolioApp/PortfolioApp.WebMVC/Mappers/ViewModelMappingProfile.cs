@@ -29,6 +29,7 @@ public class ViewModelMappingProfile : Profile
         CreateMap<RegisterViewModel, RegisterDto>();
 		CreateMap<ForgotPasswordViewModel, ForgotPasswordDto>();
 		CreateMap<NewPasswordViewModel, NewPasswordDto>();
-	}
+        CreateMap<NewVerificationViewModel, NewVerificationMailDto>();
+    }
 
 }

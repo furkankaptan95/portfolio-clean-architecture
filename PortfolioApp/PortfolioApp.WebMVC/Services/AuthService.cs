@@ -66,8 +66,10 @@ public class AuthService : IAuthService
 		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
 	}
 
-	public Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
+	public async Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await AuthApiClient.PostAsJsonAsync("new-verification", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 }

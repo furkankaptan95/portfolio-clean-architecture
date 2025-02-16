@@ -126,7 +126,31 @@ public class AuthController : Controller
 	}
 
 
-	[HttpGet]
+    [HttpGet]
+    public IActionResult NewVerification()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> NewVerification([FromForm] NewVerificationViewModel model)
+    {
+        var dto = _mapper.Map<NewVerificationMailDto>(model);
+
+        var result = await _authService.NewVerificationAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            ViewData["ErrorMessage"] = result.Message;
+            return View(model);
+        }
+
+        ViewData["Message"] = result.Message;
+        return View();
+    }
+
+
+    [HttpGet]
 	public async Task<IActionResult> RenewPassword([FromQuery] string email, string token)
 	{
 
