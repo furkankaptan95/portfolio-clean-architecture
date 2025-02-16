@@ -62,4 +62,11 @@ public class AuthService : IAuthService
 
         return result;
     }
+    public async Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
+    {
+        var result = await _mediator.Send(new NewPasswordCommand(dto));
+
+        return result;
+    }
+
 }

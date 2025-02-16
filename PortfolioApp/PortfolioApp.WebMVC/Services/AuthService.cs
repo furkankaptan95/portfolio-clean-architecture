@@ -53,4 +53,9 @@ public class AuthService : IAuthService
     {
         throw new NotImplementedException();
     }
+    public Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
 }
