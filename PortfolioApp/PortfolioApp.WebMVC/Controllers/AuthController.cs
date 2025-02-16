@@ -84,4 +84,21 @@ public class AuthController : Controller
         TempData["Message"] = result.Message;
         return RedirectToAction(nameof(Login));
     }
+
+	[HttpGet]
+	public async Task<IActionResult> VerifyEmail([FromQuery] string email, string token)
+	{
+
+		var dto = new VerifyEmailDto(email, token);
+
+		var result = await _authService.VerifyEmailAsync(dto);
+			
+		if(!result.IsSuccess)
+			TempData["ErrorMessage"] = result.Message;
+		else
+			TempData["Message"] = result.Message;
+
+		return RedirectToAction(nameof(Login));
+
+	}
 }

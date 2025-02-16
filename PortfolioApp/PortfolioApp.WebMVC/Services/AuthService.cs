@@ -49,10 +49,12 @@ public class AuthService : IAuthService
 		throw new NotImplementedException();
 	}
 
-    public Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
+    public async Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
     {
-        throw new NotImplementedException();
-    }
+		var response = await AuthApiClient.PostAsJsonAsync("verify-email", dto);
+
+		return await response.Content.ReadFromJsonAsync<ServiceResult>();
+	}
     public Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
     {
         throw new NotImplementedException();
