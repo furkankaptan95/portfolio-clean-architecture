@@ -38,4 +38,9 @@ public class AuthService : IAuthService
 
 		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
 	}
+
+    public Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }

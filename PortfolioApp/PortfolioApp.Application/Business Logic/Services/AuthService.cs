@@ -41,4 +41,11 @@ public class AuthService : IAuthService
 
         return result;
     }
+
+    public async Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
+    {
+        var result = await _mediator.Send(new VerifyEmailCommand(dto));
+
+        return result;
+    }
 }

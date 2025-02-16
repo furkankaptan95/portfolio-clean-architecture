@@ -38,4 +38,9 @@ public class AuthService : IAuthService
 	{
 		throw new NotImplementedException();
 	}
+
+    public Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
