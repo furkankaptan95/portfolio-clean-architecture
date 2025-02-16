@@ -68,7 +68,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100">
-				<form asp-action="Login" asp-controller="Auth" class="login100-form validate-form" method="post">
+				<form asp-action="Login" asp-controller="Auth" class="login100-form validate-form" method="post" autocomplete="off">
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
@@ -94,10 +94,11 @@
 					</div>
 
 					<div class="text-center p-t-90">
-						<a class="txt1" href="#">
+						<a class="txt1" href="/Auth/ForgotPassword">
 							Şifrenizi mi unuttunuz?
 						</a>
 					</div>
+
 				</form>
 			</div>
 		</div>

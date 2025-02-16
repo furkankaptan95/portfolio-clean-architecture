@@ -62,7 +62,73 @@ public class AuthController : Controller
 		return Redirect("/");
 	}
 
+    [HttpGet]
+    public IActionResult ForgotPassword()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ForgotPassword([FromForm] ForgotPasswordViewModel model)
+    {
+		var dto = _mapper.Map<ForgotPasswordDto>(model);
+
+        var result = await _authService.ForgotPasswordAsync(dto);
+
+        if (!result.IsSuccess)
+        {
+            ViewData["ErrorMessage"] = result.Message;
+            return View(model);
+        }
+
+        ViewData["Message"] = result.Message;
+        return View();
+    }
+
+
 	[HttpGet]
+	public async Task<IActionResult> RenewPassword([FromQuery] string email, string token)
+	{
+
+		var dto = new RenewPasswordDto(email, token);
+
+		var result = await _authService.RenewPasswordVerifyEmailAsync(dto);
+
+		if (!result.IsSuccess)
+		{
+			TempData["ErrorMessage"] = result.Message;
+			return RedirectToAction(nameof(ForgotPassword));
+		}
+
+		ViewData["Message"] = result.Message;
+
+		var model = new NewPasswordViewModel
+		{
+			Token = result.Data,
+			Email = email
+		};
+
+		return View(model);
+	}
+
+    [HttpPost]
+    public async Task<IActionResult> RenewPassword([FromForm] NewPasswordViewModel model)
+    {
+		var dto = _mapper.Map<NewPasswordDto>(model);
+
+        var result = await _authService.NewPasswordAsync(dto);
+
+        if (result.IsSuccess)
+        {
+            TempData["Message"] = result.Message;
+            return RedirectToAction(nameof(Login));
+        }
+
+        TempData["ErrorMessage"] = result.Message;
+        return RedirectToAction(nameof(ForgotPassword));
+    }
+
+    [HttpGet]
 	public async Task<IActionResult> LogOut()
 	{
 		var refreshToken = Request.Cookies["RefreshToken"];

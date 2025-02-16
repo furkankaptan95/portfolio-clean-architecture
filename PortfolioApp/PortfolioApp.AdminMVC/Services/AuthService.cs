@@ -13,10 +13,12 @@ public class AuthService : IAuthService
     }
     private HttpClient AuthApiClient => _factory.CreateClient("authApi");
 
-    public Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+    public async Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
     {
-        throw new NotImplementedException();
-    }
+		var apiResponse = await AuthApiClient.PostAsJsonAsync("forgot-password", forgotPasswordDto);
+
+		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
+	}
 
     public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
     {
@@ -25,9 +27,11 @@ public class AuthService : IAuthService
 		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<TokensDto>>();
 	}
 
-    public Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
+    public async Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto)
     {
-        throw new NotImplementedException();
+        var apiResponse = await AuthApiClient.PostAsJsonAsync("new-password", dto);
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
     public Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
@@ -47,10 +51,12 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
+    public async Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto)
     {
-        throw new NotImplementedException();
-    }
+		var response = await AuthApiClient.PostAsJsonAsync("renew-password-verify", dto);
+
+		return await response.Content.ReadFromJsonAsync<ServiceResult<string>>();
+	}
 
     public async Task<ServiceResult> RevokeTokenAsync(string token)
     {
