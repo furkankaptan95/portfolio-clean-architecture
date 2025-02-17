@@ -1,5 +1,10 @@
-﻿namespace PortfolioApp.AdminMVC.Models.ViewModels.Auth;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PortfolioApp.AdminMVC.Models.ViewModels.Auth;
 public class ForgotPasswordViewModel
 {
-    public string Email { get; set; }
+	[Required(ErrorMessage = "Email alanı boş bırakılamaz.")]
+	[EmailAddress(ErrorMessage = "Geçerli bir email adresi giriniz.")]
+	[MaxLength(100, ErrorMessage = "Email 100 karakterden uzun olamaz.")]
+	public string Email { get; set; }
 }

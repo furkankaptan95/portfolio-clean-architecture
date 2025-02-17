@@ -80,11 +80,13 @@
 					<div class="wrap-input100 validate-input" data-validate="Email giriniz">
 						<input class="input100" type="text" asp-for="Email" placeholder="Email">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+						<span class="alert alert-warning mt-2 p-2 d-block" asp-validation-for="Email"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Şifre giriniz">
 						<input class="input100" type="password" asp-for="Password" placeholder="Şifre" autocomplete="off">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+						<span class="alert alert-warning mt-2 p-2 d-block" asp-validation-for="Password"></span>
 					</div>
 
 					<div class="container-login100-form-btn">
@@ -123,7 +125,8 @@
 	<script src="~/auth/vendor/countdowntime/countdowntime.js"></script>
 	<!--===============================================================================================-->
 	<script src="~/auth/js/main.js"></script>
-
+	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>
 
