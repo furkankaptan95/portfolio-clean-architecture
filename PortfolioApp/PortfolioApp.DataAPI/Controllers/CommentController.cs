@@ -7,7 +7,7 @@ namespace PortfolioApp.DataAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = "Admin")]
+
 public class CommentController : ControllerBase
 {
     private readonly ICommentService _commentService;
@@ -25,6 +25,7 @@ public class CommentController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "User")]
     [HttpGet("delete/{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
@@ -37,7 +38,7 @@ public class CommentController : ControllerBase
 
         return Ok(result);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpGet("approval/{id:int}")]
     public async Task<IActionResult> Approval([FromRoute] int id)
     {
@@ -50,7 +51,7 @@ public class CommentController : ControllerBase
 
         return Ok(result);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
