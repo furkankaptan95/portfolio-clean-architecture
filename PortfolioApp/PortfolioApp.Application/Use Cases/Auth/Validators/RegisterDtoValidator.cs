@@ -13,7 +13,7 @@ public class RegisterDtoValidator : AbstractValidator<RegisterDto>
 
         RuleFor(x => x.Username)
           .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("Kullanıcı adı alanı boş bırakılamaz.")
-          .MaximumLength(50).WithMessage("Kullanıcı adı 20 karakterden uzun olamaz.")
+          .MaximumLength(20).WithMessage("Kullanıcı adı 20 karakterden uzun olamaz.")
           .Matches(@"^\S*$").WithMessage("Kullanıcı adı boşluk içeremez.");
 
         RuleFor(x => x.Password)

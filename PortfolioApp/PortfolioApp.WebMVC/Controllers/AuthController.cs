@@ -27,8 +27,13 @@ public class AuthController : Controller
 
 	[HttpPost]
 	public async Task<IActionResult> Login([FromForm] LoginViewModel loginmodel)
-	{
-		var loginDto = _mapper.Map<LoginDto>(loginmodel);
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(loginmodel);
+        }
+
+        var loginDto = _mapper.Map<LoginDto>(loginmodel);
 
 		var result = await _authService.LoginAsync(loginDto);
 
@@ -70,8 +75,13 @@ public class AuthController : Controller
 
     [HttpPost]
     public async Task<IActionResult> Register([FromForm] RegisterViewModel registerModel)
-	{
-		var registerDto = _mapper.Map<RegisterDto>(registerModel);
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(registerModel);
+        }
+
+        var registerDto = _mapper.Map<RegisterDto>(registerModel);
 
         var result = await _authService.RegisterAsync(registerDto);
 
@@ -110,8 +120,13 @@ public class AuthController : Controller
 
 	[HttpPost]
 	public async Task<IActionResult> ForgotPassword([FromForm] ForgotPasswordViewModel model)
-	{
-		var dto = _mapper.Map<ForgotPasswordDto>(model);
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var dto = _mapper.Map<ForgotPasswordDto>(model);
 
 		var result = await _authService.ForgotPasswordAsync(dto);
 
@@ -135,6 +150,11 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<IActionResult> NewVerification([FromForm] NewVerificationViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
         var dto = _mapper.Map<NewVerificationMailDto>(model);
 
         var result = await _authService.NewVerificationAsync(dto);
@@ -177,8 +197,13 @@ public class AuthController : Controller
 
 	[HttpPost]
 	public async Task<IActionResult> RenewPassword([FromForm] NewPasswordViewModel model)
-	{
-		var dto = _mapper.Map<NewPasswordDto>(model);
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var dto = _mapper.Map<NewPasswordDto>(model);
 
 		var result = await _authService.NewPasswordAsync(dto);
 
