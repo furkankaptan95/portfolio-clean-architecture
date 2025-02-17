@@ -35,9 +35,70 @@
             <li><a href="/#portfolio"><i class="bi bi-images navicon"></i> Projeler</a></li>
             <li><a href="/BlogPost/All"><i class="bi bi-images navicon"></i> Blog Postlarım</a></li>
             <li><a href="/#contact"><i class="bi bi-envelope navicon"></i> İletişim</a></li>
+            <li class="dropdown">
+                <a href="#" id="userMenuToggle"><i class="bi bi-person navicon"></i> Kullanıcı İşlemleri ▾</a>
+                <ul class="dropdown-menu" id="userDropdown">
+                    <li><a href="/Auth/Login">Giriş Yap</a></li>
+                    <li><a href="/Auth/Register">Kayıt Ol</a></li>
+                    <li><a href="/User/Profile">Profilim</a></li>
+                    <li><a href="/Auth/Logout">Çıkış Yap</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 
 </header>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+    /* Açılır menü başlangıçta gizli */
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        background: wheat;
+        border: 1px solid #ddd;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 150px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        /* Açılır menü elemanları */
+        .dropdown-menu li a {
+            padding: 10px;
+            display: block;
+            color: black;
+            background: wheat;
+            text-align: left;
+            text-decoration: none;
+        }
+
+            /* Hover efekti */
+            .dropdown-menu li a:hover {
+                background: black;
+            }
+
+</style>
+
+<script>
+    // Kullanıcı İşlemleri menüsü tıklanınca aç/kapat
+    document.getElementById("userMenuToggle").addEventListener("click", function (event) {
+        event.preventDefault();
+        var dropdown = document.getElementById("userDropdown");
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    });
+
+    // Sayfanın başka bir yerine tıklanınca menüyü kapat
+    document.addEventListener("click", function (event) {
+        var dropdown = document.getElementById("userDropdown");
+        var menuToggle = document.getElementById("userMenuToggle");
+
+        if (!menuToggle.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.style.display = "none";
+        }
+    });
+
+</script>
