@@ -48,12 +48,14 @@ public class AuthService : IAuthService
 		return await response.Content.ReadFromJsonAsync<ServiceResult<string>>();
 	}
 
-	public Task<ServiceResult> RevokeTokenAsync(string token)
+	public async Task<ServiceResult> RevokeTokenAsync(string token)
 	{
-		throw new NotImplementedException();
+		var apiResponse = await AuthApiClient.PostAsJsonAsync("revoke-token", token);
+
+		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
 	}
 
-    public async Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
+	public async Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
     {
 		var response = await AuthApiClient.PostAsJsonAsync("verify-email", dto);
 
