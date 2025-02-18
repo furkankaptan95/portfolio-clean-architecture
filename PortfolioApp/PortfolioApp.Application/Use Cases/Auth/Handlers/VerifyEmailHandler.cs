@@ -33,6 +33,6 @@ public class VerifyEmailHandler : IRequestHandler<VerifyEmailCommand, ServiceRes
 
         _authDbContext.UserVerifications.Remove(userVerification);
 
-        return new ServiceResult(true, "Hesabınız başarıyla aktiflerştirildi. Giriş yapabilirsiniz.");
+        return new ServiceResult(true, "Hesabınız başarıyla aktifleştirildi. Giriş yapabilirsiniz.");
     }
 }
