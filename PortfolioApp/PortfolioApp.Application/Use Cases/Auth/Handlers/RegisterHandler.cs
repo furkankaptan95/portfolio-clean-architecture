@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Email;
@@ -12,11 +13,13 @@ using System.Net.Http.Json;
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<RegistrationError>>
 {
-    private readonly AuthDbContext _authDbContext; 
+    private readonly AuthDbContext _authDbContext;
+    private readonly MVCLinksConfiguration _mVCLinksConfiguration;
     private readonly IHttpClientFactory _factory;
-    public RegisterHandler(IHttpClientFactory factory, AuthDbContext authDbContext)
+    public RegisterHandler(IHttpClientFactory factory, AuthDbContext authDbContext, IOptions<MVCLinksConfiguration> mVCLinksConfiguration)
     {
         _authDbContext = authDbContext;
+        _mVCLinksConfiguration = mVCLinksConfiguration.Value;
         _factory = factory;
     }
     private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
@@ -68,7 +71,9 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
         await _authDbContext.UserVerifications.AddAsync(userVerification);
         await _authDbContext.SaveChangesAsync(cancellationToken);
 
-        var verificationLink = $"https://localhost:7296/Auth/VerifyEmail?email={request.Register.Email}&token={token}";
+        var mvcLink = _mVCLinksConfiguration.Web;
+
+        var verificationLink = $"{mvcLink}/Auth/VerifyEmail?email={request.Register.Email}&token={token}";
 
         var htmlMailBody = $"<h1>Lütfen Email adresinizi doğrulayın!</h1><a href='{verificationLink}'>Hesabınızı aktif etmek için tıklayınız.</a>";
 
