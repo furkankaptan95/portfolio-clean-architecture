@@ -7,6 +7,19 @@ builder.Services.AddServices(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseCors("AllowAllOrigins");
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS") // Eðer gelen istek "OPTIONS" ise
+    {
+        context.Response.StatusCode = 200; // HTTP 200 OK döndür
+        await context.Response.CompleteAsync(); // Yanýtý tamamla ve iþlem yapmadan çýk
+        return;
+    }
+    await next(); // Diðer middleware'lere devam et
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
