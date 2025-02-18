@@ -23,8 +23,16 @@ public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, Serv
     private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
     public async Task<ServiceResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
     {
-        var user = await _authDbContext.Users.FirstOrDefaultAsync(u=>u.Email == request.ForgotPassword.Email);
+        UserEntity? user;
 
+        if (request.ForgotPassword.IsAdmin == true)
+        {
+            user = await _authDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.ForgotPassword.Email && u.Role == "Admin");
+        }
+        else
+        {
+            user = await _authDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.ForgotPassword.Email && u.Role == "User");
+        }
 
         if (user is null)
         {

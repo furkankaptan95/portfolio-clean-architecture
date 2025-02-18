@@ -22,13 +22,13 @@ public class NewVerificationHandler : IRequestHandler<NewVerificationCommand, Se
     }
     private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
     public async Task<ServiceResult> Handle(NewVerificationCommand request, CancellationToken cancellationToken)
-    {
-        var user = await _authDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.NewVerificationMail.Email);
+    {  
 
+        var user = await _authDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.NewVerificationMail.Email && u.Role == "User");
 
         if (user is null)
         {
-            return new ServiceResult(false, "User not found");
+            return new ServiceResult(false, "Bu Email adresine sahip bir kullanıcı bulunamadı.");
         }
 
         var token = Guid.NewGuid().ToString().Substring(0, 6);
