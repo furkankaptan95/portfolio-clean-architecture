@@ -124,4 +124,17 @@ public class AuthController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("user-profile/{userId}")]
+    public async Task<IActionResult> UserProfile([FromRoute] int userId)
+    {
+        var result = await _authService.UserProfileAsync(userId);
+
+        if (!result.IsSuccess)
+        {
+            return NotFound(result);
+        }
+
+        return Ok(result);
+    }
 }

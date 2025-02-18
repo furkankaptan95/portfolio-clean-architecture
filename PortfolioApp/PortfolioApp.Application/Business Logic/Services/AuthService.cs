@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
+using PortfolioApp.Application.Use_Cases.Auth.Queries;
 using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.User;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Interfaces;
@@ -72,6 +74,13 @@ public class AuthService : IAuthService
     public async Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto)
     {
         var result = await _mediator.Send(new NewVerificationCommand(dto));
+
+        return result;
+    }
+
+    public async Task<ServiceResult<UserProfileDto>> UserProfileAsync(int userId)
+    {
+        var result = await _mediator.Send(new UserProfileQuery(userId));
 
         return result;
     }

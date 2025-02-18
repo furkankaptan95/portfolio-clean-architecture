@@ -1,4 +1,6 @@
 ﻿using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.BlogPost;
+using PortfolioApp.Core.DTOs.Admin.User;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Interfaces;
@@ -64,6 +66,13 @@ public class AuthService : IAuthService
 
 		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
 	}
+
+    public async Task<ServiceResult<UserProfileDto>> UserProfileAsync(int userId)
+    {
+        var apiResponse = await AuthApiClient.GetAsync($"user-profile/{userId}");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<UserProfileDto>>();
+    }
 
     public Task<ServiceResult> VerifyEmailAsync(VerifyEmailDto dto)
     {

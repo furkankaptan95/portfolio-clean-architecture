@@ -10,6 +10,7 @@ using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.Comment;
 using PortfolioApp.Core.DTOs.Web.Comment;
 using PortfolioApp.Core.DTOs.Auth;
+using PortfolioApp.Core.DTOs.Admin.User;
 
 namespace PortfolioApp.WebMVC.Mappers;
 public class ViewModelMappingProfile : Profile
@@ -29,7 +30,8 @@ public class ViewModelMappingProfile : Profile
         CreateMap<RegisterViewModel, RegisterDto>();
 		CreateMap<ForgotPasswordViewModel, ForgotPasswordDto>();
 		CreateMap<NewPasswordViewModel, NewPasswordDto>();
-        CreateMap<NewVerificationViewModel, NewVerificationMailDto>();
+        CreateMap<NewVerificationViewModel, NewVerificationMailDto>(); 
+        CreateMap<UserProfileDto, UserProfileViewModel>();
     }
 
 }

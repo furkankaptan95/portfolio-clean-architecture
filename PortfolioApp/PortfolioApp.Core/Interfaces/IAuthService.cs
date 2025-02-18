@@ -1,4 +1,5 @@
 ﻿using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.User;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Enums;
 
@@ -13,5 +14,6 @@ public interface IAuthService
     Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto);
     Task<ServiceResult<string>> RenewPasswordVerifyEmailAsync(RenewPasswordDto dto);
     Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto);
-    Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto);
+    Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto); 
+    Task<ServiceResult<UserProfileDto>> UserProfileAsync(int userId);
 }
