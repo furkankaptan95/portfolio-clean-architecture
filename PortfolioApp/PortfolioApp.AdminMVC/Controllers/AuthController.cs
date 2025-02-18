@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.AdminMVC.Models.ViewModels.Auth;
 using PortfolioApp.Core.DTOs.Auth;
@@ -175,4 +176,17 @@ public class AuthController : Controller
 		TempData["ErrorMessage"] = "Hesabınızdan çıkış yapılırken bir problem oluştu..";
 		return Redirect("/");
 	}
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet]
+    public async Task<IActionResult> UserProfile()
+    {
+        var userId = Convert.ToInt32(User.FindFirst("UserId")?.Value);
+
+        var result = await _authService.UserProfileAsync(userId);
+
+		var model = _mapper.Map<UserProfileViewModel>(result.Data);
+		
+        return View(model);
+    }
 }

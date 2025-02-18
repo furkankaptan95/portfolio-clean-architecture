@@ -18,6 +18,7 @@ using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.Home;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
 using PortfolioApp.Core.DTOs.Admin.Project;
+using PortfolioApp.Core.DTOs.Admin.User;
 using PortfolioApp.Core.DTOs.Auth;
 
 namespace PortfolioApp.AdminMVC.Mappers;
@@ -68,5 +69,6 @@ public class ViewModelMappingProfile : Profile
 		CreateMap<LoginViewModel, LoginDto>(); 
         CreateMap<ForgotPasswordViewModel, ForgotPasswordDto>();
         CreateMap<NewPasswordViewModel, NewPasswordDto>();
+        CreateMap<UserProfileDto, UserProfileViewModel>();
     }
 }

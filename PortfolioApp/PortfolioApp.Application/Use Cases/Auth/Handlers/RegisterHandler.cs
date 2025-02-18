@@ -48,7 +48,10 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
             Username = request.Register.Username,
             Email = request.Register.Email,
             PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt
+            PasswordSalt = passwordSalt,
+            Firstname = request.Register.Firstname,
+            Lastname = request.Register.Lastname,
+            
         };
 
         await _authDbContext.Users.AddAsync(user);
