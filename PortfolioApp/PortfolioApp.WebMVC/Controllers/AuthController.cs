@@ -35,6 +35,8 @@ public class AuthController : Controller
 
         var loginDto = _mapper.Map<LoginDto>(loginmodel);
 
+		loginDto.IsAdmin = false;
+
 		var result = await _authService.LoginAsync(loginDto);
 
 		if (!result.IsSuccess)
@@ -126,9 +128,11 @@ public class AuthController : Controller
             return View(model);
         }
 
-        var dto = _mapper.Map<ForgotPasswordDto>(model);
+        var dto = _mapper.Map<ForgotPasswordDto>(model); 
 
-		var result = await _authService.ForgotPasswordAsync(dto);
+		dto.IsAdmin = false;
+
+        var result = await _authService.ForgotPasswordAsync(dto);
 
 		if (!result.IsSuccess)
 		{

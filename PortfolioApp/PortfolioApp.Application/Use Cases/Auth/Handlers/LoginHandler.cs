@@ -21,7 +21,17 @@ public class LoginHandler : IRequestHandler<LoginCommand, ServiceResult<TokensDt
     }
     public async Task<ServiceResult<TokensDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-       var user = await _authDbContext.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Email == request.Login.Email);
+        UserEntity? user;
+
+        if(request.Login.IsAdmin == true)
+        {
+             user = await _authDbContext.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Email == request.Login.Email && u.Role == "Admin");
+        }
+
+        else
+        {
+            user = await _authDbContext.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Email == request.Login.Email && u.Role == "User");
+        }
 
         if (user == null)
         {
