@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Email;
 using PortfolioApp.Core.Interfaces;
 
@@ -6,6 +7,8 @@ namespace PortfolioApp.EmailAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+
+[Authorize]
 public class EmailController : ControllerBase
 {
     private readonly IEmailService _emailService;

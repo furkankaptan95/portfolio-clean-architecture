@@ -17,6 +17,8 @@ public static class ServiceRegistrations
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddTransient<JwtTokenHandler>();
+
         var authDbConnectionString = configuration.GetConnectionString("AuthDb");
         services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlServer(authDbConnectionString));
@@ -59,9 +61,9 @@ public static class ServiceRegistrations
 		services.AddHttpClient("emailApi", c =>
 		{
 			c.BaseAddress = new Uri(emailApiUrl);
-		});
+		}).AddHttpMessageHandler<JwtTokenHandler>();
 
-		return services;
+        return services;
     }
 
 	private static void AddJwtAuth(IServiceCollection services, IConfiguration configuration)
