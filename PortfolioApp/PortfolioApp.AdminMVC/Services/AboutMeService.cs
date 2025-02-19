@@ -90,6 +90,8 @@ public class AboutMeService : IAboutMeService
             var cvResult = await cvResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
 
             dataApiDto.CvUrl = cvResult.Data.FileName;
+
+            await FileApiClient.GetAsync($"delete/{dto.CvUrl}");
         }
 
         if (dto.AboutMeImage is not null)
@@ -102,6 +104,8 @@ public class AboutMeService : IAboutMeService
             var imgResult = await imageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
 
             dataApiDto.AboutMeImageUrl = imgResult.Data.FileName;
+
+            await FileApiClient.GetAsync($"delete/{dto.AboutMeImageUrl}");
         }
 
         var dataApiResponse = await DataApiClient.PostAsJsonAsync("aboutme/update", dataApiDto);

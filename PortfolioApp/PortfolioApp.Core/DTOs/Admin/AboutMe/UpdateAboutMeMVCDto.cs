@@ -11,4 +11,6 @@ public class UpdateAboutMeMVCDto
     public string Email { get; set; }
     public IFormFile? CvFile { get; set; }
     public IFormFile? AboutMeImage { get; set; }
+    public string CvUrl { get; set; }
+    public string AboutMeImageUrl { get; set; }
 }

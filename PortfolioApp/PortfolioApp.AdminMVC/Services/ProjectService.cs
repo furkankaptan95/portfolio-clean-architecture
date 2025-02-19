@@ -87,6 +87,8 @@ public class ProjectService : IProjectService
             var cvResult = await cvResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
 
             dataApiDto.ImageUrl = cvResult.Data.FileName;
+
+            await FileApiClient.GetAsync($"delete/{dto.ImageUrl}");
         }
 
         var dataApiResponse = await DataApiClient.PostAsJsonAsync("project/update", dataApiDto);
