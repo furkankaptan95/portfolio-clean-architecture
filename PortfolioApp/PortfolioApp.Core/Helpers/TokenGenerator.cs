@@ -40,4 +40,25 @@ public static class TokenGenerator
     {
         return Guid.NewGuid().ToString();
     }
+
+    public static string GenerateJwtTokenWithoutClaims(IConfiguration _configuration)
+    {
+       
+
+        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["EmailJwt:Key"]));
+
+        int expireMinutes = Convert.ToInt32(_configuration["EmailJwt:ExpireMinutes"]);
+
+        var jwt = new JwtSecurityToken(
+            issuer: _configuration["EmailJwt:Issuer"],
+            audience: _configuration["EmailJwt:Audience"],
+            notBefore: DateTime.UtcNow,
+            expires: DateTime.UtcNow.AddMinutes(expireMinutes),
+            signingCredentials: new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
+            );
+
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+        return tokenString;
+    }
 }

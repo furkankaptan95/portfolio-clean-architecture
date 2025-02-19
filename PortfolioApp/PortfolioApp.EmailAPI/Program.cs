@@ -1,17 +1,8 @@
-using PortfolioApp.Application.Business_Logic.Services;
-using PortfolioApp.Core.Interfaces;
+using PortfolioApp.EmailAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<IEmailService, SmtpEmailService>();
-builder.Services.Configure<SmtpConfiguration>(builder.Configuration.GetSection("SmtpConfiguration"));
+builder.Services.AddServices(builder.Configuration);
 
 var app = builder.Build();
 

@@ -15,6 +15,8 @@ public static class ServiceRegistrations
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
+
+        services.AddTransient<JwtTokenHandler>();
         var emailApiUrl = configuration.GetValue<string>("EmailApiUrl");
 
         if (string.IsNullOrWhiteSpace(emailApiUrl))
@@ -25,7 +27,7 @@ public static class ServiceRegistrations
         services.AddHttpClient("emailApi", c =>
         {
             c.BaseAddress = new Uri(emailApiUrl);
-        });
+        }).AddHttpMessageHandler<JwtTokenHandler>();
 
         services.Configure<MVCLinksConfiguration>(configuration.GetSection("MVCLinks"));
 
