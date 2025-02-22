@@ -53,18 +53,21 @@ public class HomeService
     private async Task<List<EducationViewModel>> Educations()
     {
         var result = await _educationService.GetAllAsync();
-        return _mapper.Map<List<EducationViewModel>>(result.Data);
+        var visibleDtos = result.Data.Where(e=>e.IsVisible == true).ToList();
+        return _mapper.Map<List<EducationViewModel>>(visibleDtos);
     }
 
     private async Task<List<ExperienceViewModel>> Experiences()
     {
         var result = await _experienceService.GetAllAsync();
-        return _mapper.Map<List<ExperienceViewModel>>(result.Data);
+        var visibleDtos = result.Data.Where(e => e.IsVisible == true).ToList();
+        return _mapper.Map<List<ExperienceViewModel>>(visibleDtos);
     }
 
     private async Task<List<ProjectViewModel>> Projects()
     {
         var result = await _projectService.GetAllAsync();
-        return _mapper.Map<List<ProjectViewModel>>(result.Data);
+        var visibleDtos = result.Data.Where(e => e.IsVisible == true).ToList();
+        return _mapper.Map<List<ProjectViewModel>>(visibleDtos);
     }
 }
