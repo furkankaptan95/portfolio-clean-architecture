@@ -1,12 +1,17 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Business_Logic.Services;
 using PortfolioApp.Application.Mappers;
-using PortfolioApp.Application.Use_Cases.AboutMe.Validators;
+using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Application.Use_Cases.Auth.Handlers;
+using PortfolioApp.Application.Use_Cases.Auth.Queries;
 using PortfolioApp.Application.Use_Cases.Auth.Validators;
 using PortfolioApp.Core.Common;
+using PortfolioApp.Core.DTOs.Admin.User;
+using PortfolioApp.Core.DTOs.Auth;
+using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Interfaces;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
 
@@ -35,11 +40,6 @@ public static class ServiceRegistrations
         services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlServer(authDbConnectionString));
 
-        var dataDbConnectionString = configuration.GetConnectionString("DataDb");
-        services.AddDbContext<DataDbContext>(options =>
-            options.UseSqlServer(dataDbConnectionString));
-
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterHandler).Assembly));
         services.AddScoped<IAuthService, AuthService>();
 
 		services.AddAutoMapper(typeof(MappingProfile));
@@ -52,6 +52,20 @@ public static class ServiceRegistrations
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
+        services.AddScoped<IRequestHandler<RenewPasswordVerifyEmailCommand, ServiceResult<string>>, RenewPasswordVerifyEmailHandler>();
+        services.AddScoped<IRequestHandler<ForgotPasswordCommand, ServiceResult>, ForgotPasswordHandler>();
+        services.AddScoped<IRequestHandler<LoginCommand, ServiceResult<TokensDto>>, LoginHandler>();
+        services.AddScoped<IRequestHandler<NewPasswordCommand, ServiceResult>, NewPasswordHandler>();
+        services.AddScoped<IRequestHandler<NewVerificationCommand, ServiceResult>, NewVerificationHandler>();
+        services.AddScoped<IRequestHandler<RefreshTokenCommand, ServiceResult<TokensDto>>, RefreshTokenHandler>();
+        services.AddScoped<IRequestHandler<RegisterCommand, ServiceResult<RegistrationError>>, RegisterHandler>();
+        services.AddScoped<IRequestHandler<RevokeTokenCommand, ServiceResult>, RevokeTokenHandler>();
+        services.AddScoped<IRequestHandler<UserProfileQuery, ServiceResult<UserProfileDto>>, UserProfileHandler>();
+        services.AddScoped<IRequestHandler<VerifyEmailCommand, ServiceResult>, VerifyEmailHandler>();
+
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceRegistrations).Assembly));
+
         return services;
     }
+    
 }
