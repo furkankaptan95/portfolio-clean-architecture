@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Comment.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Comment.Handlers;
 public class CommentApprovalHandler : IRequestHandler<CommentApprovalCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public CommentApprovalHandler(DataDbContext dataDbContext)
-    {
-        _dataDbContext = dataDbContext;
+    private readonly ICommentRepository _commentRepository;
+    public CommentApprovalHandler(ICommentRepository commentRepository)
+    {        
+        _commentRepository = commentRepository;
     }
     public async Task<ServiceResult> Handle(CommentApprovalCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Comments.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _commentRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
@@ -23,8 +22,8 @@ public class CommentApprovalHandler : IRequestHandler<CommentApprovalCommand, Se
 
         entity.IsApproved = !entity.IsApproved;
 
-        _dataDbContext.Comments.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _commentRepository.UpdateAsync(entity);
+        await _commentRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Yorum onay durumu değiştirildi.");
     }

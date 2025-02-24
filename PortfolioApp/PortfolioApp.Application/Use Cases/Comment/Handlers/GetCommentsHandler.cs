@@ -1,23 +1,22 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Comment.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.Comment;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Comment.Handlers;
 public class GetCommentsHandler : IRequestHandler<GetCommentsQuery, ServiceResult<List<CommentDto>>>
 {
-    private readonly DataDbContext _dataDbContext;
-    public GetCommentsHandler(DataDbContext dataDbContext)
+    private readonly ICommentRepository _commentRepository;
+    public GetCommentsHandler(ICommentRepository commentRepository)
     {
-        _dataDbContext = dataDbContext;
+        _commentRepository = commentRepository;
     }
     public async Task<ServiceResult<List<CommentDto>>> Handle(GetCommentsQuery request, CancellationToken cancellationToken)
     {
         var dtos = new List<CommentDto>();
 
-        var entities = await _dataDbContext.Comments.Include(c => c.BlogPost).ToListAsync();
+        var entities = await _commentRepository.GetAllWithBlogPosts();
 
         if (entities is null)
         {

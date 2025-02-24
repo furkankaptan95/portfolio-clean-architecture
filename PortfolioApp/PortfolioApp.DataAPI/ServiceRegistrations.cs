@@ -64,6 +64,7 @@ public static class ServiceRegistrations
 		AddJwtAuth(services, configuration);
 
         services.AddScoped<HomeService>();
+
         services.AddScoped<IAboutMeService, AboutMeService>();
         services.AddScoped<IAboutMeRepository, AboutMeRepository>();
 
@@ -71,11 +72,18 @@ public static class ServiceRegistrations
 		services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
         services.AddScoped<ICommentService, CommentService>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
+
         services.AddScoped<IContactMessageService, ContactMessageService>();
+
         services.AddScoped<IEducationService, EducationService>();
+
         services.AddScoped<IExperienceService, ExperienceService>();
+
         services.AddScoped<IPersonalInfoService, PersonalInfoService>();
+
         services.AddScoped<IProjectService, ProjectService>();
+
 
         services.AddAutoMapper(typeof(MappingProfile));
 
