@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.BlogPost.Handlers;
 public class UpdateBlogPostHandler : IRequestHandler<UpdateBlogPostCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public UpdateBlogPostHandler(DataDbContext dataDbContext)
-    {
-        _dataDbContext = dataDbContext;
+    private readonly IBlogPostRepository _blogPostRepository;
+    public UpdateBlogPostHandler(IBlogPostRepository blogPostRepository)
+    {      
+        _blogPostRepository = blogPostRepository;
     }
     public async Task<ServiceResult> Handle(UpdateBlogPostCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == request.BlogPost.Id);
+        var entity = await _blogPostRepository.GetByIdAsync(request.BlogPost.Id);
 
         if (entity is null)
         {
@@ -25,8 +24,8 @@ public class UpdateBlogPostHandler : IRequestHandler<UpdateBlogPostCommand, Serv
         entity.Content = request.BlogPost.Content;
         entity.UpdatedAt = DateTime.UtcNow;
 
-        _dataDbContext.BlogPosts.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _blogPostRepository.UpdateAsync(entity);
+        await _blogPostRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Blog Post başarıyla güncellendi.");
     }

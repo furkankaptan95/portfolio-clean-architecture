@@ -1,23 +1,22 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.BlogPost.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.BlogPost.Handlers;
 public class GetBlogPostsHandler : IRequestHandler<GetBlogPostsQuery, ServiceResult<List<BlogPostDto>>>
-{
-    private readonly DataDbContext _dataDbContext;
-    public GetBlogPostsHandler(DataDbContext dataDbContext)
-    {
-        _dataDbContext = dataDbContext;
+{    
+    private readonly IBlogPostRepository _blogPostRepository;
+    public GetBlogPostsHandler(IBlogPostRepository blogPostRepository)
+    {        
+        _blogPostRepository = blogPostRepository;
     }
     public async Task<ServiceResult<List<BlogPostDto>>> Handle(GetBlogPostsQuery request, CancellationToken cancellationToken)
     {
         var dtos = new List<BlogPostDto>();
 
-        var entities = await _dataDbContext.BlogPosts.Include(bp=>bp.Comments).ToListAsync();
+        var entities = await _blogPostRepository.GetAllWithComments();
 
         if (entities is null)
         {
@@ -33,7 +32,7 @@ public class GetBlogPostsHandler : IRequestHandler<GetBlogPostsQuery, ServiceRes
                PublishDate = item.PublishDate,
                IsVisible = item.IsVisible,
                UpdatedAt = item.UpdatedAt,
-               ApprovedCommentsCount = item.Comments.Where(c=>c.IsApproved).ToList().Count,
+               ApprovedCommentsCount = item.Comments.Count,
            })
            .ToList();
 

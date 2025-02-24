@@ -2,19 +2,19 @@
 using PortfolioApp.Application.Use_Cases.BlogPost.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.BlogPost;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.BlogPost.Handlers;
 public class GetBlogPostByIdHandler : IRequestHandler<GetBlogPostByIdQuery, ServiceResult<BlogPostDto>>
 {
-    private readonly DataDbContext _dataDbContext;
-    public GetBlogPostByIdHandler(DataDbContext dataDbContext)
+    IBlogPostRepository _blogPostRepository;
+    public GetBlogPostByIdHandler(IBlogPostRepository blogPostRepository)
     {
-        _dataDbContext = dataDbContext;
+        _blogPostRepository = blogPostRepository;
     }
     public async Task<ServiceResult<BlogPostDto>> Handle(GetBlogPostByIdQuery request, CancellationToken cancellationToken)
     {
-        var blogPost = await _dataDbContext.BlogPosts.FindAsync(request.Id);
+        var blogPost = await _blogPostRepository.GetByIdAsync(request.Id);
 
         if (blogPost is null)
         {

@@ -1,27 +1,27 @@
 ﻿using MediatR;
 using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.BlogPost.Handlers;
 public class DeleteBlogPostHandler : IRequestHandler<DeleteBlogPostCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public DeleteBlogPostHandler(DataDbContext dataDbContext)
+    private readonly IBlogPostRepository _blogPostRepository;
+    public DeleteBlogPostHandler(IBlogPostRepository blogPostRepository)
     {
-        _dataDbContext = dataDbContext;
+        _blogPostRepository = blogPostRepository;
     }
     public async Task<ServiceResult> Handle(DeleteBlogPostCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.BlogPosts.FindAsync(request.Id);
+        var entity = await _blogPostRepository.GetByIdAsync(request.Id);
 
         if(entity is null)
         {
             return new ServiceResult(false, "Silmek istediğiniz Blog Post bulunamadı.");
         }
 
-        _dataDbContext.BlogPosts.Remove(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _blogPostRepository.DeleteAsync(entity);
+        await _blogPostRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Blog Post başarıyla silindi.");
     }

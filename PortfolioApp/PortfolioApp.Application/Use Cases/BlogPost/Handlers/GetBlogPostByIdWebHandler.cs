@@ -1,27 +1,26 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.BlogPost.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Web.BlogPost;
 using PortfolioApp.Core.DTOs.Web.Comment;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.BlogPost.Handlers;
 public class GetBlogPostByIdWebHandler : IRequestHandler<GetBlogPostByIdWebQuery, ServiceResult<BlogPostWebDto>>
 {
-    private readonly DataDbContext _dataDbContext;
+    private readonly IBlogPostRepository _blogPostRepository;
     private readonly IMapper _mapper;
-    public GetBlogPostByIdWebHandler(DataDbContext dataDbContext, IMapper mapper )
+    public GetBlogPostByIdWebHandler(IMapper mapper, IBlogPostRepository blogPostRepository)
     {
-        _dataDbContext = dataDbContext;
+        _blogPostRepository = blogPostRepository;
         _mapper = mapper;
     }
     public async Task<ServiceResult<BlogPostWebDto>> Handle(GetBlogPostByIdWebQuery request, CancellationToken cancellationToken)
     {
-        var blogPostEntity = await _dataDbContext.BlogPosts.Include(bp=>bp.Comments.Where(bp=>bp.IsApproved)).FirstOrDefaultAsync(bp=>bp.Id == request.Id);
+        var blogPostEntity = await _blogPostRepository.IncludeComments(request.Id);
 
-        if (blogPostEntity is null || blogPostEntity.IsVisible is false)
+        if (blogPostEntity is null)
         {
             return new ServiceResult<BlogPostWebDto>(false, "Blog Post bulunamadı.", null);
         }
