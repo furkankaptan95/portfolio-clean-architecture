@@ -1,23 +1,23 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Entities;
 using PortfolioApp.Core.Helpers;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
-
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class LoginHandler : IRequestHandler<LoginCommand, ServiceResult<TokensDto>>
 {
-    private readonly AuthDbContext _authDbContext; 
     private readonly IConfiguration _configuration;
-    public LoginHandler(AuthDbContext authDbContext, IConfiguration configuration)
+    private readonly IUserRepository _userRepository;
+    private readonly IRefreshTokenRespository _refreshTokenRespository;
+    public LoginHandler(IConfiguration configuration, IUserRepository userRepository, IRefreshTokenRespository refreshTokenRespository)
     {
-        _authDbContext = authDbContext;
+        _userRepository = userRepository;
         _configuration = configuration;
+        _refreshTokenRespository = refreshTokenRespository;
     }
     public async Task<ServiceResult<TokensDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
@@ -25,12 +25,22 @@ public class LoginHandler : IRequestHandler<LoginCommand, ServiceResult<TokensDt
 
         if(request.Login.IsAdmin == true)
         {
-             user = await _authDbContext.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Email == request.Login.Email && u.Role == "Admin");
+            user = await _userRepository.GetByEmailWithRefreshTokensAsync(request.Login.Email);
+
+            if (user is not null && user.Role is not "Admin")
+            {
+                user = null;
+            }
         }
 
         else
         {
-            user = await _authDbContext.Users.Include(u => u.RefreshTokens).FirstOrDefaultAsync(u => u.Email == request.Login.Email && u.Role == "User");
+            user = await _userRepository.GetByEmailWithRefreshTokensAsync(request.Login.Email);
+
+            if (user is not null && user.Role is not "User")
+            {
+                user = null;
+            }
         }
 
         if (user == null)
@@ -61,8 +71,8 @@ public class LoginHandler : IRequestHandler<LoginCommand, ServiceResult<TokensDt
             ExpireDate = DateTime.UtcNow.AddDays(7),
         };
 
-        await _authDbContext.RefreshTokens.AddAsync(refreshToken);
-        await _authDbContext.SaveChangesAsync(cancellationToken);
+        await _refreshTokenRespository.AddAsync(refreshToken);
+        await _refreshTokenRespository.SaveChangesAsync();
 
         var tokensDto = new TokensDto
         {

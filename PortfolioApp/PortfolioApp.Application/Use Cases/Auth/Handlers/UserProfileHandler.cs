@@ -1,21 +1,20 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Auth.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.User;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class UserProfileHandler : IRequestHandler<UserProfileQuery, ServiceResult<UserProfileDto>>
 {
-    private readonly AuthDbContext _authDbContext;
-    public UserProfileHandler(AuthDbContext authDbContext)
+    private readonly IUserRepository _userRepository;
+    public UserProfileHandler(IUserRepository userRepository)
     {
-        _authDbContext = authDbContext;
+        _userRepository = userRepository;
     }
     public async Task<ServiceResult<UserProfileDto>> Handle(UserProfileQuery request, CancellationToken cancellationToken)
     {
-        var user = await _authDbContext.Users.SingleOrDefaultAsync(u=>u.Id == request.Id);
+        var user = await _userRepository.GetByIdAsync(request.Id);
 
         if (user is null)
             return new ServiceResult<UserProfileDto>(false,"Kullanıcı bulunamadı.");

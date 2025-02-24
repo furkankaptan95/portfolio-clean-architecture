@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class RevokeTokenHandler : IRequestHandler<RevokeTokenCommand, ServiceResult>
 {
-    private readonly AuthDbContext _authDbContext;
-    public RevokeTokenHandler(AuthDbContext authDbContext)
+    private readonly IRefreshTokenRespository _refreshTokenRespository;
+    public RevokeTokenHandler(IRefreshTokenRespository refreshTokenRespository)
     {
-        _authDbContext = authDbContext;
+        _refreshTokenRespository = refreshTokenRespository;
     }
     public async Task<ServiceResult> Handle(RevokeTokenCommand request, CancellationToken cancellationToken)
     {
-        var refreshToken = await _authDbContext.RefreshTokens.FirstOrDefaultAsync(rt => rt.Token == request.Token);
+        var refreshToken = await _refreshTokenRespository.GetByTokenWithUser(request.Token);
 
         if (refreshToken is null)
         {
@@ -23,8 +22,8 @@ public class RevokeTokenHandler : IRequestHandler<RevokeTokenCommand, ServiceRes
 
         refreshToken.IsRevoked = DateTime.UtcNow;
 
-        _authDbContext.RefreshTokens.Update(refreshToken);
-        await _authDbContext.SaveChangesAsync(cancellationToken);
+        await _refreshTokenRespository.UpdateAsync(refreshToken);
+        await _refreshTokenRespository.SaveChangesAsync();
 
         return new ServiceResult(true);
     }

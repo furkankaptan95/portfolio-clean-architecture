@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class RenewPasswordVerifyEmailHandler : IRequestHandler<RenewPasswordVerifyEmailCommand, ServiceResult<string>>
 {
-    private readonly AuthDbContext _authDbContext;
-    public RenewPasswordVerifyEmailHandler(AuthDbContext authDbContext)
+    private readonly IUserVerificationRepository _userVerificationRepository;
+    public RenewPasswordVerifyEmailHandler(IUserVerificationRepository userVerificationRepository)
     {
-        _authDbContext = authDbContext;
+        _userVerificationRepository = userVerificationRepository;
     }
     public async Task<ServiceResult<string>> Handle(RenewPasswordVerifyEmailCommand request, CancellationToken cancellationToken)
     {
-        var userVerification = await _authDbContext.UserVerifications.Include(uv => uv.User).FirstOrDefaultAsync(uv => uv.Token == request.RenewPassword.Token);
+        var userVerification = await _userVerificationRepository.GetByTokenWithUser(request.RenewPassword.Token);
 
         if (userVerification == null || userVerification.ExpireDate < DateTime.UtcNow || userVerification.User.Email != request.RenewPassword.Email)
         {

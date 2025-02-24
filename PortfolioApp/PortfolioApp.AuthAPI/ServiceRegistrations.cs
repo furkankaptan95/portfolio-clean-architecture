@@ -13,7 +13,9 @@ using PortfolioApp.Core.DTOs.Admin.User;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Interfaces;
+using PortfolioApp.Core.Interfaces.Repositories;
 using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Infrastructure.Persistence.Repositories;
 
 namespace PortfolioApp.AuthAPI;
 public static class ServiceRegistrations
@@ -41,8 +43,11 @@ public static class ServiceRegistrations
             options.UseSqlServer(authDbConnectionString));
 
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserVerificationRepository, UserVerificationRepository>();
+        services.AddScoped<IRefreshTokenRespository, RefreshTokenRespository>();
 
-		services.AddAutoMapper(typeof(MappingProfile));
+        services.AddAutoMapper(typeof(MappingProfile));
 
 		services.AddFluentValidationAutoValidation();
 		services.AddValidatorsFromAssemblyContaining<LoginDtoValidator>();

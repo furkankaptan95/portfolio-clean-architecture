@@ -1,20 +1,21 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 
 public class VerifyEmailHandler : IRequestHandler<VerifyEmailCommand, ServiceResult>
 {
-    private readonly AuthDbContext _authDbContext;
-    public VerifyEmailHandler(AuthDbContext authDbContext)
+    private readonly IUserVerificationRepository _userVerificationRepository;
+    private readonly IUserRepository _userRepository;
+    public VerifyEmailHandler(IUserVerificationRepository userVerificationRepository, IUserRepository userRepository)
     {
-        _authDbContext = authDbContext;
+        _userVerificationRepository = userVerificationRepository;
+        _userRepository = userRepository;
     }
     public async Task<ServiceResult> Handle(VerifyEmailCommand request, CancellationToken cancellationToken)
     {
-        var userVerification = await _authDbContext.UserVerifications.Include(uv=>uv.User).FirstOrDefaultAsync(uv => uv.Token == request.Verify.Token);
+        var userVerification = await _userVerificationRepository.GetByTokenWithUser(request.Verify.Token);
 
         if (userVerification is null)
         {
@@ -28,10 +29,11 @@ public class VerifyEmailHandler : IRequestHandler<VerifyEmailCommand, ServiceRes
 
         userVerification.User.IsActive = true;
 
-        _authDbContext.Users.Update(userVerification.User);
-        await _authDbContext.SaveChangesAsync(cancellationToken);
+        await _userRepository.UpdateAsync(userVerification.User);
+        await _userRepository.SaveChangesAsync();
 
-        _authDbContext.UserVerifications.Remove(userVerification);
+        await _userVerificationRepository.DeleteAsync(userVerification);
+        await _userVerificationRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Hesabınız başarıyla aktifleştirildi. Giriş yapabilirsiniz.");
     }

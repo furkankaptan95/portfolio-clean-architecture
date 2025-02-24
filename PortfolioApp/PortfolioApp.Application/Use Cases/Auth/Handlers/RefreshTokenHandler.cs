@@ -1,34 +1,29 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Entities;
 using PortfolioApp.Core.Helpers;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, ServiceResult<TokensDto>>
 {
-    private readonly AuthDbContext _authDbContext;
     private readonly IConfiguration _configuration;
-    public RefreshTokenHandler(AuthDbContext authDbContext, IConfiguration configuration)
+    private readonly IRefreshTokenRespository _refreshTokenRespository;
+    public RefreshTokenHandler(IConfiguration configuration, IRefreshTokenRespository refreshTokenRespository)
     {
-        _authDbContext = authDbContext;
         _configuration = configuration;
+        _refreshTokenRespository = refreshTokenRespository;
     }
     public async Task<ServiceResult<TokensDto>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        var refreshToken = await _authDbContext.RefreshTokens.Where(rt =>
-              rt.Token == request.Token &&
-              rt.ExpireDate > DateTime.UtcNow &&
-              rt.IsRevoked == null &&
-              rt.IsUsed == null).Include(rt => rt.User).FirstOrDefaultAsync();
+        var refreshToken = await _refreshTokenRespository.GetByTokenWithUser(request.Token);
 
-        if (refreshToken is null)
+        if (refreshToken is null || refreshToken.ExpireDate < DateTime.UtcNow || refreshToken.IsRevoked is not null || refreshToken.IsUsed is not null)
         {
-            return new ServiceResult<TokensDto>(false,"Geçerli bi Refresh Token bulunmuyor.");
+            return new ServiceResult<TokensDto>(false, "Geçerli bi Refresh Token bulunmuyor.");
         }
 
         refreshToken.IsUsed = DateTime.UtcNow;
@@ -44,8 +39,8 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, ServiceR
             ExpireDate = DateTime.UtcNow.AddDays(7),
         };
 
-        await _authDbContext.RefreshTokens.AddAsync(newRefreshToken);
-        await _authDbContext.SaveChangesAsync(cancellationToken);
+        await _refreshTokenRespository.AddAsync(newRefreshToken);
+        await _refreshTokenRespository.SaveChangesAsync();
 
         var response = new TokensDto
         {
