@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Education.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Education.Handlers;
 public class UpdateEducationHandler : IRequestHandler<UpdateEducationCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public UpdateEducationHandler(DataDbContext dataDbContext)
+    private readonly IEducationRepository _educationRepository;
+    public UpdateEducationHandler(IEducationRepository educationRepository)
     {
-        _dataDbContext = dataDbContext;
+        _educationRepository = educationRepository;
     }
     public async Task<ServiceResult> Handle(UpdateEducationCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Educations.FirstOrDefaultAsync(x => x.Id == request.Education.Id);
+        var entity = await _educationRepository.GetByIdAsync(request.Education.Id);
 
         if (entity is null)
         {
@@ -26,8 +25,8 @@ public class UpdateEducationHandler : IRequestHandler<UpdateEducationCommand, Se
         entity.StartDate = request.Education.StartDate;
         entity.Degree = request.Education.Degree;
 
-        _dataDbContext.Educations.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _educationRepository.UpdateAsync(entity);
+        await _educationRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Eğitim bilgisi başarıyla güncellendi.");
     }

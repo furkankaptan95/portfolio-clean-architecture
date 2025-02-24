@@ -75,8 +75,10 @@ public static class ServiceRegistrations
         services.AddScoped<ICommentRepository, CommentRepository>();
 
         services.AddScoped<IContactMessageService, ContactMessageService>();
+        services.AddScoped<IContactMessageRepository, ContactMessageRepository>();
 
         services.AddScoped<IEducationService, EducationService>();
+        services.AddScoped<IEducationRepository, EducationRepository>();
 
         services.AddScoped<IExperienceService, ExperienceService>();
 

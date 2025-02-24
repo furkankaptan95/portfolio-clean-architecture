@@ -1,21 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
 using PortfolioApp.Application.Use_Cases.ContactMessage.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.ContactMessage.Handlers;
 public class MakeContactMessageReadHandler : IRequestHandler<MakeContactMessageReadCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public MakeContactMessageReadHandler(DataDbContext dataDbContext)
+    private readonly IContactMessageRepository _contactMessageRepository;
+    public MakeContactMessageReadHandler(IContactMessageRepository contactMessageRepository)
     {
-        _dataDbContext = dataDbContext;
+        _contactMessageRepository = contactMessageRepository;
     }
     public async Task<ServiceResult> Handle(MakeContactMessageReadCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.ContactMessages.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _contactMessageRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
@@ -24,8 +22,8 @@ public class MakeContactMessageReadHandler : IRequestHandler<MakeContactMessageR
 
         entity.IsRead = true;
 
-        _dataDbContext.ContactMessages.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _contactMessageRepository.UpdateAsync(entity);
+        await _contactMessageRepository.SaveChangesAsync();
 
         return new ServiceResult(true,"Mesaj durumu - Okundu - olarak güncellendi.");
     }

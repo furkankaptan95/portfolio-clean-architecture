@@ -1,26 +1,25 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.ContactMessage.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Email;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 using System.Net.Http.Json;
 
 namespace PortfolioApp.Application.Use_Cases.ContactMessage.Handlers;
 public class ReplyContactMessageHandler : IRequestHandler<ReplyContactMessageCommand, ServiceResult>
 {
     private readonly IHttpClientFactory _factory;
-    private readonly DataDbContext _dataDbContext;
-    public ReplyContactMessageHandler(DataDbContext dataDbContext, IHttpClientFactory factory)
+    private readonly IContactMessageRepository _contactMessageRepository;
+    public ReplyContactMessageHandler(IContactMessageRepository contactMessageRepository, IHttpClientFactory factory)
     {
-        _dataDbContext = dataDbContext;
+        _contactMessageRepository = contactMessageRepository;
         _factory = factory;
     }
 
     private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
     public async Task<ServiceResult> Handle(ReplyContactMessageCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.ContactMessages.FirstOrDefaultAsync(x => x.Id == request.ReplyDto.Id);
+        var entity = await _contactMessageRepository.GetByIdAsync(request.ReplyDto.Id);
 
         if (entity is null)
         {
@@ -31,8 +30,8 @@ public class ReplyContactMessageHandler : IRequestHandler<ReplyContactMessageCom
         entity.Reply = request.ReplyDto.ReplyMessage;
         entity.ReplyDate = DateTime.UtcNow;
 
-        _dataDbContext.ContactMessages.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _contactMessageRepository.UpdateAsync(entity);
+        await _contactMessageRepository.SaveChangesAsync();
 
         var htmlMailBody = $"<h1>Merhaba, Ben Furkan!</h1><p>{entity.Reply}</p>";
 

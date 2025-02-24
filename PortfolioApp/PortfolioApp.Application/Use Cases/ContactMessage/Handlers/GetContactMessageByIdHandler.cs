@@ -1,21 +1,20 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.ContactMessage.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.ContactMessage;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.ContactMessage.Handlers;
 public class GetContactMessageByIdHandler : IRequestHandler<GetContactMessageByIdQuery, ServiceResult<ContactMessageDto>>
 {
-    private readonly DataDbContext _dataDbContext;
-    public GetContactMessageByIdHandler(DataDbContext dataDbContext)
+    private readonly IContactMessageRepository _contactMessageRepository;
+    public GetContactMessageByIdHandler(IContactMessageRepository contactMessageRepository)
     {
-        _dataDbContext = dataDbContext;
+        _contactMessageRepository = contactMessageRepository;
     }
     public async Task<ServiceResult<ContactMessageDto>> Handle(GetContactMessageByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.ContactMessages.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _contactMessageRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
