@@ -1,23 +1,22 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Education.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.Education;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Education.Handlers;
 public class GetEducationsHandler : IRequestHandler<GetEducationsQuery, ServiceResult<List<EducationDto>>>
 {
-    private readonly DataDbContext _dataDbContext;
-    public GetEducationsHandler(DataDbContext dataDbContext)
+    private readonly IEducationRepository _educationRepository;
+    public GetEducationsHandler(IEducationRepository educationRepository)
     {
-        _dataDbContext = dataDbContext;
+        _educationRepository = educationRepository;
     }
     public async Task<ServiceResult<List<EducationDto>>> Handle(GetEducationsQuery request, CancellationToken cancellationToken)
     {
         var dtos = new List<EducationDto>();
 
-        var entities = await _dataDbContext.Educations.ToListAsync();
+        var entities = await _educationRepository.GetAllAsync();
 
         if (entities is null)
         {

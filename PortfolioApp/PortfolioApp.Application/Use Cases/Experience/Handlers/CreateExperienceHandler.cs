@@ -2,15 +2,15 @@
 using PortfolioApp.Application.Use_Cases.Experience.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Experience.Handlers;
 public class CreateExperienceHandler : IRequestHandler<CreateExperienceCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public CreateExperienceHandler(DataDbContext dataDbContext)
+    private readonly IExperienceRepository _experienceRepository;
+    public CreateExperienceHandler(IExperienceRepository experienceRepository)
     {
-        _dataDbContext = dataDbContext;
+        _experienceRepository = experienceRepository;
     }
     public async Task<ServiceResult> Handle(CreateExperienceCommand request, CancellationToken cancellationToken)
     {
@@ -23,8 +23,8 @@ public class CreateExperienceHandler : IRequestHandler<CreateExperienceCommand, 
             Description = request.Experience.Description,
         };
 
-        await _dataDbContext.Experiences.AddAsync(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _experienceRepository.AddAsync(entity);
+        await _experienceRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Deneyim başarıyla eklendi.");
     }

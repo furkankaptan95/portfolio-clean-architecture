@@ -1,22 +1,20 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Project.Queries;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.Experience;
 using PortfolioApp.Core.DTOs.Admin.Project;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Project.Handlers;
 public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, ServiceResult<ProjectDto>>
 {
-    private readonly DataDbContext _dataDbContext;
-    public GetProjectByIdHandler(DataDbContext dataDbContext)
+    private readonly IProjectRepository _projectRepository;
+    public GetProjectByIdHandler(IProjectRepository projectRepository)
     {
-        _dataDbContext = dataDbContext;
+        _projectRepository = projectRepository;
     }
     public async Task<ServiceResult<ProjectDto>> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Projects.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _projectRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {

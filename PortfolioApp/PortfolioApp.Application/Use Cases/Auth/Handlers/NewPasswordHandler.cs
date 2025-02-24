@@ -1,21 +1,22 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Helpers;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class NewPasswordHandler : IRequestHandler<NewPasswordCommand, ServiceResult>
 {
-    private readonly AuthDbContext _authDbContext;
-    public NewPasswordHandler(AuthDbContext authDbContext)
+    private readonly IUserVerificationRepository _userVerificationRepository;
+    private readonly IUserRepository _userRepository;
+    public NewPasswordHandler(IUserVerificationRepository userVerificationRepository, IUserRepository userRepository)
     {
-        _authDbContext = authDbContext;
+        _userVerificationRepository = userVerificationRepository;
+        _userRepository = userRepository;
     }
     public async Task<ServiceResult> Handle(NewPasswordCommand request, CancellationToken cancellationToken)
     {
-        var userVerification = await _authDbContext.UserVerifications.Include(uv => uv.User).FirstOrDefaultAsync(uv => uv.Token == request.NewPassword.Token);
+        var userVerification = await _userVerificationRepository.GetByTokenWithUser(request.NewPassword.Token);
 
         if (userVerification == null || userVerification.ExpireDate < DateTime.UtcNow || userVerification.User.Email != request.NewPassword.Email)
         {
@@ -31,11 +32,11 @@ public class NewPasswordHandler : IRequestHandler<NewPasswordCommand, ServiceRes
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
 
-        _authDbContext.Users.Update(user);
-        await _authDbContext.SaveChangesAsync(cancellationToken);
+        await _userRepository.UpdateAsync(user);
+        await _userRepository.SaveChangesAsync();
 
-        _authDbContext.UserVerifications.Remove(userVerification);
-        await _authDbContext.SaveChangesAsync(cancellationToken);
+        await _userVerificationRepository.DeleteAsync(userVerification);
+        await _userVerificationRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Şifreniz başarıyla değiştirildi.");
     }

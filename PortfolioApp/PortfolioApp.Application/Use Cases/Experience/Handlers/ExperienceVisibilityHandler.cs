@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Experience.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Experience.Handlers;
 public class ExperienceVisibilityHandler : IRequestHandler<ExperienceVisibilityCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public ExperienceVisibilityHandler(DataDbContext dataDbContext)
+    private readonly IExperienceRepository _experienceRepository;
+    public ExperienceVisibilityHandler(IExperienceRepository experienceRepository)
     {
-        _dataDbContext = dataDbContext;
+        _experienceRepository = experienceRepository;
     }
     public async Task<ServiceResult> Handle(ExperienceVisibilityCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Experiences.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _experienceRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
@@ -23,8 +22,8 @@ public class ExperienceVisibilityHandler : IRequestHandler<ExperienceVisibilityC
 
         entity.IsVisible = !entity.IsVisible;
 
-        _dataDbContext.Experiences.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _experienceRepository.UpdateAsync(entity);
+        await _experienceRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Deneyim bilgisi görünürlüğü başarıyla güncellendi.");
     }

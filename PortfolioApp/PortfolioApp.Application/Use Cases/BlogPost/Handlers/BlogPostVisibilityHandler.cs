@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.BlogPost.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.BlogPost.Handlers;
 public class BlogPostVisibilityHandler : IRequestHandler<BlogPostVisibilityCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public BlogPostVisibilityHandler(DataDbContext dataDbContext)
+    private readonly IBlogPostRepository _blogPostRepository;
+    public BlogPostVisibilityHandler(IBlogPostRepository blogPostRepository)
     {
-        _dataDbContext = dataDbContext;
+        _blogPostRepository = blogPostRepository;
     }
     public async Task<ServiceResult> Handle(BlogPostVisibilityCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _blogPostRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
@@ -23,8 +22,8 @@ public class BlogPostVisibilityHandler : IRequestHandler<BlogPostVisibilityComma
 
         entity.IsVisible = !entity.IsVisible;
 
-        _dataDbContext.BlogPosts.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _blogPostRepository.UpdateAsync(entity);
+        await _blogPostRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Blog Post görünürlüğü başarıyla güncellendi.");
     }

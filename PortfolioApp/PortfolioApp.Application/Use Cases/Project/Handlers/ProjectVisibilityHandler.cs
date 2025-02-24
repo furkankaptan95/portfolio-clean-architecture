@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Project.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Project.Handlers;
 public class ProjectVisibilityHandler : IRequestHandler<ProjectVisibilityCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public ProjectVisibilityHandler(DataDbContext dataDbContext)
+    private readonly IProjectRepository _projectRepository;
+    public ProjectVisibilityHandler(IProjectRepository projectRepository)
     {
-        _dataDbContext = dataDbContext;
+        _projectRepository = projectRepository;
     }
     public async Task<ServiceResult> Handle(ProjectVisibilityCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Projects.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _projectRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
@@ -23,8 +22,8 @@ public class ProjectVisibilityHandler : IRequestHandler<ProjectVisibilityCommand
 
         entity.IsVisible = !entity.IsVisible;
 
-        _dataDbContext.Projects.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _projectRepository.UpdateAsync(entity);
+        await _projectRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Proje görünürlüğü başarıyla güncellendi.");
     }

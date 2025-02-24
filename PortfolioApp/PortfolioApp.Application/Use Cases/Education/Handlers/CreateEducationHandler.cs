@@ -2,15 +2,15 @@
 using PortfolioApp.Application.Use_Cases.Education.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Education.Handlers;
 public class CreateEducationHandler : IRequestHandler<CreateEducationCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public CreateEducationHandler(DataDbContext dataDbContext)
+    private readonly IEducationRepository _educationRepository;
+    public CreateEducationHandler(IEducationRepository educationRepository)
     {
-        _dataDbContext = dataDbContext;
+        _educationRepository = educationRepository;
     }
     public async Task<ServiceResult> Handle(CreateEducationCommand request, CancellationToken cancellationToken)
     {
@@ -22,8 +22,8 @@ public class CreateEducationHandler : IRequestHandler<CreateEducationCommand, Se
             School = request.Education.School,
         };
 
-        await _dataDbContext.Educations.AddAsync(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _educationRepository.AddAsync(entity);
+        await _educationRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Eğitim başarıyla eklendi.");
     }

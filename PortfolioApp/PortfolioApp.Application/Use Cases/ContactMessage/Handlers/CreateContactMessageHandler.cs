@@ -2,15 +2,15 @@
 using PortfolioApp.Application.Use_Cases.ContactMessage.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.ContactMessage.Handlers;
 public class CreateContactMessageHandler : IRequestHandler<CreateContactMessageCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public CreateContactMessageHandler(DataDbContext dataDbContext)
+    private readonly IContactMessageRepository _contactMessageRepository;
+    public CreateContactMessageHandler(IContactMessageRepository contactMessageRepository)
     {
-        _dataDbContext = dataDbContext;
+        _contactMessageRepository = contactMessageRepository;
     }
     public async Task<ServiceResult> Handle(CreateContactMessageCommand request, CancellationToken cancellationToken)
     {
@@ -22,8 +22,8 @@ public class CreateContactMessageHandler : IRequestHandler<CreateContactMessageC
             Message = request.ContactMessage.Message,
         };
 
-        await _dataDbContext.ContactMessages.AddAsync(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _contactMessageRepository.AddAsync(entity);
+        await _contactMessageRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Mesaj başarıyla gönderildi.");
     }

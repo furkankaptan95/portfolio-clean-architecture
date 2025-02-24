@@ -1,21 +1,20 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.AboutMe.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.AboutMe.Handlers;
 public class CreateAboutMeHandler : IRequestHandler<CreateAboutMeCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public CreateAboutMeHandler(DataDbContext dataDbContext)
+    private readonly IAboutMeRepository _aboutMeRepository;
+    public CreateAboutMeHandler(IAboutMeRepository aboutMeRepository)
     {
-        _dataDbContext = dataDbContext;
+        _aboutMeRepository = aboutMeRepository; 
     }
     public async Task<ServiceResult> Handle(CreateAboutMeCommand request, CancellationToken cancellationToken)
     {
-        var entityCheck = await _dataDbContext.AboutMe.FirstOrDefaultAsync();
+        var entityCheck = await _aboutMeRepository.CheckAndGetAsync();
 
         if (entityCheck is not null)
         {
@@ -34,8 +33,8 @@ public class CreateAboutMeHandler : IRequestHandler<CreateAboutMeCommand, Servic
             CvUrl = request.AboutMe.CvUrl,
         };
 
-        await _dataDbContext.AboutMe.AddAsync(aboutMe);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _aboutMeRepository.AddAsync(aboutMe);
+        await _aboutMeRepository.SaveChangesAsync();
 
         return new ServiceResult(true,"Hakkımda bilgileri başarıyla oluşturuldu.");
     }

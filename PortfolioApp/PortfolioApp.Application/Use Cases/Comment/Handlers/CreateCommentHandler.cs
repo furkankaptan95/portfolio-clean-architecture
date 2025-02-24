@@ -2,15 +2,15 @@
 using PortfolioApp.Application.Use_Cases.Comment.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Comment.Handlers;
 public class CreateCommentHandler : IRequestHandler<CreateCommentCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public CreateCommentHandler(DataDbContext dataDbContext)
+    private readonly ICommentRepository _commentRepository;
+    public CreateCommentHandler(ICommentRepository commentRepository)
     {
-        _dataDbContext = dataDbContext;
+        _commentRepository = commentRepository;
     }
     public async Task<ServiceResult> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
     {
@@ -23,8 +23,8 @@ public class CreateCommentHandler : IRequestHandler<CreateCommentCommand, Servic
             UnsignedCommenterName = request.Comment.UnsignedCommenterName,
         };
 
-        await _dataDbContext.Comments.AddAsync(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _commentRepository.AddAsync(entity);
+        await _commentRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Yorum başarıyla oluşturuldu.");
     }

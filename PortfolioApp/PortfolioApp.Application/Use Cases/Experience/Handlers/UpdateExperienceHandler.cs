@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Experience.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Experience.Handlers;
 public class UpdateExperienceHandler : IRequestHandler<UpdateExperienceCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public UpdateExperienceHandler(DataDbContext dataDbContext)
+    private readonly IExperienceRepository _experienceRepository;
+    public UpdateExperienceHandler(IExperienceRepository experienceRepository)
     {
-        _dataDbContext = dataDbContext;
+        _experienceRepository = experienceRepository;
     }
     public async Task<ServiceResult> Handle(UpdateExperienceCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Experiences.FirstOrDefaultAsync(x => x.Id == request.Experience.Id);
+        var entity = await _experienceRepository.GetByIdAsync(request.Experience.Id);
 
         if (entity is null)
         {
@@ -27,8 +26,8 @@ public class UpdateExperienceHandler : IRequestHandler<UpdateExperienceCommand, 
         entity.Title = request.Experience.Title;
         entity.Description = request.Experience.Description;
 
-        _dataDbContext.Experiences.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _experienceRepository.UpdateAsync(entity);
+        await _experienceRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Deneyim bilgisi başarıyla güncellendi.");
     }

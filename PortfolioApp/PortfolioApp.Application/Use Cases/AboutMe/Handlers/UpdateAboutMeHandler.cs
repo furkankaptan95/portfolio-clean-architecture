@@ -1,21 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.AboutMe.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.AboutMe;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.AboutMe.Handlers;
 public class UpdateAboutMeHandler : IRequestHandler<UpdateAboutMeCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public UpdateAboutMeHandler(DataDbContext dataDbContext)
+    private readonly IAboutMeRepository _aboutMeRepository;
+    public UpdateAboutMeHandler(IAboutMeRepository aboutMeRepository)
     {
-        _dataDbContext = dataDbContext;
+        _aboutMeRepository = aboutMeRepository;
     }
     public async Task<ServiceResult> Handle(UpdateAboutMeCommand request, CancellationToken cancellationToken)
     {
-        var aboutMeEntity = await _dataDbContext.AboutMe.FirstOrDefaultAsync();
+        var aboutMeEntity = await _aboutMeRepository.CheckAndGetAsync();
 
         if (aboutMeEntity is null)
         {
@@ -39,8 +37,9 @@ public class UpdateAboutMeHandler : IRequestHandler<UpdateAboutMeCommand, Servic
             aboutMeEntity.AboutMeImageUrl = request.AboutMe.AboutMeImageUrl;
         }
 
-        _dataDbContext.AboutMe.Update(aboutMeEntity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _aboutMeRepository.UpdateAsync(aboutMeEntity);
+        await _aboutMeRepository.SaveChangesAsync();
+
         return new ServiceResult(true, "Hakkımda bilgileri başarıyla güncellendi.");
     }
 }

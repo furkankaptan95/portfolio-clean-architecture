@@ -1,24 +1,25 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Email;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 using System.Net.Http.Json;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, ServiceResult>
 {
-    private readonly AuthDbContext _authDbContext;
+    private readonly IUserRepository _userRepository;
+    private readonly IUserVerificationRepository _userVerificationRepository;
     private readonly MVCLinksConfiguration _mVCLinksConfiguration;
     private readonly IHttpClientFactory _factory;
-    public ForgotPasswordHandler(IHttpClientFactory factory, AuthDbContext authDbContext, IOptions<MVCLinksConfiguration> mVCLinksConfiguration)
+    public ForgotPasswordHandler(IUserVerificationRepository userVerificationRepository,IHttpClientFactory factory, IOptions<MVCLinksConfiguration> mVCLinksConfiguration, IUserRepository userRepository)
     {
-        _authDbContext = authDbContext;
+        _userRepository = userRepository;
         _mVCLinksConfiguration = mVCLinksConfiguration.Value;      
         _factory = factory;
+        _userVerificationRepository = userVerificationRepository;
     }
     private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
     public async Task<ServiceResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
@@ -27,11 +28,21 @@ public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, Serv
 
         if (request.ForgotPassword.IsAdmin == true)
         {
-            user = await _authDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.ForgotPassword.Email && u.Role == "Admin");
+            user = await _userRepository.GetByEmailAsync(request.ForgotPassword.Email);
+
+            if(user is not null && user.Role is not "Admin")
+            {
+                user = null;
+            }
         }
         else
         {
-            user = await _authDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.ForgotPassword.Email && u.Role == "User");
+            user = await _userRepository.GetByEmailAsync(request.ForgotPassword.Email);
+
+            if (user is not null && user.Role is not "User")
+            {
+                user = null;
+            }
         }
 
         if (user is null)
@@ -47,8 +58,8 @@ public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, Serv
             Token = token,
         };
 
-        await _authDbContext.UserVerifications.AddAsync(userVerificationEntity);
-        await _authDbContext.SaveChangesAsync();
+        await _userVerificationRepository.AddAsync(userVerificationEntity);
+        await _userVerificationRepository.SaveChangesAsync();
 
         string mvcLink;
 

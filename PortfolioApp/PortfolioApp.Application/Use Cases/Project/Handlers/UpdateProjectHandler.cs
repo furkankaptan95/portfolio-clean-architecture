@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Project.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Project.Handlers;
 public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public UpdateProjectHandler(DataDbContext dataDbContext)
+    private readonly IProjectRepository _projectRepository;
+    public UpdateProjectHandler(IProjectRepository projectRepository)
     {
-        _dataDbContext = dataDbContext;
+        _projectRepository = projectRepository;
     }
     public async Task<ServiceResult> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Projects.FirstOrDefaultAsync(x => x.Id == request.Project.Id);
+        var entity = await _projectRepository.GetByIdAsync(request.Project.Id);
 
         if (entity is null)
         {
@@ -29,8 +28,8 @@ public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, Servic
             entity.ImageUrl = request.Project.ImageUrl;
         }
 
-        _dataDbContext.Projects.Update(entity);
-        await _dataDbContext.SaveChangesAsync();
+        await _projectRepository.UpdateAsync(entity);
+        await _projectRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Proje başarıyla güncellendi.");
     }

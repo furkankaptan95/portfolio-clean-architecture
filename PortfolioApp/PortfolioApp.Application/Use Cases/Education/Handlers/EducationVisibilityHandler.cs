@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Education.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Education.Handlers;
 public class EducationVisibilityHandler : IRequestHandler<EducationVisibilityCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public EducationVisibilityHandler(DataDbContext dataDbContext)
+    private readonly IEducationRepository _educationRepository;
+    public EducationVisibilityHandler(IEducationRepository educationRepository)
     {
-        _dataDbContext = dataDbContext;
+        _educationRepository = educationRepository;
     }
     public async Task<ServiceResult> Handle(EducationVisibilityCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Educations.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _educationRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
@@ -23,8 +22,8 @@ public class EducationVisibilityHandler : IRequestHandler<EducationVisibilityCom
 
         entity.IsVisible = !entity.IsVisible;
 
-        _dataDbContext.Educations.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _educationRepository.UpdateAsync(entity);
+        await _educationRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Eğitim bilgisi görünürlüğü başarıyla güncellendi.");
     }

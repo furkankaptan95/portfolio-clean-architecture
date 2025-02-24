@@ -1,28 +1,27 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Comment.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Comment.Handlers;
 public class DeleteCommentHandler : IRequestHandler<DeleteCommentCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public DeleteCommentHandler(DataDbContext dataDbContext)
+    private readonly ICommentRepository _commentRepository;
+    public DeleteCommentHandler(ICommentRepository commentRepository)
     {
-        _dataDbContext = dataDbContext;
+        _commentRepository = commentRepository;
     }
     public async Task<ServiceResult> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Comments.FirstOrDefaultAsync(x => x.Id == request.Id); 
+        var entity = await _commentRepository.GetByIdAsync(request.Id); 
         
         if (entity is null)
         {
             return new ServiceResult(false, "Silmek istediğiniz yorum bulunamadı.");
         }
 
-        _dataDbContext.Comments.Remove(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _commentRepository.DeleteAsync(entity);
+        await _commentRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Yorum başarıyla silindi.");
     }

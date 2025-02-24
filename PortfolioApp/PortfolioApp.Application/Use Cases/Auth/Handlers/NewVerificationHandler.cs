@@ -1,32 +1,33 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Email;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 using System.Net.Http.Json;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class NewVerificationHandler : IRequestHandler<NewVerificationCommand, ServiceResult>
 {
-    private readonly AuthDbContext _authDbContext; 
+    private readonly IUserRepository _userRepository;
+    private readonly IUserVerificationRepository _userVerificationRepository;
     private readonly MVCLinksConfiguration _mVCLinksConfiguration;
     private readonly IHttpClientFactory _factory;
-    public NewVerificationHandler(IHttpClientFactory factory, AuthDbContext authDbContext, IOptions<MVCLinksConfiguration> mVCLinksConfiguration)
+    public NewVerificationHandler(IHttpClientFactory factory, IOptions<MVCLinksConfiguration> mVCLinksConfiguration, IUserRepository userRepository, IUserVerificationRepository userVerificationRepository)
     {
-        _authDbContext = authDbContext;
         _mVCLinksConfiguration = mVCLinksConfiguration.Value;
         _factory = factory;
+        _userRepository = userRepository;
+        _userVerificationRepository = userVerificationRepository;
     }
     private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
     public async Task<ServiceResult> Handle(NewVerificationCommand request, CancellationToken cancellationToken)
-    {  
+    {
 
-        var user = await _authDbContext.Users.FirstOrDefaultAsync(u => u.Email == request.NewVerificationMail.Email && u.Role == "User");
+        var user = await _userRepository.GetByEmailAsync(request.NewVerificationMail.Email);
 
-        if (user is null)
+        if (user is null || user.Role is not "User")
         {
             return new ServiceResult(false, "Bu Email adresine sahip bir kullanıcı bulunamadı.");
         }
@@ -39,8 +40,8 @@ public class NewVerificationHandler : IRequestHandler<NewVerificationCommand, Se
             Token = token,
         };
 
-        await _authDbContext.UserVerifications.AddAsync(userVerificationEntity);
-        await _authDbContext.SaveChangesAsync();
+        await _userVerificationRepository.AddAsync(userVerificationEntity);
+        await _userVerificationRepository.SaveChangesAsync();
 
         string mvcLink;
 

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PortfolioApp.Application.Use_Cases.Auth.Commands;
 using PortfolioApp.Core.Common;
@@ -7,26 +6,28 @@ using PortfolioApp.Core.DTOs.Email;
 using PortfolioApp.Core.Entities;
 using PortfolioApp.Core.Enums;
 using PortfolioApp.Core.Helpers;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 using System.Net.Http.Json;
 
 namespace PortfolioApp.Application.Use_Cases.Auth.Handlers;
 public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<RegistrationError>>
 {
-    private readonly AuthDbContext _authDbContext;
     private readonly MVCLinksConfiguration _mVCLinksConfiguration;
     private readonly IHttpClientFactory _factory;
-    public RegisterHandler(IHttpClientFactory factory, AuthDbContext authDbContext, IOptions<MVCLinksConfiguration> mVCLinksConfiguration)
+    private readonly IUserRepository _userRepository;
+    private readonly IUserVerificationRepository _userVerificationRepository;
+    public RegisterHandler(IHttpClientFactory factory,IOptions<MVCLinksConfiguration> mVCLinksConfiguration, IUserRepository userRepository, IUserVerificationRepository userVerificationRepository)
     {
-        _authDbContext = authDbContext;
         _mVCLinksConfiguration = mVCLinksConfiguration.Value;
         _factory = factory;
+        _userRepository = userRepository;
+        _userVerificationRepository = userVerificationRepository;
     }
     private HttpClient EmailApiClient => _factory.CreateClient("emailApi");
     public async Task<ServiceResult<RegistrationError>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        var isEmailAlreadyTaken = await _authDbContext.Users.SingleOrDefaultAsync(u => u.Email == request.Register.Email);
-        var isUsernameAlreadyTaken = await _authDbContext.Users.SingleOrDefaultAsync(u => u.Username == request.Register.Username);
+        var isEmailAlreadyTaken = await _userRepository.GetByEmailAsync(request.Register.Email);
+        var isUsernameAlreadyTaken = await _userRepository.GetByUsernameAsync(request.Register.Username);
 
         if (isEmailAlreadyTaken is not null && isUsernameAlreadyTaken is not null)
         {
@@ -57,8 +58,8 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
             
         };
 
-        await _authDbContext.Users.AddAsync(user);
-        await _authDbContext.SaveChangesAsync();
+        await _userRepository.AddAsync(user);
+        await _userRepository.SaveChangesAsync();
 
         var token = Guid.NewGuid().ToString().Substring(0, 6);
 
@@ -68,8 +69,8 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ServiceResult<Re
             Token = token
         };
 
-        await _authDbContext.UserVerifications.AddAsync(userVerification);
-        await _authDbContext.SaveChangesAsync(cancellationToken);
+        await _userVerificationRepository.AddAsync(userVerification);
+        await _userVerificationRepository.SaveChangesAsync();
 
         var mvcLink = _mVCLinksConfiguration.Web;
 

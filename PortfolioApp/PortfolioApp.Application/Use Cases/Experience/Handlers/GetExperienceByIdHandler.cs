@@ -1,21 +1,20 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.Experience.Queries;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.Experience;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.Experience.Handlers;
 public class GetExperienceByIdHandler : IRequestHandler<GetExperienceByIdQuery, ServiceResult<ExperienceDto>>
 {
-    private readonly DataDbContext _dataDbContext;
-    public GetExperienceByIdHandler(DataDbContext dataDbContext)
+    private readonly IExperienceRepository _experienceRepository;
+    public GetExperienceByIdHandler(IExperienceRepository experienceRepository)
     {
-        _dataDbContext = dataDbContext;
+        _experienceRepository = experienceRepository;
     }
     public async Task<ServiceResult<ExperienceDto>> Handle(GetExperienceByIdQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.Experiences.FirstOrDefaultAsync(x => x.Id == request.Id);
+        var entity = await _experienceRepository.GetByIdAsync(request.Id);
 
         if (entity is null)
         {
