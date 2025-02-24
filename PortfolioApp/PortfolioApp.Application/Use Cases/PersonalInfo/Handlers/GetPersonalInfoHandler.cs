@@ -1,23 +1,20 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.PersonalInfo.Queries;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.PersonalInfo;
-using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.PersonalInfo.Handlers;
 public class GetPersonalInfoHandler : IRequestHandler<GetPersonalInfoQuery, ServiceResult<PersonalInfoDto>>
 {
-    private readonly DataDbContext _dataDbContext;
-    public GetPersonalInfoHandler(DataDbContext dataDbContext)
+    private readonly IPersonalInfoRepository _personalInfoRepository;
+    public GetPersonalInfoHandler(IPersonalInfoRepository personalInfoRepository)
     {
-        _dataDbContext = dataDbContext;
+        _personalInfoRepository = personalInfoRepository;
     }
     public async Task<ServiceResult<PersonalInfoDto>> Handle(GetPersonalInfoQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.PersonalInfo.FirstOrDefaultAsync();
+        var entity = await _personalInfoRepository.CheckAndGetAsync();
 
         if (entity is null)
         {

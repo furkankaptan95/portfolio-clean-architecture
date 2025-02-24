@@ -1,21 +1,20 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.PersonalInfo.Commands;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.Entities;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.PersonalInfo.Handlers;
 public class CreatePersonalInfoHandler : IRequestHandler<CreatePersonalInfoCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public CreatePersonalInfoHandler(DataDbContext dataDbContext)
+    private readonly IPersonalInfoRepository _personalInfoRepository;
+    public CreatePersonalInfoHandler(IPersonalInfoRepository personalInfoRepository)
     {
-        _dataDbContext = dataDbContext;
+        _personalInfoRepository = personalInfoRepository;
     }
     public async Task<ServiceResult> Handle(CreatePersonalInfoCommand request, CancellationToken cancellationToken)
     {
-        var entityCheck = await _dataDbContext.PersonalInfo.FirstOrDefaultAsync();
+        var entityCheck = await _personalInfoRepository.CheckAndGetAsync();
 
         if (entityCheck is not null)
         {
@@ -31,8 +30,8 @@ public class CreatePersonalInfoHandler : IRequestHandler<CreatePersonalInfoComma
             Adress = request.PersonalInfo.Adress,
         };
 
-        await _dataDbContext.PersonalInfo.AddAsync(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _personalInfoRepository.AddAsync(entity);
+        await _personalInfoRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Kişisel Bilgiler başarıyla oluşturuldu.");
     }

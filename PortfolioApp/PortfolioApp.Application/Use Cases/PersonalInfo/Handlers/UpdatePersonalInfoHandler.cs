@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using PortfolioApp.Application.Use_Cases.PersonalInfo.Commands;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Infrastructure.Persistence.DbContexts;
+using PortfolioApp.Core.Interfaces.Repositories;
 
 namespace PortfolioApp.Application.Use_Cases.PersonalInfo.Handlers;
 public class UpdatePersonalInfoHandler : IRequestHandler<UpdatePersonalInfoCommand, ServiceResult>
 {
-    private readonly DataDbContext _dataDbContext;
-    public UpdatePersonalInfoHandler(DataDbContext dataDbContext)
+    private readonly IPersonalInfoRepository _personalInfoRepository;
+    public UpdatePersonalInfoHandler(IPersonalInfoRepository personalInfoRepository)
     {
-        _dataDbContext = dataDbContext;
+        _personalInfoRepository = personalInfoRepository;
     }
     public async Task<ServiceResult> Handle(UpdatePersonalInfoCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _dataDbContext.PersonalInfo.FirstOrDefaultAsync();
+        var entity = await _personalInfoRepository.CheckAndGetAsync();
 
         if (entity is null)
         {
@@ -27,8 +26,8 @@ public class UpdatePersonalInfoHandler : IRequestHandler<UpdatePersonalInfoComma
         entity.BirthDate = request.PersonalInfo.BirthDate;
         entity.Adress = request.PersonalInfo.Adress;
 
-        _dataDbContext.PersonalInfo.Update(entity);
-        await _dataDbContext.SaveChangesAsync(cancellationToken);
+        await _personalInfoRepository.UpdateAsync(entity);
+        await _personalInfoRepository.SaveChangesAsync();
 
         return new ServiceResult(true, "Kişisel bilgiler başarıyla güncellendi.");
     }

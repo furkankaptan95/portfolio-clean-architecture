@@ -85,6 +85,7 @@ public static class ServiceRegistrations
         services.AddScoped<IExperienceRepository, ExperienceRepository>();
 
         services.AddScoped<IPersonalInfoService, PersonalInfoService>();
+        services.AddScoped<IPersonalInfoRepository, PersonalInfoRepository>();
 
         services.AddScoped<IProjectService, ProjectService>();
 
