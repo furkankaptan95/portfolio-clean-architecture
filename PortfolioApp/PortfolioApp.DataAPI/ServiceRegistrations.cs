@@ -65,8 +65,11 @@ public static class ServiceRegistrations
 
         services.AddScoped<HomeService>();
         services.AddScoped<IAboutMeService, AboutMeService>();
+        services.AddScoped<IAboutMeRepository, AboutMeRepository>();
+
         services.AddScoped<IBlogPostService, BlogPostService>();
 		services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+
         services.AddScoped<ICommentService, CommentService>();
         services.AddScoped<IContactMessageService, ContactMessageService>();
         services.AddScoped<IEducationService, EducationService>();
