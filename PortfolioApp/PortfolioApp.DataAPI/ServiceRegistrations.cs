@@ -88,7 +88,7 @@ public static class ServiceRegistrations
         services.AddScoped<IPersonalInfoRepository, PersonalInfoRepository>();
 
         services.AddScoped<IProjectService, ProjectService>();
-
+        services.AddScoped<IProjectRepository, ProjectRepository>();
 
         services.AddAutoMapper(typeof(MappingProfile));
 
