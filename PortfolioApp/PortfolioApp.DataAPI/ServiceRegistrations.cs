@@ -64,6 +64,7 @@ public static class ServiceRegistrations
 		AddJwtAuth(services, configuration);
 
         services.AddScoped<HomeService>();
+        services.AddScoped<IHomeRepository, HomeRepository>();
 
         services.AddScoped<IAboutMeService, AboutMeService>();
         services.AddScoped<IAboutMeRepository, AboutMeRepository>();
