@@ -84,4 +84,11 @@ public class AuthService : IAuthService
 
         return result;
     }
+
+    public async Task<ServiceResult<List<AllUsersDto>>> GetAllUsersAsync()
+    {
+        var result = await _mediator.Send(new GetAllUsersQuery());
+
+        return result;
+    }
 }

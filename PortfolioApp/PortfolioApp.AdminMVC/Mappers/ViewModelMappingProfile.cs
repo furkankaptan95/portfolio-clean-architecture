@@ -70,5 +70,6 @@ public class ViewModelMappingProfile : Profile
         CreateMap<ForgotPasswordViewModel, ForgotPasswordDto>();
         CreateMap<NewPasswordViewModel, NewPasswordDto>();
         CreateMap<UserProfileDto, UserProfileViewModel>();
+        CreateMap<AllUsersDto, AllUsersViewModel>();
     }
 }

@@ -1,0 +1,45 @@
+﻿@model List<AllUsersViewModel>
+
+@{
+    ViewData["Title"] = "Kullanıcılar";
+}
+
+<h2 class="text-center my-4" style="font-weight: 600; color: #333;">Kullanıcılar</h2>
+
+<div class="table-responsive text-nowrap" style="padding-bottom:100px;">
+    <table class="table card-table">
+        <thead>
+            <tr>
+                <th>İsim</th>
+                <th>Soyisim</th>
+                <th>Kullanıcı adı</th>
+                <th>Email</th>
+                <th>Aktiflik</th>
+            </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+        
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Firstname</td>
+                    <td>@user.Lastname</td>
+                    <td>@user.Username</td>
+                    <td>@user.Email</td>
+                  
+                    <td>
+                        @if (user.IsActive)
+                        {
+                            <span>Aktif ✅</span>
+                        }
+                        else
+                        {
+                            <span>Aktif değil ❌</span>
+                        }
+                    </td>
+                    <td>@user.Role</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -16,4 +16,5 @@ public interface IAuthService
     Task<ServiceResult> NewPasswordAsync(NewPasswordDto dto);
     Task<ServiceResult> NewVerificationAsync(NewVerificationMailDto dto); 
     Task<ServiceResult<UserProfileDto>> UserProfileAsync(int userId);
+    Task<ServiceResult<List<AllUsersDto>>> GetAllUsersAsync();
 }

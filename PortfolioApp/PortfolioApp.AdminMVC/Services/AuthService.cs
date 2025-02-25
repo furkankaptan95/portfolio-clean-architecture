@@ -1,5 +1,4 @@
 ﻿using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.BlogPost;
 using PortfolioApp.Core.DTOs.Admin.User;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Enums;
@@ -21,6 +20,13 @@ public class AuthService : IAuthService
 
 		return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
 	}
+
+    public async Task<ServiceResult<List<AllUsersDto>>> GetAllUsersAsync()
+    {
+        var apiResponse = await AuthApiClient.GetAsync("all-users");
+
+        return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<List<AllUsersDto>>>();
+    }
 
     public async Task<ServiceResult<TokensDto>> LoginAsync(LoginDto loginDto)
     {

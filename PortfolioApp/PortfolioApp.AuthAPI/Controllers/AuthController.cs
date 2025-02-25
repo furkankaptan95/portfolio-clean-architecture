@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Interfaces;
@@ -125,6 +125,7 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "Admin,User")]
     [HttpGet("user-profile/{userId}")]
     public async Task<IActionResult> UserProfile([FromRoute] int userId)
     {
@@ -137,4 +138,14 @@ public class AuthController : ControllerBase
 
         return Ok(result);
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("all-users")]
+    public async Task<IActionResult> AllUsers()
+    {
+        var result = await _authService.GetAllUsersAsync();
+
+        return Ok(result);
+    }
+
 }

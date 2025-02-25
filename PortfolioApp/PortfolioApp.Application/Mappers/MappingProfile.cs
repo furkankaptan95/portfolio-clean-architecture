@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.DTOs.Web.Comment;
 using PortfolioApp.Core.Entities;
 
@@ -11,6 +12,8 @@ public class MappingProfile : Profile
     .ForMember(dest => dest.Commenter, opt => opt.MapFrom(src =>
         !string.IsNullOrEmpty(src.UnsignedCommenterName) ? src.UnsignedCommenterName : src.SignedCommenterName
     ));
+
+        CreateMap<UserEntity, AllUsersDto>();
 
     }
 }
