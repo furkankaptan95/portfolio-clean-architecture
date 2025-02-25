@@ -189,4 +189,15 @@ public class AuthController : Controller
 		
         return View(model);
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet]
+    public async Task<IActionResult> AllUsers()
+    {
+		var result = await _authService.GetAllUsersAsync();
+
+		var models = _mapper.Map<List<AllUsersViewModel>>(result.Data);
+
+        return View(models);
+    }
 }

@@ -58,7 +58,7 @@ public static class ServiceRegistrations
 		services.AddHttpClient("authApi", c =>
 		{
 			c.BaseAddress = new Uri(authApiUrl);
-		});
+		}).AddHttpMessageHandler<JwtAndRefreshTokenHandler>();
 
 		services.AddScoped<IAuthService, AuthService>();
 		services.AddScoped<IAboutMeService, AboutMeService>();

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using PortfolioApp.Core.DTOs.Auth;
 using PortfolioApp.Core.Interfaces;
 using PortfolioApp.WebMVC.Models.ViewModels;
-using System.Security.Claims;
 
 namespace PortfolioApp.WebMVC.Controllers;
 public class AuthController : Controller
@@ -252,21 +251,10 @@ public class AuthController : Controller
 		return Redirect("/");
 	}
 
+	[Authorize(Roles = "User")]
     [HttpGet]
     public async Task<IActionResult> UserProfile()
     {
-        if (!User.Identity.IsAuthenticated)
-        {
-            return RedirectToAction(nameof(Login)); 
-        }
-
-        var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
-
-        if (userRole != "User")
-        {
-            return RedirectToAction(nameof(Forbidden));
-        }
-
         var userId = Convert.ToInt32(User.FindFirst("UserId")?.Value);
 
         var result = await _authService.UserProfileAsync(userId);

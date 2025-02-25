@@ -82,4 +82,9 @@ public class AuthService : IAuthService
 
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult<UserProfileDto>>();
     }
+
+    public Task<ServiceResult<List<AllUsersDto>>> GetAllUsersAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
