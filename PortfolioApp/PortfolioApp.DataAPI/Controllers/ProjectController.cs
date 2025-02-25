@@ -32,10 +32,10 @@ public class ProjectController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("delete/{id:int}")]
-    public async Task<IActionResult> Delete([FromRoute] int id)
+    [HttpPost("delete")]
+    public async Task<IActionResult> Delete([FromBody] DeleteProjectDto dto)
     {
-        var result = await _projectService.DeleteAsync(id);
+        var result = await _projectService.DeleteAsync(dto);
 
         if (!result.IsSuccess)
         {

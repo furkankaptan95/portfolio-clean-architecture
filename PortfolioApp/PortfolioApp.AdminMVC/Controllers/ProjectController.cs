@@ -119,16 +119,16 @@ public class ProjectController : Controller
         return RedirectToAction(nameof(All));
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Delete([FromRoute] int id)
+    [HttpPost]
+    public async Task<IActionResult> Delete([FromForm] DeleteProjectDto dto)
     {
-        if (id < 1)
+        if (dto.Id < 1)
         {
             TempData["ErrorMessage"] = "Geçersiz ID";
             return RedirectToAction(nameof(All));
         }
 
-        var result = await _projectService.DeleteAsync(id);
+        var result = await _projectService.DeleteAsync(dto);
 
         if (!result.IsSuccess)
             TempData["ErrorMessage"] = result.Message;

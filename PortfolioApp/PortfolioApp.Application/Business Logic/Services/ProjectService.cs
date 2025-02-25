@@ -33,9 +33,9 @@ public class ProjectService : IProjectService
         return result;
     }
 
-    public async Task<ServiceResult> DeleteAsync(int id)
+    public async Task<ServiceResult> DeleteAsync(DeleteProjectDto dto)
     {
-        var result = await _mediator.Send(new DeleteProjectCommand(id));
+        var result = await _mediator.Send(new DeleteProjectCommand(dto.Id));
 
         return result;
     }

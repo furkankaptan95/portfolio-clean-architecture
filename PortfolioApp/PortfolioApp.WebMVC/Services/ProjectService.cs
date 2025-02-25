@@ -7,11 +7,9 @@ namespace PortfolioApp.WebMVC.Services;
 public class ProjectService : IProjectService
 {
     private readonly IHttpClientFactory _factory;
-    private readonly IMapper _mapper;
-    public ProjectService(IHttpClientFactory factory, IMapper mapper)
+    public ProjectService(IHttpClientFactory factory)
     {
         _factory = factory;
-        _mapper = mapper;
     }
     private HttpClient DataApiClient => _factory.CreateClient("dataApi");
     public Task<ServiceResult> AddAsync(AddApiProjectDto dto)
@@ -29,7 +27,7 @@ public class ProjectService : IProjectService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult> DeleteAsync(int id)
+    public Task<ServiceResult> DeleteAsync(DeleteProjectDto dto)
     {
         throw new NotImplementedException();
     }
