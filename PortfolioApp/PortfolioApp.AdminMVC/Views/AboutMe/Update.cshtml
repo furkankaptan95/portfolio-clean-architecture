@@ -26,6 +26,8 @@
 
                     <input type="hidden" asp-for="AboutMeImageUrl" />
 
+                    <input type="hidden" asp-for="HeroImageUrl" />
+
                     <div class="mb-3">
                         <label asp-for="FullName" class="form-label mb-1">Tam İsim</label>
                         <input asp-for="FullName" class="form-control" />
@@ -62,6 +64,27 @@
                     </div>
 
                     <div class="mb-3">
+                        <label asp-for="MediumUrl" class="form-label mb-1">Medium</label>
+                        <input asp-for="MediumUrl" class="form-control" />
+                        <span id="MediumUrlError" class="text-danger"></span>
+                        <span asp-validation-for="MediumUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="TwitterUrl" class="form-label mb-1">Twitter</label>
+                        <input asp-for="TwitterUrl" class="form-control" />
+                        <span id="TwitterUrlError" class="text-danger"></span>
+                        <span asp-validation-for="TwitterUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="InstagramUrl" class="form-label mb-1">Instagram</label>
+                        <input asp-for="InstagramUrl" class="form-control" />
+                        <span id="InstagramUrlError" class="text-danger"></span>
+                        <span asp-validation-for="InstagramUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
                         <label asp-for="Email" class="form-label mb-1">Email</label>
                         <input asp-for="Email" class="form-control" />
                         <span id="EmailError" class="text-danger"></span>
@@ -76,6 +99,14 @@
                                     <img src="@($"{fileApiUrl}/{Model.AboutMeImageUrl}")" class="img-fluid" alt="Mevcut Fotoğraf" style="max-width: 100%; max-height: 200px; object-fit: cover;">
                                 </div>
                             </div>
+
+                            <div class="col-12 col-md-6 mb-3 d-flex justify-content-center">
+                                <div class="text-center">
+                                    <h4 class="mb-3">Mevcut Hero Fotoğrafı</h4>
+                                    <img src="@($"{fileApiUrl}/{Model.HeroImageUrl}")" class="img-fluid" alt="Mevcut Fotoğraf" style="max-width: 100%; max-height: 200px; object-fit: cover;">
+                                </div>
+                            </div>
+
                             <div class="col-12 col-md-6 mb-3 d-flex justify-content-center">
                                 <div class="text-center">
                                     <h4 class="mb-3">CV</h4>
@@ -93,6 +124,16 @@
                         <input asp-for="AboutMeImage" class="form-control" type="file" accept="image/*">
                         <span class="text-danger" id="AboutMeImageError"></span>
                         <span asp-validation-for="AboutMeImage" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="HeroImage" class="form-label mb-1">Yeni Hero Fotoğrafı</label>
+                        <p style="font-size:14px;">Hero fotoğrafını değiştirmek istiyorsanız fotoğraf dosyası yükleyiniz.</p>
+
+                        <p style="font-size:12px;">**Yüklemezseniz  Hero fotoğrafı aynı kalacaktır.</p>
+                        <input asp-for="HeroImage" class="form-control" type="file" accept="image/*">
+                        <span class="text-danger" id="HeroImageError"></span>
+                        <span asp-validation-for="HeroImage" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
@@ -117,15 +158,19 @@
    <script>
    document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
-    
+
     const inputs = {
         FullName: document.querySelector("#FullName"),
         Introduction: document.querySelector("#Introduction"),
         Field: document.querySelector("#Field"),
         LinkedInUrl: document.querySelector("#LinkedInUrl"),
         GithubUrl: document.querySelector("#GithubUrl"),
+        MediumUrl: document.querySelector("#MediumUrl"),
+        TwitterUrl: document.querySelector("#TwitterUrl"),
+        InstagramUrl: document.querySelector("#InstagramUrl"),
         Email: document.querySelector("#Email"),
         AboutMeImage: document.querySelector("#AboutMeImage"),
+        HeroImage: document.querySelector("#HeroImage"),
         CvFile: document.querySelector("#CvFile")
     };
 
@@ -135,8 +180,12 @@
         Field: document.querySelector("#FieldError"),
         LinkedInUrl: document.querySelector("#LinkenInUrlError"),
         GithubUrl: document.querySelector("#GithubUrlError"),
+        MediumUrl: document.querySelector("#MediumUrlError"),
+        TwitterUrl: document.querySelector("#TwitterUrlError"),
+        InstagramUrl: document.querySelector("#InstagramUrlError"),
         Email: document.querySelector("#EmailError"),
         AboutMeImage: document.querySelector("#AboutMeImageError"),
+        HeroImage: document.querySelector("#HeroImageError"),
         CvFile: document.querySelector("#CvFileError")
     };
 
@@ -200,6 +249,9 @@
 
             case "LinkedInUrl":
             case "GithubUrl":
+            case "MediumUrl":
+            case "InstagramUrl":
+            case "TwitterUrl":
                 if (!validateNotEmpty(value)) showError(name, "Bu alan boş olamaz.");
                 else if (!validateUrl(value)) showError(name, "URL en fazla 255 karakter olmalıdır.");
                 else clearError(name);
@@ -213,6 +265,7 @@
                 break;
 
             case "AboutMeImage":
+            case "HeroImage":
                 if (files.length > 0 && !validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, JPEG).");
                 else clearError(name);
                 break;

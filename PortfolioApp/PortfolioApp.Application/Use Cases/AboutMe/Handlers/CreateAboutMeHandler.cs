@@ -31,6 +31,10 @@ public class CreateAboutMeHandler : IRequestHandler<CreateAboutMeCommand, Servic
             GithubUrl = request.AboutMe.GithubUrl,
             Email = request.AboutMe.Email,
             CvUrl = request.AboutMe.CvUrl,
+            InstagramUrl = request.AboutMe.InstagramUrl,
+            TwitterUrl = request.AboutMe.TwitterUrl,
+            MediumUrl = request.AboutMe.MediumUrl,
+            HeroImageUrl = request.AboutMe.HeroImageUrl,
         };
 
         await _aboutMeRepository.AddAsync(aboutMe);

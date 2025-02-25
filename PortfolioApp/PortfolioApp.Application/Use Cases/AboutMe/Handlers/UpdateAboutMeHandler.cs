@@ -26,8 +26,11 @@ public class UpdateAboutMeHandler : IRequestHandler<UpdateAboutMeCommand, Servic
         aboutMeEntity.LinkedInUrl = request.AboutMe.LinkedInUrl;
         aboutMeEntity.GithubUrl = request.AboutMe.GithubUrl;
         aboutMeEntity.Email = request.AboutMe.Email;
-       
-        if(request.AboutMe.CvUrl is not null)
+        aboutMeEntity.TwitterUrl = request.AboutMe.TwitterUrl;
+        aboutMeEntity.InstagramUrl = request.AboutMe.InstagramUrl;
+        aboutMeEntity.MediumUrl = request.AboutMe.MediumUrl;
+
+        if (request.AboutMe.CvUrl is not null)
         {
             aboutMeEntity.CvUrl = request.AboutMe.CvUrl;
         }
@@ -35,6 +38,11 @@ public class UpdateAboutMeHandler : IRequestHandler<UpdateAboutMeCommand, Servic
         if(request.AboutMe.AboutMeImageUrl is not null)
         {
             aboutMeEntity.AboutMeImageUrl = request.AboutMe.AboutMeImageUrl;
+        }
+
+        if (request.AboutMe.HeroImageUrl is not null)
+        {
+            aboutMeEntity.HeroImageUrl = request.AboutMe.HeroImageUrl;
         }
 
         await _aboutMeRepository.UpdateAsync(aboutMeEntity);

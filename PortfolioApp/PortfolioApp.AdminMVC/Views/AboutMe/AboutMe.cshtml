@@ -35,6 +35,18 @@
         </div>
 
         <div class="profile-detail mb-3">
+            <span class="profile-label">Medium: </span> @Model.MediumUrl
+        </div>
+
+        <div class="profile-detail mb-3">
+            <span class="profile-label">Twitter: </span> @Model.TwitterUrl
+        </div>
+
+        <div class="profile-detail mb-3">
+            <span class="profile-label">Instagram: </span> @Model.InstagramUrl
+        </div>
+
+        <div class="profile-detail mb-3">
             <span class="profile-label">Email: </span> @Model.Email
         </div>
 
@@ -51,6 +63,16 @@
                 <img src="@($"{fileApiUrl}/{Model.AboutMeImageUrl}")"
                      class="img-thumbnail" 
                      alt="Mevcut Fotoğraf" 
+                     style="max-width: 100%; max-height: 250px; height: auto;">
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6 text-center mb-3">
+                <span class="profile-label">Hero Fotoğrafı: </span>
+                <img src="@($"{fileApiUrl}/{Model.HeroImageUrl}")"
+                     class="img-thumbnail"
+                     alt="Mevcut Fotoğraf"
                      style="max-width: 100%; max-height: 250px; height: auto;">
             </div>
         </div>

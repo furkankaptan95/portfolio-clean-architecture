@@ -2,8 +2,6 @@
 
 @{
     ViewData["Link"] = Model.AboutMe.LinkedInUrl;
-    ViewData["FullName"] = Model.AboutMe.FullName;
-    ViewData["Field"] = Model.AboutMe.Field;
     ViewData["Email"] = Model.AboutMe.Email;
 }
 
@@ -36,7 +34,7 @@
 <main class="main">
 
     <!-- Hero Section -->
-    <partial name="Partials/HeroSection.cshtml" />
+    <partial name="Partials/HeroSection.cshtml" model="Model.AboutMe" />
 
     <!-- About Section -->
     <partial name="Partials/AboutSection.cshtml" model="Model.AboutMe" />
