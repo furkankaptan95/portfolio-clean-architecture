@@ -23,32 +23,43 @@ public class AboutMeService : IAboutMeService
 
     public async Task<ServiceResult> CreateAboutMeAsync(AddAboutMeMvcDto dto)
     {
-        var cvResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-          {
-             { new StreamContent(dto.CvFile.OpenReadStream()), "file", dto.CvFile.FileName }
-         });
+        string cvUrl;
+        using var cvStream = dto.CvFile.OpenReadStream();
+        using var cvContent = new StreamContent(cvStream);
 
+        var cvMultipartContent = new MultipartFormDataContent();
+        cvMultipartContent.Add(cvContent, "file", dto.CvFile.FileName);
+
+        var cvResponse = await FileApiClient.PostAsync("upload", cvMultipartContent);
         var cvResult = await cvResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+        cvUrl = cvResult.Data.FileName;
 
-        var imageResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-        {
-             { new StreamContent(dto.AboutMeImage.OpenReadStream()), "file", dto.AboutMeImage.FileName }
-        });
+        string aboutMeImageUrl;
+        using var imageStream = dto.AboutMeImage.OpenReadStream();
+        using var imageContent = new StreamContent(imageStream);
 
+        var imageMultipartContent = new MultipartFormDataContent();
+        imageMultipartContent.Add(imageContent, "file", dto.AboutMeImage.FileName);
+
+        var imageResponse = await FileApiClient.PostAsync("upload", imageMultipartContent);
         var imgResult = await imageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+        aboutMeImageUrl = imgResult.Data.FileName;
 
-        var heroImageResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-        {
-             { new StreamContent(dto.HeroImage.OpenReadStream()), "file", dto.HeroImage.FileName }
-        });
+        string heroImageUrl;
+        using var heroImageStream = dto.HeroImage.OpenReadStream();
+        using var heroImageContent = new StreamContent(heroImageStream);
 
+        var heroImageMultipartContent = new MultipartFormDataContent();
+        heroImageMultipartContent.Add(heroImageContent, "file", dto.HeroImage.FileName);
+
+        var heroImageResponse = await FileApiClient.PostAsync("upload", heroImageMultipartContent);
         var heroImageResult = await heroImageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+        heroImageUrl = heroImageResult.Data.FileName;
 
         var apiDto = _mapper.Map<AddAboutMeApiDto>(dto);
-
-        apiDto.CvUrl = cvResult.Data.FileName;
-        apiDto.AboutMeImageUrl = imgResult.Data.FileName;
-        apiDto.HeroImageUrl = heroImageResult.Data.FileName;
+        apiDto.CvUrl = cvUrl;
+        apiDto.AboutMeImageUrl = aboutMeImageUrl;
+        apiDto.HeroImageUrl = heroImageUrl;
 
         var dataApiResponse = await DataApiClient.PostAsJsonAsync("aboutme/create", apiDto);
 
@@ -57,13 +68,13 @@ public class AboutMeService : IAboutMeService
         return dataApiResult;
     }
 
-    public async Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl)
+    public async Task<ServiceResult<Stream>> DownloadCvAsync(string cvUrl)
     {
         var response = await FileApiClient.GetAsync($"download?fileUrl={cvUrl}");
 
-        var result = await response.Content.ReadAsByteArrayAsync();
+        var stream = await response.Content.ReadAsStreamAsync();
 
-        return new ServiceResult<byte[]>(true,null,result);
+        return new ServiceResult<Stream>(true, null, stream);
     }
 
     public async Task<ServiceResult<AboutMeDto>> GetAsync()
@@ -89,43 +100,55 @@ public class AboutMeService : IAboutMeService
 
         if(dto.CvFile is not null)
         {
-            var cvResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-              {
-                 { new StreamContent(dto.CvFile.OpenReadStream()), "file", dto.CvFile.FileName }
-             });
+            string cvUrl;
+            using var cvStream = dto.CvFile.OpenReadStream();
+            using var cvContent = new StreamContent(cvStream);
 
+            var cvMultipartContent = new MultipartFormDataContent();
+            cvMultipartContent.Add(cvContent, "file", dto.CvFile.FileName);
+
+            var cvResponse = await FileApiClient.PostAsync("upload", cvMultipartContent);
             var cvResult = await cvResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+            cvUrl = cvResult.Data.FileName;
 
-            dataApiDto.CvUrl = cvResult.Data.FileName;
+            dataApiDto.CvUrl = cvUrl;
 
             await FileApiClient.GetAsync($"delete/{dto.CvUrl}");
         }
 
         if (dto.AboutMeImage is not null)
         {
-            var imageResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-            {
-                 { new StreamContent(dto.AboutMeImage.OpenReadStream()), "file", dto.AboutMeImage.FileName }
-            });
+            string aboutMeImageUrl;
+            using var imageStream = dto.AboutMeImage.OpenReadStream();
+            using var imageContent = new StreamContent(imageStream);
 
+            var imageMultipartContent = new MultipartFormDataContent();
+            imageMultipartContent.Add(imageContent, "file", dto.AboutMeImage.FileName);
+
+            var imageResponse = await FileApiClient.PostAsync("upload", imageMultipartContent);
             var imgResult = await imageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+            aboutMeImageUrl = imgResult.Data.FileName;
 
-            dataApiDto.AboutMeImageUrl = imgResult.Data.FileName;
+            dataApiDto.AboutMeImageUrl = aboutMeImageUrl;
 
             await FileApiClient.GetAsync($"delete/{dto.AboutMeImageUrl}");
         }
 
         if (dto.HeroImage is not null)
         {
-            var heroImageResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-            {
-                 { new StreamContent(dto.HeroImage.OpenReadStream()), "file", dto.HeroImage.FileName }
-            });
+            string heroImageUrl;
+            using var heroImageStream = dto.HeroImage.OpenReadStream();
+            using var heroImageContent = new StreamContent(heroImageStream);
 
+            var heroImageMultipartContent = new MultipartFormDataContent();
+            heroImageMultipartContent.Add(heroImageContent, "file", dto.HeroImage.FileName);
+
+            var heroImageResponse = await FileApiClient.PostAsync("upload", heroImageMultipartContent);
             var heroImageResult = await heroImageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+            heroImageUrl = heroImageResult.Data.FileName;
 
-            dataApiDto.HeroImageUrl = heroImageResult.Data.FileName;
 
+            dataApiDto.HeroImageUrl = heroImageUrl;
             await FileApiClient.GetAsync($"delete/{dto.HeroImageUrl}");
         }
 

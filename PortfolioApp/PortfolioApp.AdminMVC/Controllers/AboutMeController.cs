@@ -107,11 +107,11 @@ public class AboutMeController : Controller
     [HttpGet]
     public async Task<IActionResult> DownloadCv([FromQuery] string cvUrl)
     {
-        var result = await _aboutMeService.DownloadCvAsync(cvUrl); 
+        var result = await _aboutMeService.DownloadCvAsync(cvUrl);
 
-        var fileBytes = result.Data;
-        var downloadedFileName = "FurkanKaptanÖzgeçmiş.pdf";
-
-        return File(fileBytes, "application/pdf", downloadedFileName);
+        return new FileStreamResult(result.Data, "application/pdf")
+        {
+            FileDownloadName = "FurkanKaptanOzgecmis"
+        };
     }
 }

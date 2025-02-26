@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using PortfolioApp.Core.Common;
-using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.Admin.Project;
 using PortfolioApp.Core.DTOs.File;
 using PortfolioApp.Core.Interfaces;
@@ -24,16 +23,19 @@ public class ProjectService : IProjectService
 
     public async Task<ServiceResult> AddAsync(AddMvcProjectDto dto)
     {
-        var imageResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-          {
-             { new StreamContent(dto.ImageFile.OpenReadStream()), "file", dto.ImageFile.FileName }
-         });
+        string imageUrl;
+        using var imageStream = dto.ImageFile.OpenReadStream();
+        using var imageContent = new StreamContent(imageStream);
 
-        var cvResult = await imageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+        var multipartContent = new MultipartFormDataContent();
+        multipartContent.Add(imageContent, "file", dto.ImageFile.FileName);
+
+        var imageResponse = await FileApiClient.PostAsync("upload", multipartContent);
+        var imageResult = await imageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+        imageUrl = imageResult.Data.FileName;
 
         var apiDto = _mapper.Map<AddApiProjectDto>(dto);
-
-        apiDto.ImageUrl = cvResult.Data.FileName;
+        apiDto.ImageUrl = imageUrl;
 
         var dataApiResponse = await DataApiClient.PostAsJsonAsync("project/create", apiDto);
 
@@ -81,14 +83,18 @@ public class ProjectService : IProjectService
 
         if (dto.ImageFile is not null)
         {
-            var cvResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
-              {
-                 { new StreamContent(dto.ImageFile.OpenReadStream()), "file", dto.ImageFile.FileName }
-             });
+            string imageUrl;
+            using var imageStream = dto.ImageFile.OpenReadStream();
+            using var imageContent = new StreamContent(imageStream);
 
-            var cvResult = await cvResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+            var multipartContent = new MultipartFormDataContent();
+            multipartContent.Add(imageContent, "file", dto.ImageFile.FileName);
 
-            dataApiDto.ImageUrl = cvResult.Data.FileName;
+            var imageResponse = await FileApiClient.PostAsync("upload", multipartContent);
+            var imageResult = await imageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+            imageUrl = imageResult.Data.FileName;
+
+            dataApiDto.ImageUrl = imageUrl;
 
             await FileApiClient.GetAsync($"delete/{dto.ImageUrl}");
         }
