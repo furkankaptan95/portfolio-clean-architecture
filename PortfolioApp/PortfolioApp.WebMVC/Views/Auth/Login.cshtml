@@ -69,6 +69,11 @@
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100">
 				<form asp-action="Login" asp-controller="Auth" class="login100-form validate-form" method="post" autocomplete="off">
+
+					<div class="text-center mb-5">
+						<a href="/" class="btn btn-secondary">Anasayfaya Dön</a>
+					</div>
+
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
@@ -94,8 +99,13 @@
 							Giriş yap
 						</button>
 					</div>
+					<div class="text-center p-t-30">
+						<a class="txt1" href="/Auth/Register">
+							Hesabınız mı yok? Kayıt olun.
+						</a>
+					</div>
 
-					<div class="text-center p-t-50">
+					<div class="text-center p-t-30">
 						<a class="txt1" href="/Auth/ForgotPassword">
 							Şifrenizi mi unuttunuz?
 						</a>
@@ -164,6 +174,10 @@
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	}
 
+	.btn-secondary {
+		background-color: #7d5ff5; /* İkincil buton rengi sarı */
+		color: white;
+	}
 </style>
 
 
