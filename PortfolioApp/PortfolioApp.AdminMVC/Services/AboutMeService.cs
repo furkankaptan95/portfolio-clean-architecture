@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Rewrite;
 using PortfolioApp.Core.Common;
 using PortfolioApp.Core.DTOs.Admin.AboutMe;
 using PortfolioApp.Core.DTOs.File;
@@ -38,10 +37,18 @@ public class AboutMeService : IAboutMeService
 
         var imgResult = await imageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
 
+        var heroImageResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
+        {
+             { new StreamContent(dto.HeroImage.OpenReadStream()), "file", dto.HeroImage.FileName }
+        });
+
+        var heroImageResult = await heroImageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+
         var apiDto = _mapper.Map<AddAboutMeApiDto>(dto);
 
         apiDto.CvUrl = cvResult.Data.FileName;
         apiDto.AboutMeImageUrl = imgResult.Data.FileName;
+        apiDto.HeroImageUrl = heroImageResult.Data.FileName;
 
         var dataApiResponse = await DataApiClient.PostAsJsonAsync("aboutme/create", apiDto);
 
@@ -106,6 +113,20 @@ public class AboutMeService : IAboutMeService
             dataApiDto.AboutMeImageUrl = imgResult.Data.FileName;
 
             await FileApiClient.GetAsync($"delete/{dto.AboutMeImageUrl}");
+        }
+
+        if (dto.HeroImage is not null)
+        {
+            var heroImageResponse = await FileApiClient.PostAsync("upload", content: new MultipartFormDataContent
+            {
+                 { new StreamContent(dto.HeroImage.OpenReadStream()), "file", dto.HeroImage.FileName }
+            });
+
+            var heroImageResult = await heroImageResponse.Content.ReadFromJsonAsync<ServiceResult<FileNameDto>>();
+
+            dataApiDto.HeroImageUrl = heroImageResult.Data.FileName;
+
+            await FileApiClient.GetAsync($"delete/{dto.HeroImageUrl}");
         }
 
         var dataApiResponse = await DataApiClient.PostAsJsonAsync("aboutme/update", dataApiDto);

@@ -130,7 +130,9 @@ else
                                     <p> <b>@project.Title</b> başlıklı projeyi silmek istediğinize emin misiniz?</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="/Project/Delete/@project.Id" method="get">
+                                    <form action="/Project/Delete" method="post">
+                                        <input type="hidden" name="Id" value="@project.Id" />
+                                        <input type="hidden" name="ImageUrl" value="@project.ImageUrl" />
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
                                         <button type="submit" class="btn btn-danger">Sil</button>
                                     </form>

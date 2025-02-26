@@ -7,7 +7,7 @@ public interface IProjectService
     Task<ServiceResult> AddAsync(AddApiProjectDto dto);
     Task<ServiceResult> AddAsync(AddMvcProjectDto dto);
     Task<ServiceResult<List<ProjectDto>>> GetAllAsync();
-    Task<ServiceResult> DeleteAsync(int id);
+    Task<ServiceResult> DeleteAsync(DeleteProjectDto dto);
     Task<ServiceResult> UpdateAsync(UpdateProjectApiDto dto);
     Task<ServiceResult> UpdateAsync(UpdateProjectMVCDto dto);
     Task<ServiceResult<ProjectDto>> GetByIdAsync(int id);

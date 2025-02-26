@@ -10,6 +10,9 @@ public class AddAboutMeApiDtoValidator : AbstractValidator<AddAboutMeApiDto>
         RuleFor(x => x.AboutMeImageUrl)
              .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("AboutMeImageUrl kısmı boş olamaz.").MaximumLength(255).WithMessage("AboutMeImageUrl maksimum 255 karakter olabilir.");
 
+        RuleFor(x => x.HeroImageUrl)
+             .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("HeroImageUrl kısmı boş olamaz.").MaximumLength(255).WithMessage("HeroImageUrl maksimum 255 karakter olabilir.");
+
         RuleFor(x => x.LinkedInUrl)
              .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("LinkedInUrl kısmı boş olamaz.")
              .MaximumLength(255).WithMessage("LinkedInUrl maksimum 255 karakter olabilir.");
@@ -21,6 +24,18 @@ public class AddAboutMeApiDtoValidator : AbstractValidator<AddAboutMeApiDto>
         RuleFor(x => x.CvUrl)
              .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("CvUrl kısmı boş olamaz.")
              .MaximumLength(255).WithMessage("CvUrl maksimum 255 karakter olabilir.");
+
+        RuleFor(x => x.TwitterUrl)
+           .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("TwitterUrl kısmı boş olamaz.")
+           .MaximumLength(255).WithMessage("TwitterUrl maksimum 255 karakter olabilir.");
+
+        RuleFor(x => x.InstagramUrl)
+           .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("InstagramUrl kısmı boş olamaz.")
+           .MaximumLength(255).WithMessage("InstagramUrl maksimum 255 karakter olabilir.");
+
+        RuleFor(x => x.MediumUrl)
+           .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("MediumUrl kısmı boş olamaz.")
+           .MaximumLength(255).WithMessage("MediumUrl maksimum 255 karakter olabilir.");
 
         RuleFor(x => x.Introduction)
             .Must(name => !string.IsNullOrWhiteSpace(name)).WithMessage("Giriş kısmı boş olamaz.")

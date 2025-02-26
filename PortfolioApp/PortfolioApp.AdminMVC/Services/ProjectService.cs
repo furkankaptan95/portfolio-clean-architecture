@@ -47,9 +47,11 @@ public class ProjectService : IProjectService
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }
 
-    public async Task<ServiceResult> DeleteAsync(int id)
+    public async Task<ServiceResult> DeleteAsync(DeleteProjectDto dto)
     {
-        var apiResponse = await DataApiClient.GetAsync($"project/delete/{id}");
+        await FileApiClient.GetAsync($"delete/{dto.ImageUrl}");
+
+        var apiResponse = await DataApiClient.PostAsJsonAsync("project/delete", dto);
 
         return await apiResponse.Content.ReadFromJsonAsync<ServiceResult>();
     }

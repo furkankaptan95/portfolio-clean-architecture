@@ -52,6 +52,27 @@
                     </div>
 
                     <div class="mb-3">
+                        <label asp-for="MediumUrl" class="form-label mb-1">Medium</label>
+                        <input asp-for="MediumUrl" class="form-control" />
+                        <span id="MediumUrlError" class="text-danger"></span>
+                        <span asp-validation-for="MediumUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="TwitterUrl" class="form-label mb-1">Twitter</label>
+                        <input asp-for="TwitterUrl" class="form-control" />
+                        <span id="TwitterUrlError" class="text-danger"></span>
+                        <span asp-validation-for="TwitterUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="InstagramUrl" class="form-label mb-1">Instagram</label>
+                        <input asp-for="InstagramUrl" class="form-control" />
+                        <span id="InstagramUrlError" class="text-danger"></span>
+                        <span asp-validation-for="InstagramUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
                         <label asp-for="Email" class="form-label mb-1">Email</label>
                         <input asp-for="Email" class="form-control" />
                         <span id="EmailError" class="text-danger"></span>
@@ -63,6 +84,13 @@
                         <input asp-for="AboutMeImage" class="form-control" type="file" accept="image/*">
                         <span id="AboutMeImageError" class="text-danger"></span>
                         <span asp-validation-for="AboutMeImage" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="HeroImage" class="form-label mb-1">Hero Fotoğrafı</label>
+                        <input asp-for="HeroImage" class="form-control" type="file" accept="image/*">
+                        <span id="HeroImageError" class="text-danger"></span>
+                        <span asp-validation-for="HeroImage" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
@@ -91,8 +119,12 @@ document.addEventListener("DOMContentLoaded", function () {
         Field: document.querySelector("#Field"),
         LinkedInUrl: document.querySelector("#LinkedInUrl"),
         GithubUrl: document.querySelector("#GithubUrl"),
+        MediumUrl: document.querySelector("#MediumUrl"),
+        TwitterUrl: document.querySelector("#TwitterUrl"),
+        InstagramUrl: document.querySelector("#InstagramUrl"),
         Email: document.querySelector("#Email"),
         AboutMeImage: document.querySelector("#AboutMeImage"),
+        HeroImage: document.querySelector("#HeroImage"),
         CvFile: document.querySelector("#CvFile")
     };
 
@@ -102,8 +134,12 @@ document.addEventListener("DOMContentLoaded", function () {
         Field: document.querySelector("#FieldError"),
         LinkedInUrl: document.querySelector("#LinkenInUrlError"),
         GithubUrl: document.querySelector("#GithubUrlError"),
+        MediumUrl: document.querySelector("#MediumUrlError"),
+        TwitterUrl: document.querySelector("#TwitterUrlError"),
+        InstagramUrl: document.querySelector("#InstagramUrlError"),
         Email: document.querySelector("#EmailError"),
         AboutMeImage: document.querySelector("#AboutMeImageError"),
+        HeroImage: document.querySelector("#HeroImageError"),
         CvFile: document.querySelector("#CvFileError")
     };
 
@@ -167,6 +203,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             case "LinkedInUrl":
             case "GithubUrl":
+            case "MediumUrl":
+            case "InstagramUrl":
+            case "TwitterUrl":
                 if (!validateNotEmpty(value)) showError(name, "Bu alan boş olamaz.");
                 else if (!validateUrl(value)) showError(name, "URL en fazla 255 karakter olmalıdır.");
                 else clearError(name);
@@ -175,11 +214,12 @@ document.addEventListener("DOMContentLoaded", function () {
             case "Email":
                 if (!validateNotEmpty(value)) showError(name, "Email boş olamaz.");
                 else if (!validateEmail(value)) showError(name, "Geçerli bir email giriniz.");
-                 else if (!validateMaxLength(value, 100)) showError(name, "Email en fazla 100 karakter olmalıdır.");
+                else if (!validateMaxLength(value, 100)) showError(name, "Email en fazla 100 karakter olmalıdır.");
                 else clearError(name);
                 break;
 
             case "AboutMeImage":
+            case "HeroImage":
                 if (files.length === 0) showError(name, "Fotoğraf yüklenmelidir.");
                 else if (!validateImageFile(files[0])) showError(name, "Geçerli bir fotoğraf formatı olmalıdır (JPG, PNG, JPEG).");
                 else clearError(name);

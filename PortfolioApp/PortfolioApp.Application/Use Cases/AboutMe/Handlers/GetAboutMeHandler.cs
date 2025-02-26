@@ -31,6 +31,10 @@ public class GetAboutMeHandler : IRequestHandler<GetAboutMeQuery, ServiceResult<
             GithubUrl = aboutMeEntity.GithubUrl,
             Email = aboutMeEntity.Email,
             CvUrl = aboutMeEntity.CvUrl,
+            InstagramUrl = aboutMeEntity.InstagramUrl,
+            TwitterUrl = aboutMeEntity.TwitterUrl,
+            MediumUrl = aboutMeEntity.MediumUrl,
+            HeroImageUrl = aboutMeEntity.HeroImageUrl,
         };
 
         return new ServiceResult<AboutMeDto>(true,null,aboutMeDto);

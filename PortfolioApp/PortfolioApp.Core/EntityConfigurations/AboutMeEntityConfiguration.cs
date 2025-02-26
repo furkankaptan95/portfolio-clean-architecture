@@ -14,7 +14,11 @@ public class AboutMeEntityConfiguration : IEntityTypeConfiguration<AboutMeEntity
         builder.Property(a => a.FullName).IsRequired().HasColumnType("nvarchar(50)");
         builder.Property(a => a.Field).IsRequired().HasColumnType("nvarchar(50)");
         builder.Property(a => a.AboutMeImageUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.HeroImageUrl).IsRequired().HasColumnType("nvarchar(255)");
         builder.Property(a => a.LinkedInUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.MediumUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.InstagramUrl).IsRequired().HasColumnType("nvarchar(255)");
+        builder.Property(a => a.TwitterUrl).IsRequired().HasColumnType("nvarchar(255)");
         builder.Property(a => a.GithubUrl).IsRequired().HasColumnType("nvarchar(255)");
         builder.Property(a => a.GithubUrl).IsRequired().HasColumnType("nvarchar(255)");
         builder.Property(a => a.Email).IsRequired().HasColumnType("nvarchar(100)");
