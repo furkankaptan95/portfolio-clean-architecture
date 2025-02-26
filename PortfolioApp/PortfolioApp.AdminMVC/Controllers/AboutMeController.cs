@@ -111,7 +111,7 @@ public class AboutMeController : Controller
 
         return new FileStreamResult(result.Data, "application/pdf")
         {
-            FileDownloadName = "FurkanKaptanOzgecmis"
+            FileDownloadName = "FurkanKaptanOzgecmis.pdf"
         };
     }
 }
