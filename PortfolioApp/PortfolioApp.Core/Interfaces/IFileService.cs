@@ -7,5 +7,5 @@ public interface IFileService
 {
     Task<ServiceResult<FileNameDto>> UploadFileAsync(IFormFile file);
     ServiceResult DeleteFile(string fileName);
-    Task<ServiceResult<FileDownloadDto?>> DownloadAsync(string fileUrl);
+    Task<ServiceResult<Stream?>> DownloadAsync(string fileUrl);
 }

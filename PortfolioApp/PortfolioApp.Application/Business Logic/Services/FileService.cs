@@ -30,22 +30,24 @@ public class FileService : IFileService
             return new ServiceResult(true,"Dosya başarıyla silindi.");
         }
 
-        return new ServiceResult(false, "Dosya silinirken bir hatayla karşılaşıldı.");
+        return new ServiceResult(false, "Silinecek dosya bulunamadı.");
     }
 
-    public async Task<ServiceResult<FileDownloadDto>> DownloadAsync(string fileUrl)
+    public async Task<ServiceResult<Stream>> DownloadAsync(string fileUrl)
     {
         var filePath = Path.Combine(_uploadsFolder, fileUrl);
 
+        // Dosyanın var olup olmadığını kontrol et
         if (!System.IO.File.Exists(filePath))
         {
-            return new ServiceResult<FileDownloadDto>(false,"Dosya bulunamadı.",null);
+            return new ServiceResult<Stream>(false, "Dosya bulunamadı.", null);
         }
 
-        var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
-        var fileName = Path.GetFileName(filePath) ?? "downloaded_file";
+        // Dosyayı stream olarak aç
+        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
-        return new ServiceResult<FileDownloadDto>(true,"Dosya başarıyla indirildi.", new FileDownloadDto(fileBytes, fileName));
+        // Stream'i döndür
+        return new ServiceResult<Stream>(true, "Dosya başarıyla indirildi.", fileStream);
     }
 
     public async Task<ServiceResult<FileNameDto>> UploadFileAsync(IFormFile file)

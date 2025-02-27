@@ -1,7 +1,7 @@
 ﻿namespace PortfolioApp.AdminMVC.Models.ViewModels.Home;
 public class HomeViewModel
 {
-    public int UsersCount { get; set; }
+    public int ContactMessagesCount { get; set; }
     public int BlogPostsCount { get; set; }
     public int CommentsCount { get; set; }
     public int ProjectsCount { get; set; }

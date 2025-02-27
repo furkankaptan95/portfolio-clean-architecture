@@ -15,7 +15,7 @@ public class HomeRepository : IHomeRepository
     public async Task<HomeDto> GetHomeInfosAsync()
     {
         var dto = new HomeDto();
-
+        dto.ContactMessagesCount = await _dataDbContext.ContactMessages.CountAsync();
         dto.CommentsCount = await _dataDbContext.Comments.CountAsync();
         dto.ProjectsCount = await _dataDbContext.Projects.CountAsync();
         dto.BlogPostsCount = await _dataDbContext.BlogPosts.CountAsync();

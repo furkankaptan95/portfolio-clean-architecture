@@ -12,6 +12,10 @@ public class HomeController : Controller
         _aboutMeService = aboutMeService;
         _homeService = homeService;
     }
+    public IActionResult Error()
+    {
+        return View();
+    }
     public async Task<IActionResult> Index()
     {
         var model = await _homeService.GetHomeModel();
@@ -24,9 +28,9 @@ public class HomeController : Controller
     {
         var result = await _aboutMeService.DownloadCvAsync(cvUrl);
 
-        var fileBytes = result.Data;
-        var downloadedFileName = "FurkanKaptanCV.pdf";
-
-        return File(fileBytes, "application/pdf", downloadedFileName);
+        return new FileStreamResult(result.Data, "application/pdf")
+        {
+            FileDownloadName = "FurkanKaptanOzgecmis.pdf"
+        };
     }
 }

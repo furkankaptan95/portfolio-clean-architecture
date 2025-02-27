@@ -25,13 +25,13 @@ public class AboutMeService : IAboutMeService
         throw new NotImplementedException();
     }
 
-    public async Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl)
+    public async Task<ServiceResult<Stream>> DownloadCvAsync(string cvUrl)
     {
         var response = await FileApiClient.GetAsync($"download?fileUrl={cvUrl}");
 
-        var result = await response.Content.ReadAsByteArrayAsync();
+        var stream = await response.Content.ReadAsStreamAsync();
 
-        return new ServiceResult<byte[]>(true, null, result);
+        return new ServiceResult<Stream>(true, null, stream);
     }
 
     public async Task<ServiceResult<AboutMeDto>> GetAsync()

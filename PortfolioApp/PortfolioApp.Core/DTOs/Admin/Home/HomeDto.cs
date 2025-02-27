@@ -1,7 +1,7 @@
 ﻿namespace PortfolioApp.Core.DTOs.Admin.Home;
 public class HomeDto
 {
-    public int UsersCount { get; set; }
+    public int ContactMessagesCount { get; set; }
     public int BlogPostsCount { get; set; }
     public int CommentsCount { get; set; }
     public int ProjectsCount { get; set; }

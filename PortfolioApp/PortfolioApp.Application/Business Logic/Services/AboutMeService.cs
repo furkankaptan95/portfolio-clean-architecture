@@ -24,7 +24,7 @@ public class AboutMeService : IAboutMeService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult<byte[]>> DownloadCvAsync(string cvUrl)
+    public Task<ServiceResult<Stream>> DownloadCvAsync(string cvUrl)
     {
         throw new NotImplementedException();
     }

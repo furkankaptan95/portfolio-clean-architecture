@@ -44,6 +44,6 @@ public class FileController : ControllerBase
         if (!result.IsSuccess)
             return NotFound(result);
 
-        return File(result.Data.FileBytes, "application/octet-stream", result.Data.FileName);
+        return File(result.Data, "application/octet-stream", "downloaded_file");
     }
 }
