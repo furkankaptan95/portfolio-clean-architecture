@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "f212e2a0-5836-426a-ae3a-962784bcc9f7",
+		"name": "PortfolioApp.EmailAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "42562467"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Email",
+					"item": [
+						{
+							"name": "send",
+							"item": [
+								{
+									"name": "/api/Email/send",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"to\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"body\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Email/send"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"to\": \"string\",\n  \"subject\": \"string\",\n  \"body\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Email/send"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "Email başarıyla gönderildi."
+										},
+										{
+											"name": "Internal Server Error",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"to\": \"string\",\n  \"subject\": \"string\",\n  \"body\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Email/send"
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": null,
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "Email gönderilirken bir hata oluştu!.."
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}

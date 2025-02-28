@@ -1,0 +1,3694 @@
+{
+	"info": {
+		"_postman_id": "f59bc5d5-1d04-40e6-a9b3-29227c57d88b",
+		"name": "PortfolioApp.DataAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "42562467"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "AboutMe",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/AboutMe/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"fullName\": \"<string>\",\n  \"field\": \"<string>\",\n  \"introduction\": \"<string>\",\n  \"aboutMeImageUrl\": \"<string>\",\n  \"heroImageUrl\": \"<string>\",\n  \"linkedInUrl\": \"<string>\",\n  \"mediumUrl\": \"<string>\",\n  \"twitterUrl\": \"<string>\",\n  \"instagramUrl\": \"<string>\",\n  \"githubUrl\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cvUrl\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/AboutMe/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"fullName\": \"string\",\n  \"field\": \"string\",\n  \"introduction\": \"string\",\n  \"aboutMeImageUrl\": \"string\",\n  \"heroImageUrl\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"mediumUrl\": \"string\",\n  \"twitterUrl\": \"string\",\n  \"instagramUrl\": \"string\",\n  \"githubUrl\": \"string\",\n  \"email\": \"string\",\n  \"cvUrl\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/AboutMe/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "BadRequest",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"fullName\": \"string\",\n  \"field\": \"string\",\n  \"introduction\": \"string\",\n  \"aboutMeImageUrl\": \"string\",\n  \"heroImageUrl\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"mediumUrl\": \"string\",\n  \"twitterUrl\": \"string\",\n  \"instagramUrl\": \"string\",\n  \"githubUrl\": \"string\",\n  \"email\": \"string\",\n  \"cvUrl\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/AboutMe/create"
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "/api/AboutMe/get",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/AboutMe/get"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/AboutMe/get"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Data retrieved successfully.\",\n    \"data\": {\n        \"fullName\": \"John Doe\",\n        \"field\": \"Software Engineer\",\n        \"introduction\": \"Passionate developer with expertise in .NET and microservices.\",\n        \"aboutMeImageUrl\": \"https://example.com/images/about-me.jpg\",\n        \"heroImageUrl\": \"https://example.com/images/hero.jpg\",\n        \"linkedInUrl\": \"https://linkedin.com/in/johndoe\",\n        \"mediumUrl\": \"https://medium.com/@johndoe\",\n        \"twitterUrl\": \"https://twitter.com/johndoe\",\n        \"instagramUrl\": \"https://instagram.com/johndoe\",\n        \"githubUrl\": \"https://github.com/johndoe\",\n        \"email\": \"johndoe@example.com\",\n        \"cvUrl\": \"https://example.com/cv.pdf\"\n    }\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/AboutMe/get"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve data.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "update",
+							"item": [
+								{
+									"name": "/api/AboutMe/update",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"fullName\": \"<string>\",\n  \"field\": \"<string>\",\n  \"introduction\": \"<string>\",\n  \"aboutMeImageUrl\": \"<string>\",\n  \"heroImageUrl\": \"<string>\",\n  \"linkedInUrl\": \"<string>\",\n  \"mediumUrl\": \"<string>\",\n  \"twitterUrl\": \"<string>\",\n  \"instagramUrl\": \"<string>\",\n  \"githubUrl\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cvUrl\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/AboutMe/update"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"fullName\": \"string\",\n  \"field\": \"string\",\n  \"introduction\": \"string\",\n  \"aboutMeImageUrl\": \"string\",\n  \"heroImageUrl\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"mediumUrl\": \"string\",\n  \"twitterUrl\": \"string\",\n  \"instagramUrl\": \"string\",\n  \"githubUrl\": \"string\",\n  \"email\": \"string\",\n  \"cvUrl\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/AboutMe/update"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"fullName\": \"string\",\n  \"field\": \"string\",\n  \"introduction\": \"string\",\n  \"aboutMeImageUrl\": \"string\",\n  \"heroImageUrl\": \"string\",\n  \"linkedInUrl\": \"string\",\n  \"mediumUrl\": \"string\",\n  \"twitterUrl\": \"string\",\n  \"instagramUrl\": \"string\",\n  \"githubUrl\": \"string\",\n  \"email\": \"string\",\n  \"cvUrl\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/AboutMe/update"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "BlogPost",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/BlogPost/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"<string>\",\n  \"content\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/BlogPost/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"title\": \"string\",\n  \"content\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/BlogPost/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "all",
+							"item": [
+								{
+									"name": "/api/BlogPost/all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/BlogPost/all"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/BlogPost/all"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": "{\r\n    \"isSuccess\": true,\r\n    \"message\": \"Blog posts retrieved successfully.\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"title\": \"Introduction to .NET Microservices\",\r\n            \"content\": \"In this post, we will explore the fundamentals of .NET microservices architecture...\",\r\n            \"publishDate\": \"2024-02-28T10:30:00Z\",\r\n            \"updatedAt\": \"2024-02-29T15:45:00Z\",\r\n            \"isVisible\": true,\r\n            \"approvedCommentsCount\": 5\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"title\": \"CQRS and MediatR in Clean Architecture\",\r\n            \"content\": \"This article discusses how to implement CQRS with MediatR in a Clean Architecture project...\",\r\n            \"publishDate\": \"2024-02-20T09:00:00Z\",\r\n            \"updatedAt\": null,\r\n            \"isVisible\": true,\r\n            \"approvedCommentsCount\": 12\r\n        }\r\n    ]\r\n}\r\n"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/BlogPost/delete/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BlogPost/delete/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BlogPost",
+														"delete",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/BlogPost/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"BlogPost",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/BlogPost/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"BlogPost",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "update",
+							"item": [
+								{
+									"name": "/api/BlogPost/update",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"content\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/BlogPost/update"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"title\": \"string\",\n  \"content\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/BlogPost/update"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"title\": \"string\",\n  \"content\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/BlogPost/update"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/BlogPost/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/BlogPost/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"BlogPost",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BlogPost/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BlogPost",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": ""
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Blog post retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Introduction to .NET Microservices\",\n        \"content\": \"In this post, we will explore the fundamentals of .NET microservices architecture...\",\n        \"publishDate\": \"2024-02-28T10:30:00Z\",\n        \"updatedAt\": \"2024-02-29T15:45:00Z\",\n        \"isVisible\": true,\n        \"approvedCommentsCount\": 5\n    }\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BlogPost/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BlogPost",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve blog post.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "web",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/BlogPost/web/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BlogPost/web/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BlogPost",
+														"web",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/BlogPost/web/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"BlogPost",
+																"web",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Blog post retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Understanding Clean Architecture in .NET\",\n        \"content\": \"This post explores the principles and benefits of Clean Architecture in .NET applications...\",\n        \"publishDate\": \"2024-02-28T10:30:00Z\",\n        \"comments\": [\n            {\n                \"id\": 101,\n                \"userId\": 1,\n                \"commenter\": \"Alice Johnson\",\n                \"content\": \"Great article! Helped me understand Clean Architecture better.\",\n                \"createdAt\": \"2024-02-29T12:15:00Z\"\n            },\n            {\n                \"id\": 102,\n                \"userId\": null,\n                \"commenter\": \"Guest User\",\n                \"content\": \"Thanks for sharing! Looking forward to more content.\",\n                \"createdAt\": \"2024-02-29T14:00:00Z\"\n            }\n        ]\n    }\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/BlogPost/web/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"BlogPost",
+																"web",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve blog post.\",\n    \"data\": null\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "visibility",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/BlogPost/visibility/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/BlogPost/visibility/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"BlogPost",
+														"visibility",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/BlogPost/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"BlogPost",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/BlogPost/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"BlogPost",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/Comment/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"content\": \"<string>\",\n  \"blogPostId\": \"<integer>\",\n  \"unsignedCommenterName\": \"<string>\",\n  \"userId\": \"<integer>\",\n  \"signedCommenterName\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Comment/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"content\": \"string\",\n  \"blogPostId\": 0,\n  \"unsignedCommenterName\": \"string\",\n  \"userId\": 0,\n  \"signedCommenterName\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Comment/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/Comment/delete/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Comment/delete/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Comment",
+														"delete",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Comment/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Comment",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Comment/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Comment",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "approval",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/Comment/approval/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Comment/approval/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Comment",
+														"approval",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Comment/approval/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Comment",
+																"approval",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "Not Found",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Comment/approval/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Comment",
+																"approval",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "all",
+							"item": [
+								{
+									"name": "/api/Comment/all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/Comment/all"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/Comment/all"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Comments retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"commenter\": \"Alice Johnson\",\n            \"commenterId\": 101,\n            \"content\": \"Great article! Helped me understand Clean Architecture better.\",\n            \"createdAt\": \"2024-02-28T12:15:00Z\",\n            \"isApproved\": true,\n            \"blogPostName\": \"Understanding Clean Architecture in .NET\"\n        },\n        {\n            \"id\": 2,\n            \"commenter\": \"Guest User\",\n            \"commenterId\": null,\n            \"content\": \"Thanks for sharing! Looking forward to more content.\",\n            \"createdAt\": \"2024-02-28T14:00:00Z\",\n            \"isApproved\": false,\n            \"blogPostName\": \"Understanding Clean Architecture in .NET\"\n        }\n    ]\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "ContactMessage",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/ContactMessage/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"subject\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/ContactMessage/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"subject\": \"string\",\n  \"message\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/ContactMessage/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "all",
+							"item": [
+								{
+									"name": "/api/ContactMessage/all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/ContactMessage/all"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/ContactMessage/all"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Contact messages retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"John Doe\",\n            \"email\": \"johndoe@example.com\",\n            \"subject\": \"Inquiry about services\",\n            \"message\": \"I would like to know more about your software development services.\",\n            \"sentDate\": \"2024-02-28T10:15:00Z\",\n            \"isRead\": true,\n            \"reply\": \"Thank you for reaching out! We will get back to you soon.\",\n            \"replyDate\": \"2024-02-29T08:30:00Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Jane Smith\",\n            \"email\": \"janesmith@example.com\",\n            \"subject\": null,\n            \"message\": \"How can I collaborate with your team?\",\n            \"sentDate\": \"2024-02-28T14:45:00Z\",\n            \"isRead\": false,\n            \"reply\": null,\n            \"replyDate\": null\n        }\n    ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/ContactMessage/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/ContactMessage/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"ContactMessage",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/ContactMessage/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"ContactMessage",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": ""
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Contact message retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"John Doe\",\n        \"email\": \"johndoe@example.com\",\n        \"subject\": \"Inquiry about services\",\n        \"message\": \"I would like to know more about your software development services.\",\n        \"sentDate\": \"2024-02-28T10:15:00Z\",\n        \"isRead\": true,\n        \"reply\": \"Thank you for reaching out! We will get back to you soon.\",\n        \"replyDate\": \"2024-02-29T08:30:00Z\"\n    }\n}"
+										},
+										{
+											"name": "BadRequest",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/ContactMessage/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"ContactMessage",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve contact message.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "reply",
+							"item": [
+								{
+									"name": "/api/ContactMessage/reply",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<integer>\",\n  \"replyMessage\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/ContactMessage/reply"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"replyMessage\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/ContactMessage/reply"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "make-read",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/ContactMessage/make-read/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/ContactMessage/make-read/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"ContactMessage",
+														"make-read",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/ContactMessage/make-read/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ContactMessage",
+																"make-read",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/ContactMessage/make-read/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ContactMessage",
+																"make-read",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Education",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/Education/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"degree\": \"<string>\",\n  \"school\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Education/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"degree\": \"string\",\n  \"school\": \"string\",\n  \"startDate\": \"2025-02-27T20:48:52.246Z\",\n  \"endDate\": \"2025-02-27T20:48:52.246Z\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Education/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "all",
+							"item": [
+								{
+									"name": "/api/Education/all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/Education/all"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/Education/all"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Education records retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"degree\": \"Bachelor of Science in Computer Science\",\n            \"school\": \"MIT\",\n            \"startDate\": \"2018-09-01T00:00:00Z\",\n            \"endDate\": \"2022-06-01T00:00:00Z\",\n            \"isVisible\": true\n        },\n        {\n            \"id\": 2,\n            \"degree\": \"Master of Science in Artificial Intelligence\",\n            \"school\": \"Stanford University\",\n            \"startDate\": \"2022-09-01T00:00:00Z\",\n            \"endDate\": null,\n            \"isVisible\": true\n        }\n    ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/Education/delete/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Education/delete/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Education",
+														"delete",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Education/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Education",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Education/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Education",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "update",
+							"item": [
+								{
+									"name": "/api/Education/update",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<integer>\",\n  \"degree\": \"<string>\",\n  \"school\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Education/update"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"degree\": \"string\",\n  \"school\": \"string\",\n  \"startDate\": \"2025-02-27T20:49:56.800Z\",\n  \"endDate\": \"2025-02-27T20:49:56.800Z\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Education/update"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"degree\": \"string\",\n  \"school\": \"string\",\n  \"startDate\": \"2025-02-27T20:49:56.800Z\",\n  \"endDate\": \"2025-02-27T20:49:56.800Z\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Education/update"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/Education/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Education/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Education",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Education/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Education",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": ""
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Education record retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"degree\": \"Bachelor of Science in Computer Science\",\n        \"school\": \"MIT\",\n        \"startDate\": \"2018-09-01T00:00:00Z\",\n        \"endDate\": \"2022-06-01T00:00:00Z\",\n        \"isVisible\": true\n    }\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Education/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Education",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve education record.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "visibility",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/Education/visibility/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Education/visibility/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Education",
+														"visibility",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Education/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Education",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Education/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Education",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Experience",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/Experience/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"<string>\",\n  \"company\": \"<string>\",\n  \"description\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Experience/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"title\": \"string\",\n  \"company\": \"string\",\n  \"description\": \"string\",\n  \"startDate\": \"2025-02-27T20:50:57.495Z\",\n  \"endDate\": \"2025-02-27T20:50:57.495Z\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Experience/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "all",
+							"item": [
+								{
+									"name": "/api/Experience/all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/Experience/all"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/Experience/all"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Experience records retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Software Developer\",\n            \"company\": \"Tech Solutions Ltd.\",\n            \"startDate\": \"2020-01-15T00:00:00Z\",\n            \"endDate\": \"2022-05-30T00:00:00Z\",\n            \"description\": \"Worked on developing web applications using .NET and Angular.\",\n            \"isVisible\": true\n        },\n        {\n            \"id\": 2,\n            \"title\": \"Senior Software Engineer\",\n            \"company\": \"Innovative Tech Corp.\",\n            \"startDate\": \"2022-06-01T00:00:00Z\",\n            \"endDate\": null,\n            \"description\": \"Leading a team of software engineers to design and implement enterprise solutions.\",\n            \"isVisible\": true\n        }\n    ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/Experience/delete/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Experience/delete/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Experience",
+														"delete",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Experience/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Experience",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Experience/delete/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Experience",
+																"delete",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "update",
+							"item": [
+								{
+									"name": "/api/Experience/update",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"company\": \"<string>\",\n  \"description\": \"<string>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Experience/update"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"title\": \"string\",\n  \"company\": \"string\",\n  \"description\": \"string\",\n  \"startDate\": \"2025-02-27T20:51:41.278Z\",\n  \"endDate\": \"2025-02-27T20:51:41.278Z\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Experience/update"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"title\": \"string\",\n  \"company\": \"string\",\n  \"description\": \"string\",\n  \"startDate\": \"2025-02-27T20:51:41.278Z\",\n  \"endDate\": \"2025-02-27T20:51:41.278Z\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Experience/update"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/Experience/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Experience/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Experience",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Experience/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Experience",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": ""
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Experience record retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Software Developer\",\n        \"company\": \"Tech Solutions Ltd.\",\n        \"startDate\": \"2020-01-15T00:00:00Z\",\n        \"endDate\": \"2022-05-30T00:00:00Z\",\n        \"description\": \"Worked on developing web applications using .NET and Angular.\",\n        \"isVisible\": true\n    }\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Experience/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Experience",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve experience record.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "visibility",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/Experience/visibility/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Experience/visibility/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Experience",
+														"visibility",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Experience/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Experience",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Experience/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Experience",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Home",
+					"item": [
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "/api/Home/get",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/Home/get"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/Home/get"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Home data retrieved successfully.\",\n    \"data\": {\n        \"contactMessagesCount\": 5,\n        \"blogPostsCount\": 10,\n        \"commentsCount\": 25,\n        \"projectsCount\": 3,\n        \"educationsCount\": 2,\n        \"experiencesCount\": 4\n    }\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/Home/get"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve home data.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "PersonalInfo",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/PersonalInfo/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"about\": \"<string>\",\n  \"name\": \"<string>\",\n  \"surname\": \"<string>\",\n  \"birthDate\": \"<dateTime>\",\n  \"adress\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/PersonalInfo/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"about\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"birthDate\": \"2025-02-27T20:54:14.142Z\",\n  \"adress\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/PersonalInfo/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "BadRequest",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"about\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"birthDate\": \"2025-02-27T20:54:14.142Z\",\n  \"adress\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/PersonalInfo/create"
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "get",
+							"item": [
+								{
+									"name": "/api/PersonalInfo/get",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/PersonalInfo/get"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/PersonalInfo/get"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Personal info retrieved successfully.\",\n    \"data\": {\n        \"name\": \"John\",\n        \"surname\": \"Doe\",\n        \"about\": \"Software developer with a passion for coding and solving complex problems.\",\n        \"birthDate\": \"1990-05-15T00:00:00Z\",\n        \"adress\": \"123 Main St, Springfield, IL\"\n    }\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/PersonalInfo/get"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve personal info.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "update",
+							"item": [
+								{
+									"name": "/api/PersonalInfo/update",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"surname\": \"<string>\",\n  \"about\": \"<string>\",\n  \"birthDate\": \"<dateTime>\",\n  \"adress\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/PersonalInfo/update"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"about\": \"string\",\n  \"birthDate\": \"2025-02-27T20:55:20.820Z\",\n  \"adress\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/PersonalInfo/update"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"about\": \"string\",\n  \"birthDate\": \"2025-02-27T20:55:20.820Z\",\n  \"adress\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/PersonalInfo/update"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Project",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "/api/Project/create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"imageUrl\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Project/create"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"imageUrl\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Project/create"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "all",
+							"item": [
+								{
+									"name": "/api/Project/all",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{baseUrl}}/api/Project/all"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": "{{baseUrl}}/api/Project/all"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Project records retrieved successfully.\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Portfolio Website\",\n            \"description\": \"A personal portfolio website to showcase my skills and projects.\",\n            \"imageUrl\": \"https://example.com/portfolio-image.jpg\",\n            \"isVisible\": true\n        },\n        {\n            \"id\": 2,\n            \"title\": \"E-commerce Platform\",\n            \"description\": \"An e-commerce platform built with ASP.NET Core and Angular.\",\n            \"imageUrl\": \"https://example.com/ecommerce-image.jpg\",\n            \"isVisible\": true\n        }\n    ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "delete",
+							"item": [
+								{
+									"name": "/api/Project/delete",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<integer>\",\n  \"imageUrl\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Project/delete"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<integer>\",\n  \"imageUrl\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Project/delete"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": \"<integer>\",\n  \"imageUrl\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Project/delete"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "update",
+							"item": [
+								{
+									"name": "/api/Project/update",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"imageUrl\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{baseUrl}}/api/Project/update"
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"imageUrl\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Project/update"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"id\": 0,\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"imageUrl\": \"string\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": "{{baseUrl}}/api/Project/update"
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "/api/Project/:id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Project/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Project",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<integer>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Project/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Project",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": ""
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": true,\n    \"message\": \"Project record retrieved successfully.\",\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Portfolio Website\",\n        \"description\": \"A personal portfolio website to showcase my skills and projects.\",\n        \"imageUrl\": \"https://example.com/portfolio-image.jpg\",\n        \"isVisible\": true\n    }\n}"
+										},
+										{
+											"name": "NotFound",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Project/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Project",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json",
+													"name": "Content-Type",
+													"description": "",
+													"type": "text"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"isSuccess\": false,\n    \"message\": \"Failed to retrieve project record.\",\n    \"data\": null\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "visibility",
+							"item": [
+								{
+									"name": "{id}",
+									"item": [
+										{
+											"name": "/api/Project/visibility/:id",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Project/visibility/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Project",
+														"visibility",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<integer>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Project/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Project",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": ""
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": true,\n    \"message\": \"message\"\n}"
+												},
+												{
+													"name": "NotFound",
+													"originalRequest": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/Project/visibility/:id",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"Project",
+																"visibility",
+																":id"
+															],
+															"variable": [
+																{
+																	"key": "id",
+																	"value": "<integer>",
+																	"description": "(Required) "
+																}
+															]
+														}
+													},
+													"status": "Not Found",
+													"code": 404,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "application/json",
+															"name": "Content-Type",
+															"description": "",
+															"type": "text"
+														}
+													],
+													"cookie": [],
+													"body": "{\n    \"isSuccess\": false,\n    \"message\": \"message\"\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}
